@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/image")
+@RequestMapping("/images")
 public class ImageController {
     @Autowired
     IImageService imageService;
