@@ -18,12 +18,12 @@ public class BillService implements IBillService {
 
     @Override
     public Optional<Bill> findById(Long id) {
-        return Optional.empty();
+        return iBillRepository.findById(id);
     }
 
     @Override
     public Bill save(Bill bill) {
-        return null;
+        return iBillRepository.save(bill);
     }
 
     @Override
