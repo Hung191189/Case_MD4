@@ -1,5 +1,6 @@
 package com.example.case_md4.service;
 
+
 import java.util.Optional;
 
 public interface IGeneralService<T> {

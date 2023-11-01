@@ -32,5 +32,18 @@ public class User {
     @Column(nullable = false)
     private String confirmPassword;
     private boolean enabled = true;
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+    public boolean isEnabled() {
+        return enabled;
+    }
+    public Set<Role> getRoles() {
+        return advertisementSet;
+    }
 
+
+    public void setRoles(Set<Role> roles) {
+        this.advertisementSet = roles;
+    }
 }
