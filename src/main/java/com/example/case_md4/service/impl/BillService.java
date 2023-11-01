@@ -29,6 +29,6 @@ public class BillService implements IBillService {
 
     @Override
     public void delete(Long id) {
-
+        iBillRepository.deleteById(id);
     }
 }
