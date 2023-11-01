@@ -26,8 +26,5 @@ public class Home {
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
-    @ManyToOne
-    @JoinColumn(name = "id_status")
-    private Status status;
-
+    private int status = 1;
 }
