@@ -3,7 +3,9 @@ package com.example.case_md4.service.impl;
 import com.example.case_md4.model.User;
 import com.example.case_md4.model.UserPrinciple;
 import com.example.case_md4.repository.IUserRepository;
+
 import com.example.case_md4.service.IUserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 @Service
 public class UserService implements IUserService {
+
     @Autowired
     private IUserRepository userRepository;
 
