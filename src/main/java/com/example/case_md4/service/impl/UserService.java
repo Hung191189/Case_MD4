@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
 @Service
 public class UserService implements IUserService {
 
@@ -23,7 +24,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUserName(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -34,7 +35,7 @@ public class UserService implements IUserService {
         boolean accountNonExpired = false;
         boolean credentialsNonExpired = false;
         boolean accountNonLocked = false;
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),
                 user.getPassword(), enable, accountNonExpired, credentialsNonExpired,
                 accountNonLocked, null);
     }
@@ -52,7 +53,7 @@ public class UserService implements IUserService {
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUserName(username);
     }
 
     @Override
@@ -89,7 +90,7 @@ public class UserService implements IUserService {
         Iterable<User> users = this.findAll();
         boolean isCorrectUser = false;
         for (User currentUser : users) {
-            if (currentUser.getEmail().equals(user.getEmail())
+            if (currentUser.getUserName().equals(user.getUserName())
                     && user.getPassword().equals(currentUser.getPassword())&&
                     currentUser.isEnabled()) {
                 isCorrectUser = true;
@@ -103,7 +104,7 @@ public class UserService implements IUserService {
         boolean isRegister = false;
         Iterable<User> users = this.findAll();
         for (User currentUser : users) {
-            if (user.getEmail().equals(currentUser.getEmail())) {
+            if (user.getUserName().equals(currentUser.getUserName())) {
                 isRegister = true;
                 break;
             }

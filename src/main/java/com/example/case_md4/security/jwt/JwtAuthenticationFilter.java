@@ -1,7 +1,7 @@
 package com.example.case_md4.security.jwt;
 
-import com.example.case_md4_nhap.service.impl.JwtService;
-import com.example.case_md4_nhap.service.impl.UserService;
+import com.example.case_md4.service.impl.JwtService;
+import com.example.case_md4.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-@Service
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtService jwtService;
