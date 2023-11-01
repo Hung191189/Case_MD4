@@ -6,6 +6,7 @@ import com.example.case_md4.service.IBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 @Service
 public class BillService implements IBillService {
@@ -30,5 +31,20 @@ public class BillService implements IBillService {
     @Override
     public void delete(Long id) {
         iBillRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Bill> findAllByUserId(Long id) {
+        return iBillRepository.findAllByUserId(id);
+    }
+
+    @Override
+    public Iterable<Bill> findAllByHomeId(Long id) {
+        return iBillRepository.findAllByHomeId(id);
+    }
+
+    @Override
+    public Iterable<Bill> findAllByDateOfHire(LocalDate date) {
+        return iBillRepository.findAllByDateOfHire(date);
     }
 }
