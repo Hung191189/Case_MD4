@@ -37,25 +37,25 @@ public class HomeController {
         }
         return new ResponseEntity<>(homeOptional.get(), HttpStatus.OK);
     }
-    @GetMapping("findByName")
-    public ResponseEntity <Iterable<Home>> findAllByNameContaining(@RequestBody String name){
+    @GetMapping("/findByName/{name}")
+    public ResponseEntity <Iterable<Home>> findAllByNameContaining(@PathVariable String name){
         List<Home> homeIterable = (List<Home>) homeService.findAllByNameContaining(name);
         if(homeIterable.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(homeIterable, HttpStatus.OK);
     }
-    @GetMapping("findByPrice")
-    public ResponseEntity <Iterable<Home>> findAllByPriceBetween(@RequestBody double min, double max){
+    @GetMapping("/findByPrice")
+    public ResponseEntity <Iterable<Home>> findAllByPriceBetween(@RequestBody double[] range){
 
-        List<Home> homeIterable = (List<Home>) homeService.findAllByPriceBetween(min, max);
+        List<Home> homeIterable = (List<Home>) homeService.findAllByPriceBetween(range[0], range[1]);
         if(homeIterable.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(homeIterable, HttpStatus.OK);
     }
-    @GetMapping("findByProvince")
-    public ResponseEntity <Iterable<Home>> findAllByProvince(@RequestBody String province){
+    @GetMapping("/findByProvince/{province}")
+    public ResponseEntity <Iterable<Home>> findAllByProvince(@PathVariable String province){
 
         List<Home> homeIterable = (List<Home>) homeService.findAllByProvince(province);
         if(homeIterable.isEmpty()) {

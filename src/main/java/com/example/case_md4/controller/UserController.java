@@ -77,4 +77,8 @@ public class UserController {
         User currentUser = userService.findByUsername(user.getUserName());
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
     }
+    @GetMapping
+    private ResponseEntity<Iterable<User>> showList(){
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
 }
