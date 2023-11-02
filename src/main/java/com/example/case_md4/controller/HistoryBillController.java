@@ -7,10 +7,7 @@ import com.example.case_md4.service.IHistoryBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,12 +17,17 @@ import java.util.List;
 public class HistoryBillController {
     @Autowired
     IHistoryBillService historyBillService;
-    GetMapping
+    @GetMapping
     ResponseEntity<Iterable<HistoryBill>> findAll() {
         List<HistoryBill> historyBills = (List<HistoryBill>) historyBillService.findAll();
         if (historyBills.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(historyBills, HttpStatus.OK);
+    }
+    @PostMapping
+    ResponseEntity<HistoryBill> save(@RequestBody HistoryBill historyBill) {
+        historyBillService.save(historyBill);
+        return new ResponseEntity<>(historyBill, HttpStatus.CREATED);
     }
 }
