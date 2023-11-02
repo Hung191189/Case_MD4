@@ -36,6 +36,7 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     @PostMapping("/register")
     public ResponseEntity<User> createUser(@RequestBody User user, BindingResult bindingResult) {
+
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -49,12 +50,13 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (user.getRoles() != null) {
-            Role role = roleService.findByName("ROLE_ADMIN").get();
+            Role role = roleService.findById(1L).get();
             Set<Role> roles = new HashSet<>();
             roles.add(role);
             user.setRoles(roles);
         } else {
-            Role role1 = roleService.findByName("ROLE_USER").get();
+            System.out.println(roleService.findById(2L));
+            Role role1 = roleService.findById(2L).get();
             Set<Role> roles1 = new HashSet<>();
             roles1.add(role1);
             user.setRoles(roles1);
