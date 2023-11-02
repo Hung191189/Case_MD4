@@ -45,7 +45,7 @@ public class HomeController {
         }
         return new ResponseEntity<>(homeIterable, HttpStatus.OK);
     }
-    @GetMapping("findByPrice")
+    @GetMapping("/findByPrice")
     public ResponseEntity <Iterable<Home>> findAllByPriceBetween(@RequestBody double min, double max){
 
         List<Home> homeIterable = (List<Home>) homeService.findAllByPriceBetween(min, max);
@@ -54,7 +54,7 @@ public class HomeController {
         }
         return new ResponseEntity<>(homeIterable, HttpStatus.OK);
     }
-    @GetMapping("findByProvince")
+    @GetMapping("/findByProvince")
     public ResponseEntity <Iterable<Home>> findAllByProvince(@RequestBody String province){
 
         List<Home> homeIterable = (List<Home>) homeService.findAllByProvince(province);
