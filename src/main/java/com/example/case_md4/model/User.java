@@ -34,6 +34,12 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String confirmPassword;
     private boolean enabled = true;
+
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+
     public String getConfirmPassword() {
         return confirmPassword;
     }
