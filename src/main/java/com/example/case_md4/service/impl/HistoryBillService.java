@@ -18,7 +18,7 @@ public class HistoryBillService implements IHistoryBillService {
 
     @Override
     public Optional<HistoryBill> findById(Long id) {
-        return Optional.empty();
+        return iHistoryBillRepository.findById(id);
     }
 
     @Override
