@@ -23,17 +23,17 @@ public class RoleService implements IRoleService {
     }
 
     @Override
-    public Optional<Role> findByName(String name) {
-        return findByName(name);
-    }
-
-    @Override
     public Role save(Role role) {
-        return null;
+        return iRoleRepository.save(role);
     }
 
     @Override
     public void delete(Long id) {
+            iRoleRepository.deleteById(id);
+    }
 
+    @Override
+    public Role findByName(String name) {
+        return iRoleRepository.findByName(name);
     }
 }
