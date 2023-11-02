@@ -41,7 +41,7 @@ public class UserController {
         }
         Iterable<User> users = userService.findAll();
         for (User currentUser : users) {
-            if (currentUser.getEmail().equals(user.getEmail())) {
+            if (currentUser.getUserName().equals(user.getUserName())) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
@@ -67,12 +67,12 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user){
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+                new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User currentUser = userService.findByUsername(user.getEmail());
+        User currentUser = userService.findByUsername(user.getUserName());
         return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
     }
 }

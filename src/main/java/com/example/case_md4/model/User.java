@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,7 +22,7 @@ public class User {
     private int age;
     private String sex;
     private String address;
-    private String email;
+    private String userName;
     private String password;
     private String phone;
     private String image;
