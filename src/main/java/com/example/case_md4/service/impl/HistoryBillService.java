@@ -28,6 +28,6 @@ public class HistoryBillService implements IHistoryBillService {
 
     @Override
     public void delete(Long id) {
-
+        iHistoryBillRepository.findById(id);
     }
 }
