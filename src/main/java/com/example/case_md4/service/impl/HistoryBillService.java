@@ -13,7 +13,7 @@ public class HistoryBillService implements IHistoryBillService {
     IHistoryBillRepository iHistoryBillRepository;
     @Override
     public Iterable<HistoryBill> findAll() {
-        return null;
+        return iHistoryBillRepository.findAll();
     }
 
     @Override
