@@ -23,7 +23,7 @@ public class HistoryBillService implements IHistoryBillService {
 
     @Override
     public HistoryBill save(HistoryBill historyBill) {
-        return null;
+        return iHistoryBillRepository.save(historyBill);
     }
 
     @Override
