@@ -1,6 +1,5 @@
 package com.example.case_md4.security;
 
-
 import com.example.case_md4.security.jwt.CustomAccessDeniedHandler;
 import com.example.case_md4.security.jwt.JwtAuthenticationFilter;
 import com.example.case_md4.security.jwt.RestAuthenticationEntryPoint;
@@ -25,10 +24,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Bean
-    public UserService userService() {
-        return new UserService();
-    }
+//    @Bean
+//    public UserService userService() {
+//        return new UserService();
+//    }
 
     @Autowired
     private UserService userService;
