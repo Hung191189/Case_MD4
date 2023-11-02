@@ -7024,7 +7024,8 @@ textarea.form-control-lg {
   border-radius: 0.3rem !important; }
 
 .rounded-circle {
-  border-radius: 50% !important; }
+  border-radius: 50% !important;
+}
 
 .rounded-pill {
   border-radius: 50rem !important; }
@@ -9665,7 +9666,7 @@ textarea {
 .hero {
   position: relative;
   background-size: cover;
-  background-position: cnter center;
+  background-position: center center;
   background-repeat: no-repeat;
   background-color: #00204a; }
   .hero.overlay {
@@ -9747,6 +9748,8 @@ textarea {
         background: rgba(34, 34, 34, 0.4); }
 
 .section {
+  position: relative;
+  margin-top: 50px;
   padding-top: 4rem;
   padding-bottom: 4rem; }
   .section .heading {
