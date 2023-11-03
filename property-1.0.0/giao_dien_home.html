@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,8 +34,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
-
-
 
 </head>
 <body >
@@ -149,7 +146,6 @@
                                 <a href="property-single.html" class="img">
                                     <img src="images/img_1.jpg" alt="Image" class="img-fluid"/>
                                 </a>
-
                                 <div class="property-content">
                                     <div class="price mb-2"><span>$1,291,000</span></div>
                                     <div>
@@ -784,9 +780,9 @@
         </div>
         <!-- /.container -->
     </div>
-    /.site-footer
+<!--    /.site-footer-->
 
-    <!-- Preloader -->
+<!--     Preloader-->
     <div id="overlayer"></div>
     <div class="loader">
         <div class="spinner-border" role="status">
@@ -802,7 +798,12 @@
         <div class="modal_inner">
             <div class="auth_form">
                 <div class="auth_form_header">
-                    <form>
+                    <div style="text-align: center; margin-top: 70px">
+                        <div class="mb-3" style="text-align: center">
+                            <label for="user_name" class="form-label">User name</label>
+                            <input type="text" class="form-control" id="user_name"
+                                   aria-describedby="emailHelp" style="width: 400px; margin-left: 50px">
+                          
                         <div style="text-align: center; margin-top: 70px">
                             <div class="mb-3" style="text-align: center">
                                 <label for="user_name" class="form-label">User name</label>
@@ -816,8 +817,17 @@
                             </div>
                             <button type="submit" class="btn btn-primary" onclick="home()" style="width: 100px">back</button>
                             <button type="submit" class="btn btn-primary" onclick="login()" style="width: 100px">Log in</button>
+
                         </div>
-                    </form>
+                        <div class="mb-3" style="text-align: center">
+                            <label for="pass_word" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="pass_word"
+                                   style="width: 400px; margin-left: 50px">
+                        </div>
+                        <button class="btn btn-primary" onclick="home()" style="width: 100px">back</button>
+                        <button type="submit" class="btn btn-primary" onclick="login()" style="width: 100px">Log in
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -833,6 +843,42 @@
         <div class="modal_inner_register">
             <div class="auth_form_register">
                 <div class="auth_form_header_register">
+
+                    <div style="margin-top: 80px">
+                        <div style="margin-left: 70px">
+                            <div style="display: flex">
+                                <div class="mb-3">
+                                    <label for="name_register" class="form-label"
+                                           style="margin-left: 200px">Name</label>
+                                    <input type="text" class="form-control" id="name_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="age_register" class="form-label" style="margin-left: 210px">Age</label>
+                                    <input type="text" class="form-control" id="age_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                            </div>
+                            <div style="display: flex">
+                                <div class="mb-3">
+                                    <label for="address_register" class="form-label"
+                                           style="margin-left: 200px">Address</label>
+                                    <input type="text" class="form-control" id="address_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sex_register" class="form-label" style="margin-left: 210px">Sex</label>
+                                    <input type="text" class="form-control" id="sex_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                            </div>
+                            <div style="display: flex">
+                                <div class="mb-3">
+                                    <label for="user_name_register" class="form-label" style="margin-left: 200px">User
+                                        name</label>
+                                    <input type="text" class="form-control" id="user_name_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+
                         <div style="margin-top: 80px">
                             <div style="margin-left: 70px">
                                 <div style="display: flex">
@@ -871,7 +917,30 @@
                                         <input type="text" class="form-control" id="phone_register"
                                                aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
                                     </div>
+
                                 </div>
+                                <div class="mb-3">
+                                    <label for="phone_register" class="form-label"
+                                           style="margin-left: 200px">Phone</label>
+                                    <input type="text" class="form-control" id="phone_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                            </div>
+
+
+                            <div style="display: flex">
+                                <div class="mb-3">
+                                    <label for="pass_word_register" class="form-label" style="margin-left: 200px">Pass
+                                        word</label>
+                                    <input type="password" class="form-control" id="pass_word_register"
+                                           style="width: 400px; margin-left: 20px">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm_password_register" class="form-label"
+                                           style="margin-left: 160px">Confirm
+                                        pass word</label>
+                                    <input type="password" class="form-control" id="confirm_password_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
 
                                 <div style="display: flex">
                                     <div class="mb-3">
@@ -886,8 +955,35 @@
                                         <input type="password" class="form-control" id="confirm_password_register"
                                                aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
                                     </div>
+
                                 </div>
                             </div>
+                        </div>
+
+
+                        <div style="display: flex">
+                            <div class="mb-3" style="margin-left: 70px">
+                                <label for="img_register" class="form-label" style="margin-left: 200px">Image</label>
+                                <input type="file" class="form-control" id="img_register"
+                                       aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                            </div>
+                            <div>
+                                <label for="role" class="form-label" style="margin-left: 200px">Role</label>
+                                <select class="form-select" aria-label="Default select example" style="width: 400px;
+                                        height: 50px ;margin-left: 25px" id="role">
+                                    <option value="2">User</option>
+                                    <option value="3">Owner</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-primary" onclick="home()" style="width: 100px">back
+                            </button>
+                            <button type="submit" class="btn btn-primary" onclick="register()" style="width: 100px">
+                                Register
+                            </button>
+                        </div>
+                    </div>
 
                            <div style="display: flex">
                                <div class="mb-3" style="margin-left: 70px">

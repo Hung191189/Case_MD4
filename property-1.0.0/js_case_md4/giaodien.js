@@ -127,6 +127,8 @@ function register() {
         alert("Xác nhận mật khẩu chưa đúng")
     }
 }
+
+
 showHome_GD()
 function showHome_GD() {
     axios.get("http://localhost:8080/homes", ).then((response)=>{
