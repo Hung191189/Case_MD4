@@ -1,0 +1,502 @@
+<!-- /*
+* Template Name: Property
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Untree.co" />
+    <link rel="shortcut icon" href="favicon.png" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <meta name="description" content=""/>
+<!--    <meta name="keywords" content="bootstrap, bootstrap5" />-->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <title>
+      OWNER
+    </title>
+  </head>
+  <body>
+    <div class="site-mobile-menu site-navbar-target">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+          <span class="icofont-close js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+<!--============================-->
+    <nav class="site-nav">
+      <div class="container">
+        <div class="menu-bg-wrap">
+          <div class="site-navigation">
+            <a href="scss/index.html" class="logo m-0 float-start">OWNER MANAGER</a>
+
+            <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+              <li><a href="scss/index.html">MY HOUSE LIST</a></li>
+              <li><a href="about.html">ALL HOUSE</a></li>
+              <li>
+                <div class="dropdown align-items-center">
+                  <a
+                          class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                          href="#"
+                          id="navbarDropdownMenuAvatar"
+                          role="button"
+                          data-mdb-toggle="dropdown"
+                          aria-expanded="false"
+                  >
+                    <img
+                            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                            class="rounded-circle"
+                            height="41"
+                            alt="Black and White Portrait of a Man"
+                            loading="lazy"
+                    />
+                  </a>
+                  <ul
+                          class="dropdown-menu dropdown-menu-end"
+                          aria-labelledby="navbarDropdownMenuAvatar"
+                  >
+                    <li>
+                      <a class="dropdown-item" href="#">My profile</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">Settings</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" onclick="logOut()">Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+
+            <a
+              href="#"
+              class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
+              data-toggle="collapse"
+              data-target="#main-navbar"
+            >
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+<!--Danh sách các nhà đang cho thuê-->
+    <div class="section">
+      <div class="container">
+        <div class="row mb-5 align-items-center">
+          <div class="col-lg-6">
+            <h2 class="font-weight-bold text-primary heading">
+              Popular Properties
+            </h2>
+          </div>
+          <div class="col-lg-6 text-lg-end">
+            <p>
+              <a
+                href="#"
+                target="_blank"
+                class="btn btn-primary text-white py-3 px-4"
+                >View all properties</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="property-slider-wrap">
+              <div class="property-slider">
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_1.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_5.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_6.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_7.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_8.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+
+                <div class="property-item">
+                  <a href="property-single.html" class="img">
+                    <img src="images/img_1.jpg" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >5232 California Fake, Ave. 21BC</span
+                      >
+                      <span class="city d-block mb-3">California, USA</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">2 beds</span>
+                        </span>
+                        <span class="d-block d-flex align-items-center">
+                          <span class="icon-bath me-2"></span>
+                          <span class="caption">2 baths</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href="property-single.html"
+                        class="btn btn-primary py-2 px-3"
+                        >See details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- .item -->
+              </div>
+
+              <div
+                id="property-nav"
+                class="controls"
+                tabindex="0"
+                aria-label="Carousel Navigation"
+              >
+                <span
+                  class="prev"
+                  data-controls="prev"
+                  aria-controls="property"
+                  tabindex="-1"
+                  >Prev</span
+                >
+                <span
+                  class="next"
+                  data-controls="next"
+                  aria-controls="property"
+                  tabindex="-1"
+                  >Next</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--    &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+    <div class="section section-5 bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-lg-6 mb-5">
+            <h2 class="font-weight-bold heading text-primary mb-4">
+              Nhóm sáng lập
+            </h2>
+            <p class="text-black-50">
+              Tổng hợp các thành viên của nhóm trong dự án cho thuê nhà ở cho người thu nhập thấp.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+<!--          người đầu tiên-->
+          <div class="col-sm-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+            <div class="h-100 person">
+              <img
+                src="images/person_1-min.jpg"
+                alt="Image"
+                class="img-fluid"
+              />
+
+              <div class="person-contents">
+                <h2 class="mb-0"><a href="#">Vũ Hồng Đạt</a></h2>
+                <span class="meta d-block mb-3">Trùm chơi dao</span>
+                <p>
+                  Nước biển màu xanh, con dao màu đỏ!!!
+                </p>
+
+                <ul class="social list-unstyled list-inline dark-hover">
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-github"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-facebook"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+<!--        người thứ 2-->
+          <div class="col-sm-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+            <div class="h-100 person">
+              <img
+                      src="images/person_1-min.jpg"
+                      alt="Image"
+                      class="img-fluid"
+              />
+
+              <div class="person-contents">
+                <h2 class="mb-0"><a href="#">Vũ Hồng Đạt</a></h2>
+                <span class="meta d-block mb-3">Trùm chơi dao</span>
+                <p>
+                  Nước biển màu xanh, con dao màu đỏ!!!
+                </p>
+
+                <ul class="social list-unstyled list-inline dark-hover">
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-github"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-facebook"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+<!--          người thứ 3-->
+          <div class="col-sm-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+            <div class="h-100 person">
+              <img
+                      src="images/person_1-min.jpg"
+                      alt="Image"
+                      class="img-fluid"
+              />
+
+              <div class="person-contents">
+                <h2 class="mb-0"><a href="#">Vũ Hồng Đạt</a></h2>
+                <span class="meta d-block mb-3">Trùm chơi dao</span>
+                <p>
+                  Nước biển màu xanh, con dao màu đỏ!!!
+                </p>
+
+                <ul class="social list-unstyled list-inline dark-hover">
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-github"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-facebook"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+<!--          người thứ 4-->
+          <div class="col-sm-6 col-md-6 col-lg-3 mb-5 mb-lg-0">
+            <div class="h-100 person">
+              <img
+                      src="images/person_1-min.jpg"
+                      alt="Image"
+                      class="img-fluid"
+              />
+
+              <div class="person-contents">
+                <h2 class="mb-0"><a href="#">Vũ Hồng Đạt</a></h2>
+                <span class="meta d-block mb-3">Trùm chơi dao</span>
+                <p>
+                  Nước biển màu xanh, con dao màu đỏ!!!
+                </p>
+
+                <ul class="social list-unstyled list-inline dark-hover">
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-github"></span></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#"><span class="icon-facebook"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+<!--hahahahahah-->
+        </div>
+      </div>
+    </div>
+    <!-- Preloader -->
+    <div id="overlayer"></div>
+    <div class="loader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/tiny-slider.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/counter.js"></script>
+    <script src="js/custom.js"></script>
+  </body>
+</html>
