@@ -1,5 +1,7 @@
 let URL = "http://localhost:8080/api/"
 let token = localStorage.getItem("token");
+let idLogin = localStorage.getItem("idLogin");
+let nameLogin = localStorage.getItem("nameLogin");
 function showForm() {
 document.getElementById("modal").style.display = "flex";
 }
@@ -14,11 +16,13 @@ function login() {
         userName: userName,
         password: passWord
     }
-    axios.post(URL+ "users/login", user, token).then((response) =>{
-        alert("đng nhập thành công")
-        console.log(response.data)
-        console.log("role = "+ response.data.roles[0].authority)
+    axios.post(URL+ "users/login", user).then((response) =>{
+        alert("đăng nhập thành công")
+
         localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("idLogin", response.data.id);
+        localStorage.setItem("nameLogin", response.data.username);
+
         if (response.data.roles[0].authority === "ROLE_ADMIN"){
             console.log("admin")
         } else if (response.data.roles[0].authority === "ROLE_USER"){
@@ -28,4 +32,8 @@ function login() {
         }
     })
     event.preventDefault()
+}
+
+function register() {
+
 }
