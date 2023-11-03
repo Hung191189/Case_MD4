@@ -127,22 +127,18 @@ function register() {
         alert("Xác nhận mật khẩu chưa đúng")
     }
 }
-showHome_GD();
-function showHome_GD() {
-    let config = {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
 
-        }
-    }
-    axios.get("http://localhost:8080/homes", config).then((response)=>{
+
+showHome_GD()
+function showHome_GD() {
+    axios.get("http://localhost:8080/homes", ).then((response)=>{
         let list_home = response.data;
         let content = "";
         for (let i = 0; i < list_home.length; i++) {
 
             content += "<div class=\"property-item\">\n" +
                 "                                <a class=\"img\">\n" +
-                "                                    <img src=\"images/img_1.jpg\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                                    <img src=\"" + list_home[i].image +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
                 "                                </a>\n" +
                 "\n" +
                 "                                <div class=\"property-content\">\n" +
