@@ -2,6 +2,7 @@ let URL = "http://localhost:8080/api/"
 let token = localStorage.getItem("token");
 let idLogin = localStorage.getItem("idLogin");
 let nameLogin = localStorage.getItem("nameLogin");
+let user = localStorage.getItem("user");
 
 function showForm() {
     document.getElementById("modal").style.display = "flex";
@@ -30,15 +31,25 @@ function login() {
         localStorage.setItem("idLogin", response.data.id);
         localStorage.setItem("nameLogin", response.data.username);
 
+
         if (response.data.roles[0].authority === "ROLE_ADMIN") {
+            showOneUser();
             console.log("admin")
         } else if (response.data.roles[0].authority === "ROLE_USER") {
+            showOneUser();
             console.log("user")
         } else {
+            showOneUser();
             console.log("chủ nhà")
         }
     })
+
     event.preventDefault()
+}
+function showOneUser() {
+    axios.get(URL + idLogin).then((response) =>{
+        localStorage.setItem("user", JSON.stringify(response.data));
+    })
 }
 
 function register() {
