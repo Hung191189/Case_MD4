@@ -3,20 +3,29 @@ let idLogin = localStorage.getItem("idLogin");
 let nameLogin = localStorage.getItem("nameLogin");
 let imageLogin = localStorage.getItem("image");
 let nameUserLogin = localStorage.getItem("name")
-axios.get('http://localhost:8080/api/users' + "/" + idLogin).then((res)=>{
+
+const axiosConfig = {
+    headers: {
+        'Authorization': `Bearer` + token, // Thiết lập header 'Authorization' với giá trị token Bearer
+        'Content-Type': 'application/json', // Có thể thay đổi kiểu dữ liệu nếu cần thiết
+    }
+};
+axios.get('http://localhost:8080/api/users' + "/" + idLogin, axiosConfig).then((res)=>{
     let data = res.data
     localStorage.setItem("image", data.image)
     localStorage.setItem("name", data.name)
 })
-console.log(imageLogin)
-console.log(nameUserLogin)
-showImageLogin()
-showNameLogin()
-function showImageLogin() {
-    document.getElementById('showImageUserLogin').innerHTML = `<img src="${imageLogin}" alt="haha" style="width: 50px; height: 50px; border-radius: 50%">`
-}
-function showNameLogin() {
-    document.getElementById('showNameLogin').innerHTML = `${nameUserLogin}`
+
+showInfoLogin()
+function showInfoLogin() {
+    document.getElementById("a").innerHTML = `<a href="scss/index.html" id="user" class="logo m-0 float-start">${nameUserLogin}</a>`;
+    document.getElementById("b").innerHTML = `<img id="img"
+                            src=${imageLogin}
+                            class="rounded-circle"
+                            height="41"
+                            alt="Black and White Portrait of a Man"
+                            loading="lazy"
+                style="margin-left: 20px"/>`;
 }
 
 function showAdmin() {

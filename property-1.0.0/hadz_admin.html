@@ -5,7 +5,7 @@
 * License: https://creativecommons.org/licenses/by/3.0/
 */ -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -49,8 +49,17 @@
 <nav class="site-nav">
     <div class="container">
         <div class="menu-bg-wrap">
-            <div class="site-navigation">
-                <a href="#" class="logo m-0 float-start">Property</a>
+            <span class="site-navigation">
+                <span id="a"><a href="scss/index.html" id="user" class="logo m-0 float-start">OWNER MANAGER</a></span>
+                <span id="b">
+                    <img id="img"
+                         src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                         class="rounded-circle"
+                         height="41"
+                         alt="Black and White Portrait of a Man"
+                         loading="lazy"
+                    />
+                </span>
 
                 <ul
                         class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
@@ -60,8 +69,6 @@
                     <li class="active"><a onclick="showOwner()">OWNER</a></li>
                     <li class="active"><a onclick="showUser()">USER</a></li>
                     <li class="active"><a onclick="showHouse()">LIST HOUSE</a></li>
-                    <li class="active"><div id="showImageUserLogin"></div></li>
-                    <li class="active"><a id="showNameLogin"></a></li>
                     <li class="active"><a href="">LOG OUT</a></li>
                 </ul>
 
@@ -71,9 +78,9 @@
                         data-toggle="collapse"
                         data-target="#main-navbar"
                 >
-                    <span></span>
+
                 </a>
-            </div>
+            </span>
         </div>
     </div>
 </nav>
@@ -100,8 +107,9 @@
             </div>
         </div>
     </div>
-
 </div>
+
+
 
 <div class="section">
     <div class="container">
