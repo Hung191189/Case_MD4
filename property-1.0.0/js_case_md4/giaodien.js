@@ -1,4 +1,5 @@
 let URL = "http://localhost:8080/api/"
+
 let token = localStorage.getItem("token");
 let idLogin = localStorage.getItem("idLogin");
 let nameLogin = localStorage.getItem("nameLogin");
@@ -70,10 +71,10 @@ function login() {
 function showOneUser() {
     let config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+
         }
     }
-    console.log("zzzzzzzz")
 
     axios.get(URL + idLogin, config).then((response) => {
         localStorage.setItem("user", JSON.stringify(response.data));
@@ -128,7 +129,7 @@ function register() {
 }
 showHome_GD()
 function showHome_GD() {
-    axios.get("http://localhost:8080/homes").then((response)=>{
+    axios.get("http://localhost:8080/homes", ).then((response)=>{
         let list_home = response.data;
         let content = "";
         for (let i = 0; i < list_home.length; i++) {
