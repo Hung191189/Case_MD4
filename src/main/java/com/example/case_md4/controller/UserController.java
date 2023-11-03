@@ -81,4 +81,8 @@ public class UserController {
     private ResponseEntity<Iterable<User>> showList(){
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable("id")Long id_user){
+        return new ResponseEntity<>(userService.findById(id_user).get(), HttpStatus.OK);
+    }
 }
