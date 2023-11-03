@@ -29,6 +29,7 @@ public class HomeController {
         }
         return new ResponseEntity<>(homeList, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Home> findHomeById(@PathVariable Long id) {
         Optional<Home> homeOptional = iHomeService.findById(id);
@@ -37,32 +38,36 @@ public class HomeController {
         }
         return new ResponseEntity<>(homeOptional.get(), HttpStatus.OK);
     }
+
     @GetMapping("/findByName/{name}")
-    public ResponseEntity <Iterable<Home>> findAllByNameContaining(@PathVariable String name){
+    public ResponseEntity<Iterable<Home>> findAllByNameContaining(@PathVariable String name) {
         List<Home> homeIterable = (List<Home>) homeService.findAllByNameContaining(name);
-        if(homeIterable.isEmpty()) {
+        if (homeIterable.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(homeIterable, HttpStatus.OK);
     }
+
     @GetMapping("/findByPrice")
-    public ResponseEntity <Iterable<Home>> findAllByPriceBetween(@RequestBody double[] range){
+    public ResponseEntity<Iterable<Home>> findAllByPriceBetween(@RequestBody double[] range) {
 
         List<Home> homeIterable = (List<Home>) homeService.findAllByPriceBetween(range[0], range[1]);
-        if(homeIterable.isEmpty()) {
+        if (homeIterable.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(homeIterable, HttpStatus.OK);
     }
+
     @GetMapping("/findByProvince/{province}")
-    public ResponseEntity <Iterable<Home>> findAllByProvince(@PathVariable String province){
+    public ResponseEntity<Iterable<Home>> findAllByProvince(@PathVariable String province) {
 
         List<Home> homeIterable = (List<Home>) homeService.findAllByProvince(province);
-        if(homeIterable.isEmpty()) {
+        if (homeIterable.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(homeIterable, HttpStatus.OK);
     }
+
     @PostMapping("")
     public ResponseEntity<Home> saveHome(@RequestBody Home home) {
         iHomeService.save(home);
@@ -86,7 +91,7 @@ public class HomeController {
         if (!homeOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-       homeOptional.get().setStatus(3);
+        homeOptional.get().setStatus(3);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
