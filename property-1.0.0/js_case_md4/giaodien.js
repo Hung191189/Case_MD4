@@ -141,7 +141,7 @@ function showHome_GD() {
 
             content += "<div class=\"property-item\">\n" +
                 "                                <a class=\"img\">\n" +
-                "                                    <img src=\"images/img_1.jpg\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                                    <img src=\"\" id=\" img" + list_home[i].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
                 "                                </a>\n" +
                 "\n" +
                 "                                <div class=\"property-content\">\n" +
@@ -169,6 +169,13 @@ function showHome_GD() {
                 "                            </div>"
         }
         document.getElementById("property_list").innerHTML = content;
-
+    })
+    axios.get("http://localhost:8080/images", config).then((response) =>{
+        let list_img = response.data;
+        for (let i = 0; i < list_img.length; i++) {
+            if (document.getElementById("img"+list_img[i].home.id).src === null){
+                document.getElementById("img"+list_img[i].home.id).src = list_img[i].url;
+            }
+        }
     })
 }
