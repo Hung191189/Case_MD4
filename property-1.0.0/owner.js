@@ -157,3 +157,8 @@ function createNewHome() {
         console.log("Tạo mới home")
     })
 }
+function createNewHomeAndImg() {
+    let nameHouse = document.getElementById("house-name").value
+    createNewHome()
+    setTimeout(saveNewImage(nameHouse),0)
+}
