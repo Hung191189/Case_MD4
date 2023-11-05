@@ -93,7 +93,50 @@ function showAllHouse() {
         document.getElementById("house-slider").innerHTML = str;
     })
 }
+function saveNewImage(nameHome) {
+    const fileInput = document.getElementById("house-img");
+    const files = Array.from(fileInput.files);
 
+    // Tạo một mảng chứa các Promise của việc tải lên các ảnh
+    const uploadPromises = files.map((file) => {
+        // Tạo tham chiếu đến nơi bạn muốn lưu trữ ảnh trong Storage
+        const storageRef = storage.ref("images/" + file.name);
+
+        // Tải file lên Firebase Storage và trả về Promise của việc lấy URL
+        return storageRef.put(file).then((snapshot) => {
+            console.log("Uploaded a file: " + file.name);
+            // Lấy URL của ảnh sau khi đã tải lên
+            return storageRef.getDownloadURL();
+        });
+    });
+
+    // Sử dụng Promise.all để đợi tất cả các Promise hoàn thành
+    Promise.all(uploadPromises)
+        .then((urls) => {
+            // urls chứa một mảng các URL của các ảnh đã tải lên
+            axios.get(API_HOME).then((res) => {
+                let listHome = res.data
+                for (let i = 0; i < listHome.length; i++) {
+                    if (listHome[i].name === nameHome) {
+                        for (let j = 0; j <urls.length; j++) {
+                            let data = {
+                                url: urls[j],
+                                home:{
+                                    id: listHome[i].id
+                                }
+                            }
+                            axios.post(API_IMAGE,data,axiosConfig).then(() => {
+                                console.log("save " + urls[j])
+                            })
+                        }
+                    }
+                }
+            })
+        })
+        .catch((error) => {
+            console.error("Error uploading files: ", error);
+        });
+}
 function createNewHome() {
     let data = {
         name: document.getElementById("house-name").value,
