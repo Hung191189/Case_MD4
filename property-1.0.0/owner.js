@@ -1,3 +1,15 @@
+//Cấu hình firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBhmULDIPWa_gvIGuZFLmAzIG4_BXXeYgY",
+    authDomain: "blog-bb78f.firebaseapp.com",
+    projectId: "blog-bb78f",
+    storageBucket: "blog-bb78f.appspot.com",
+    messagingSenderId: "769600865870",
+    appId: "1:769600865870:web:7c322e5ebe6adfc242a51f",
+}
+firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+// ----------
 let API_USER = "http://localhost:8080/api/users";
 let API_HOME = "http://localhost:8080/homes";
 let API_IMAGE = "http://localhost:8080/images";
@@ -36,7 +48,7 @@ function loadUser() {
 loadUser()
 showAllHouse()
 function showAllHouse() {
-    document.getElementById("house-slider").innerHTML = "";
+    document.getElementById("house-slider").innerHTML = "Danh sách này rỗng!!!";
     Promise.all([
         axios.get(API_HOME,axiosConfig),
         axios.get(API_IMAGE,axiosConfig)
@@ -48,7 +60,7 @@ function showAllHouse() {
         let str = "";
         for (let i = 0; i < listHome.length; i++) {
             str += `
-            <div class="property-item col-4">`
+            <div class="property-item">`
             for (let j = 0; j < listImg.length; j++) {
                 if (listImg[j].home.id === listHome[i].id) {
                     str += `
@@ -58,9 +70,9 @@ function showAllHouse() {
             }
             str += `
                 <div class="property-content">
-                    <div class="price mb-2"><span>${listHome[i].price}</span></div>
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
                         <div>
-                            <span class="d-block mb-2 text-black-50">${listHome[i].address}</span>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
                             <span class="city d-block mb-3">${listHome[i].province}</span>
                             <div class="specs d-flex mb-4">
                                 <span class="d-block d-flex align-items-center me-3">
@@ -71,41 +83,34 @@ function showAllHouse() {
                                     <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
                                     <span class="caption"></span>
                                 </span>
+                            </div>
+                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
                         </div>
-                        <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
                     </div>
                 </div>
-            </div>
             `
         }
-        // let str = ""
-        // for (let i = 0; i < list.length; i++) {
-        //     str +=
-        //         `
-        //     <div class="property-item">
-        //         <a href="property-single.html" class="img"><img src="${list[i].image}" alt="Image" class="img-fluid" /></a>
-        //         <div class="property-content">
-        //             <div class="price mb-2"><span>${list[i].price}</span></div>
-        //                 <div>
-        //                     <span class="d-block mb-2 text-black-50">${list[i].address}</span>
-        //                     <span class="city d-block mb-3">${list[i].province}</span>
-        //                     <div class="specs d-flex mb-4">
-        //                         <span class="d-block d-flex align-items-center me-3">
-        //                             <span class="icon-bed me-2">Bedroom</span>
-        //                             <span class="caption">${list[i].bedroom}</span>
-        //                         </span>
-        //                         <span class="d-block d-flex align-items-center">
-        //                             <span class="icon-bath me-2"></span>
-        //                             <span class="caption">Bathroom</span>
-        //                         </span>
-        //                 </div>
-        //                 <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     `
-        // }
         document.getElementById("house-slider").innerHTML = str;
+    })
+}
 
+function createNewHome() {
+    let data = {
+        name: document.getElementById("house-name").value,
+        bathroom: document.getElementById("baths").value,
+        bedroom: document.getElementById("beds").value,
+        description: document.getElementById("description").value,
+        price: document.getElementById("price").value,
+        province: document.getElementById("city").value,
+        district: document.getElementById("district").value,
+        ward: document.getElementById("ward").value,
+        address: document.getElementById("house-address").value,
+        user:
+            {
+                id: localStorage.getItem("idLogin")
+            }
+    }
+    axios.post(API_HOME,data,axiosConfig).then(() => {
+        console.log("Tạo mới home")
     })
 }
