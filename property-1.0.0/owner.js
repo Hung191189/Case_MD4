@@ -1,4 +1,6 @@
 let API_USER = "http://localhost:8080/api/users";
+let API_HOME = "http://localhost:8080/homes";
+let API_IMAGE = "http://localhost:8080/images";
 // localStorage.setItem("nameLogin", "dat2")
 // localStorage.setItem("idLogin", "2")
 // localStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXQyIiwiaWF0IjoxNjk4OTc1OTc2LCJleHAiOjg4MDk4OTc1OTc2fQ.03fZhgd6VMh5zgHqlOpGhAJRWzEsg7mVi9uNOMXbNA6kiFUBcRcQHs7ywyIQfStZ2Ic12bU5Mv12llmXz4YC4g")
@@ -10,8 +12,8 @@ function getIdLogin() {
 }
 const axiosConfig = {
     headers: {
-        'Authorization': `Bearer` + getToken(), // Thiết lập header 'Authorization' với giá trị token Bearer
-        'Content-Type': 'application/json', // Có thể thay đổi kiểu dữ liệu nếu cần thiết
+        'Authorization': `Bearer` + getToken() // Thiết lập header 'Authorization' với giá trị token Bearer
+        // 'Content-Type': 'application/json', // Có thể thay đổi kiểu dữ liệu nếu cần thiết
     }
 };
 let currentUser = localStorage.getItem("currentUser");
@@ -32,3 +34,78 @@ function loadUser() {
                 />`;
 }
 loadUser()
+showAllHouse()
+function showAllHouse() {
+    document.getElementById("house-slider").innerHTML = "";
+    Promise.all([
+        axios.get(API_HOME,axiosConfig),
+        axios.get(API_IMAGE,axiosConfig)
+    ])
+    .then((res) => {
+        let listHome = res[0].data;
+        let listImg = res[1].data;
+        let listImgOfHome;
+        let str = "";
+        for (let i = 0; i < listHome.length; i++) {
+            str += `
+            <div class="property-item col-4">`
+            for (let j = 0; j < listImg.length; j++) {
+                if (listImg[j].home.id === listHome[i].id) {
+                    str += `
+                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
+                    break;
+                }
+            }
+            str += `
+                <div class="property-content">
+                    <div class="price mb-2"><span>${listHome[i].price}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                        </div>
+                        <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+        // let str = ""
+        // for (let i = 0; i < list.length; i++) {
+        //     str +=
+        //         `
+        //     <div class="property-item">
+        //         <a href="property-single.html" class="img"><img src="${list[i].image}" alt="Image" class="img-fluid" /></a>
+        //         <div class="property-content">
+        //             <div class="price mb-2"><span>${list[i].price}</span></div>
+        //                 <div>
+        //                     <span class="d-block mb-2 text-black-50">${list[i].address}</span>
+        //                     <span class="city d-block mb-3">${list[i].province}</span>
+        //                     <div class="specs d-flex mb-4">
+        //                         <span class="d-block d-flex align-items-center me-3">
+        //                             <span class="icon-bed me-2">Bedroom</span>
+        //                             <span class="caption">${list[i].bedroom}</span>
+        //                         </span>
+        //                         <span class="d-block d-flex align-items-center">
+        //                             <span class="icon-bath me-2"></span>
+        //                             <span class="caption">Bathroom</span>
+        //                         </span>
+        //                 </div>
+        //                 <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+        //             </div>
+        //         </div>
+        //     </div>
+        //     `
+        // }
+        document.getElementById("house-slider").innerHTML = str;
+
+    })
+}

@@ -41,6 +41,7 @@ function login() {
         } else {
             showOneUser();
             console.log("chủ nhà")
+            window.location.href = "owner.html"
         }
     })
 
