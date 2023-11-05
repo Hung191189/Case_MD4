@@ -10,6 +10,8 @@ const axiosConfig = {
         'Content-Type': 'application/json', // Có thể thay đổi kiểu dữ liệu nếu cần thiết
     }
 };
+
+
 axios.get('http://localhost:8080/api/users' + "/" + idLogin, axiosConfig).then((res)=>{
     let data = res.data
     localStorage.setItem("image", data.image)
@@ -27,7 +29,10 @@ function showInfoLogin() {
                             loading="lazy"
                 style="margin-left: 20px"/>`;
 }
-
+showAdmin()
+function statusShowAdmin() {
+    document.getElementById("abc").style.display = "none"
+}
 function showAdmin() {
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
                         Enter The Admin Name You Want To Find
@@ -45,6 +50,41 @@ function showAdmin() {
                         />
                         <button type="submit" class="btn btn-primary">Search</button>
                     </form>`
+
+    axios.get('http://localhost:8080/api/users', axiosConfig).then((res)=>{
+        let list = res.data;
+        let str = ""
+        console.log(list)
+        console.log("123" + list[0].roles[0].name)
+        for (let i = 0; i<list.length; i++) {
+            if (list[i].roles[0].name === "ROLE_ADMIN") {
+                str += `<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" style="margin-top: 60px">
+                <div class="h-100 person">
+                    <img
+                            src="${list[i].image}"
+                            alt="Image"
+                            class="img-fluid"
+                    />
+
+                    <div class="person-contents">
+                        <h2 class="mb-0"><a style="cursor: pointer">${list[i].name}</a></h2>
+                        <ul class="social list-unstyled list-inline dark-hover">
+                            <div style="margin-top: 20px">
+                                <li class="list-inline-item">
+                                    <a href="https://www.facebook.com/zuck"><span class="icon-facebook"></span></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="https://www.youtube.com/"><span class="icon-github"></span></a>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>`
+            }
+        }
+        document.getElementById('list_admin').innerHTML = str
+    })
 }
 function showOwner(){
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
@@ -100,3 +140,4 @@ function showHouse(){
                         <button type="submit" class="btn btn-primary">Search</button>
                     </form>`
 }
+
