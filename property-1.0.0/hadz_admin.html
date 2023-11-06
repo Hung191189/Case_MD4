@@ -10,6 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Untree.co" />
+
     <link rel="shortcut icon" href="favicon.png" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
@@ -30,6 +31,7 @@
     <link rel="stylesheet" href="css/tiny-slider.css" />
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <title>
         Property &mdash; Free Bootstrap 5 Website Template by Untree.co
@@ -797,6 +799,113 @@
             </div>
         </div>
         <div class="row" id="list_admin">
+        </div>
+    </div>
+</div>
+<div class="w3-container">
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div id="showProfile"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal_register" id="modal_register">
+    <div class="modal_overlay_register">
+    </div>
+    <div class="modal_body_register">
+        <div class="modal_inner_register">
+            <div class="auth_form_register">
+                <div class="auth_form_header_register">
+                    <div style="margin-top: 80px">
+                        <div style="margin-left: 70px">
+                            <div style="display: flex">
+                                <div class="mb-3">
+                                    <label for="name_register" class="form-label"
+                                           style="margin-left: 200px">Name</label>
+                                    <input type="text" class="form-control" id="name_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="age_register" class="form-label" style="margin-left: 210px">Age</label>
+                                    <input type="text" class="form-control" id="age_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                            </div>
+                            <div style="display: flex">
+                                <div class="mb-3">
+                                    <label for="address_register" class="form-label"
+                                           style="margin-left: 200px">Address</label>
+                                    <input type="text" class="form-control" id="address_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sex_register" class="form-label" style="margin-left: 210px">Sex</label>
+                                    <input type="text" class="form-control" id="sex_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                            </div>
+                            <div style="display: flex">
+                                <div class="mb-3">
+                                    <label for="user_name_register" class="form-label" style="margin-left: 200px">User
+                                        name</label>
+                                    <input type="text" class="form-control" id="user_name_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone_register" class="form-label"
+                                           style="margin-left: 200px">Phone</label>
+                                    <input type="text" class="form-control" id="phone_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                            </div>
+
+                            <div style="display: flex">
+                                <div class="mb-3">
+                                    <label for="pass_word_register" class="form-label" style="margin-left: 200px">Pass
+                                        word</label>
+                                    <input type="password" class="form-control" id="pass_word_register"
+                                           style="width: 400px; margin-left: 20px">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm_password_register" class="form-label"
+                                           style="margin-left: 160px">Confirm
+                                        pass word</label>
+                                    <input type="password" class="form-control" id="confirm_password_register"
+                                           aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex">
+                            <div class="mb-3" style="margin-left: 70px">
+                                <label for="img_register" class="form-label" style="margin-left: 200px">Image</label>
+                                <input type="file" class="form-control" id="img_register"
+                                       aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                            </div>
+                            <div>
+                                <label for="role" class="form-label" style="margin-left: 200px">Role</label>
+                                <select class="form-select" aria-label="Default select example" style="width: 400px;
+                                        height: 50px ;margin-left: 25px" id="role">
+                                    <option value="2">User</option>
+                                    <option value="3">Owner</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-primary" style="width: 100px">back
+                            </button>
+                            <button type="submit" class="btn btn-primary" style="width: 100px">
+                                Register
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
