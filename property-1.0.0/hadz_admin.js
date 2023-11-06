@@ -113,10 +113,21 @@ function searchAdmin(){
             }
             console.log(listAdmin)
             if (listAdmin.length === 0) {
-                document.getElementById("list_admin").innerHTML = "<h2><b>Không có admin nào có tên bạn đang tìm</b></h2>"
+                document.getElementById("abc").innerHTML = "<h2 style='text-align: center'><b>Không có admin nào có tên bạn đang tìm</b></h2>"
                 document.getElementById("nameAdminSearch").value = ""
             } else {
-                let str = ""
+                let str = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List Admin
+                </h2>
+                <p class="text-black-50">
+                    Hội mực lệch cân điêu.
+                </p>
+            </div>
+        </div>
+        <div class="row">`
                 for (let j = 0; j<listAdmin.length; j++) {
                     str += `<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" style="margin-top: 60px">
                     <div class="h-100 person">
@@ -142,7 +153,9 @@ function searchAdmin(){
                     </div>
                 </div>`
                 }
-                document.getElementById('list_admin').innerHTML = str
+                str += `</div>
+    </div>`
+                document.getElementById('abc').innerHTML = str
                 document.getElementById("nameAdminSearch").value = ""
             }
         }
@@ -159,10 +172,10 @@ function showOwner(){
                                     type="text"
                                     class="form-control px-4"
                                     placeholder="Name Owner..."
-                                    id="nameAdminSearch"
+                                    id="nameOwnerSearch"
                                     style="border-radius: 30px"
                             />
-                            <button type="submit" class="btn btn-primary" >Search</button>
+                            <button type="submit" class="btn btn-primary" onclick="searchOwner()">Search</button>
                         </div>
                     `
     axios.get('http://localhost:8080/api/users', axiosConfig).then((res)=>{
@@ -251,6 +264,10 @@ function showOwner(){
         document.getElementById('abc').innerHTML = str
         document.getElementById('xyz').innerHTML = str2
     })
+
+function searchOwner() {
+
+}
 
 }
 function showOwnerDetail(id) {
