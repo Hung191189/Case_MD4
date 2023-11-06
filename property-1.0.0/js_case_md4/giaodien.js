@@ -83,7 +83,12 @@ function register() {
     let password = document.getElementById("pass_word_register").value;
     let confirm_pass_word = document.getElementById("confirm_password_register").value;
     console.log(password)
-    console.log(confirm_pass_word   )
+    console.log(confirm_pass_word)
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    }
     if (password === confirm_pass_word) {
 
         const fileInput = document.getElementById("img_register");
@@ -92,6 +97,7 @@ function register() {
         const file = fileInput.files[0];
         // Tạo tham chiếu đến nơi bạn muốn lưu trữ ảnh trong Storage
         const storageRef = storage.ref("images/" + file.name);
+        console.log("9999999")
         // Tải file lên Firebase Storage
         storageRef.put(file).then((snapshot) => {
             // console.log("Uploaded a file!");
@@ -114,7 +120,7 @@ function register() {
                     confirmPassword: confirm_pass_word,
                     enabled: true
                 }
-                axios.post(URL + "users/register", user).then((response) => {
+                axios.post(URL + "users/register", user, config).then((response) => {
                     alert("tạo mới thành công")
                     document.getElementById("modal_register").style.display = "none";
                 })
@@ -139,7 +145,7 @@ function showHome_GD() {
 
             content += "<div class=\"property-item\">\n" +
                 "                                <a class=\"img\">\n" +
-                "                                    <img src=\"images/img_5.jpg\" id=\" img" + list_home[i].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                                    <img src=\"images/img_5.jpg\" id=\"img_" + list_home[i].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
                 "                                </a>\n" +
                 "\n" +
                 "                                <div class=\"property-content\">\n" +
@@ -171,7 +177,10 @@ function showHome_GD() {
     axios.get("http://localhost:8080/images", config).then((response) =>{
         let list_img = response.data;
         for (let i = 0; i < list_img.length; i++) {
-          document.getElementById("img" + list_img[i].home.id).src = list_img[i].url;
+          if (list_img[i].url == null){
+              list_img[i].url = "images/img_5.jpg";
+          }
+            document.getElementById("img_" + list_img[i].home.id).src = list_img[i].url;
         }
     })
 }
@@ -235,7 +244,8 @@ function showOneHome() {
                 "                </div>\n" +
                 "            </div>";
         document.getElementById("home_number_one").innerHTML = content;
+        // axios.post("http://localhost:8080/images/img/" + list_home[0].id, config).then((response)=>{
+        //     document.getElementById("img-" + list_home[0].id).src = response.data.url;
+        // })
     })
-
-    axios.post()
 }

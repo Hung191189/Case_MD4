@@ -33,7 +33,7 @@ public class ImageService implements IImageService {
     }
 
     @Override
-    public Image findOneImage(Long id) {
-        return null;
+    public Image findOneImg(Long id_home) {
+        return iImageRepository.findOneImage(id_home);
     }
 }
