@@ -146,7 +146,7 @@ function showHome_GD() {
 
             content += "<div class=\"property-item\">\n" +
                 "                                <a class=\"img\">\n" +
-                "                                    <img src=\"images/img_5.jpg\" id=\"img_" + list_home[i].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                                    <img style=\"width: 412px; height: 412px\" src=\"images/img_5.jpg\" id=\"img_" + list_home[i].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
                 "                                </a>\n" +
                 "\n" +
                 "                                <div class=\"property-content\">\n" +
@@ -245,8 +245,8 @@ function showOneHome() {
                 "                </div>\n" +
                 "            </div>";
         document.getElementById("home_number_one").innerHTML = content;
-        // axios.post("http://localhost:8080/images/img/" + list_home[0].id, config).then((response)=>{
-        //     document.getElementById("img-" + list_home[0].id).src = response.data.url;
-        // })
+    })
+    axios.post("http://localhost:8080/images/img/" + list_home[0].id, config).then((response)=>{
+        document.getElementById("img-" + list_home[0].id).src = response.data.url;
     })
 }
