@@ -66,6 +66,17 @@ public class UserController {
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+    @GetMapping("/update/{id_user}")
+    public ResponseEntity<User> update(@PathVariable("id_user")Long id_user){
+        return new ResponseEntity<>(userService.findById(id_user).get(), HttpStatus.OK);
+    }
+    @PutMapping
+    public ResponseEntity<?> put(@RequestBody User user_new){
+        user_new.setPassword(passwordEncoder.encode(user_new.getPassword()));
+        user_new.setConfirmPassword(passwordEncoder.encode(user_new.getConfirmPassword()));
+        userService.save(user_new);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user){
         Authentication authentication = authenticationManager.authenticate(

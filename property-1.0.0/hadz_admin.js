@@ -158,8 +158,6 @@ function showAdminDetail(id) {
             <h2 class="heading text-primary">Address: ${list.address}</h2>
           `
         if (id == idLogin) {
-            console.log(typeof id)
-            console.log(typeof idLogin)
             str += `<button class="btn btn-primary" style="background-color: #0d6efd" onclick="showEditAdmin(${list.id})">Edit Profile</button>`
         }
         str += `</div>
