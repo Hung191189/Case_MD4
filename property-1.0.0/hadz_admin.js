@@ -39,19 +39,17 @@ function showAdmin() {
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
                         Enter The Admin Name You Want To Find
                     </h1>
-                    <form
-                            action="#"
-                            class="narrow-w form-search d-flex align-items-stretch mb-3"
-                            data-aos="fade-up"
-                            data-aos-delay="200"
-                    >
-                        <input
-                                type="text"
-                                class="form-control px-4"
-                                placeholder="Name Admin..."
-                        />
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>`
+                        <div style="display: flex">
+                            <input
+                                    type="text"
+                                    class="form-control px-4"
+                                    placeholder="Name Admin..."
+                                    id="nameAdminSearch"
+                                    style="border-radius: 30px"
+                            />
+                            <button type="submit" class="btn btn-primary" onclick="searchAdmin()">Search</button>
+                        </div>
+                    `
 
     axios.get('http://localhost:8080/api/users', axiosConfig).then((res)=>{
         let list = res.data;
@@ -85,6 +83,59 @@ function showAdmin() {
         }
         document.getElementById('list_admin').innerHTML = str
     })
+}
+
+function searchAdmin(){
+    axios.get('http://localhost:8080/api/users', axiosConfig).then((res)=>{
+        let list = res.data
+        let listAdmin = []
+        let name = document.getElementById("nameAdminSearch").value;
+        if (name === ""){
+            return
+        } else {
+            for (let i = 0; i<list.length; i++) {
+                if (list[i].name.includes(name) && list[i].roles[0].name === "ROLE_ADMIN") {
+                    listAdmin.push(list[i])
+                }
+            }
+            console.log(listAdmin)
+            if (listAdmin.length === 0) {
+                document.getElementById("list_admin").innerHTML = "<h2><b>Không có admin nào có tên bạn đang tìm</b></h2>"
+                document.getElementById("nameAdminSearch").value = ""
+            } else {
+                let str = ""
+                for (let j = 0; j<listAdmin.length; j++) {
+                    str += `<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" style="margin-top: 60px">
+                    <div class="h-100 person">
+                        <img
+                                src="${listAdmin[j].image}"
+                                alt="Image"
+                                class="img-fluid"
+                        />
+    
+                        <div class="person-contents">
+                            <h2 class="mb-0"><a style="cursor: pointer" data-target="#modal_profile" onclick="showAdminDetail(${listAdmin[j].id})"><b>${listAdmin[j].name}</b></a></h2>
+                            <ul class="social list-unstyled list-inline dark-hover">
+                                <div style="margin-top: 20px">
+                                    <li class="list-inline-item">
+                                        <a href="https://www.facebook.com/zuck"><span class="icon-facebook"></span></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="https://www.youtube.com/"><span class="icon-github"></span></a>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`
+                }
+                document.getElementById('list_admin').innerHTML = str
+                document.getElementById("nameAdminSearch").value = ""
+            }
+        }
+
+
+    });
 }
 function showOwner(){
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
