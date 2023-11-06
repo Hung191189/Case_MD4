@@ -129,7 +129,8 @@
         </div>
     </div>
 </div>
-<div style="display: flex;" id="searchProvince">23456789</div>
+<div style="display: flex" id="showAllHome">1234</div>
+<div style="display: flex" id="searchProvince">23456789</div>
 <div class="section">
     <div class="container">
         <div class="row mb-5 align-items-center">
@@ -1045,8 +1046,25 @@
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>
 <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDFEUMA9f_4sbJtYuq2RYdAKvEx6z9VtyA",
+        authDomain: "casemd4-396b2.firebaseapp.com",
+        projectId: "casemd4-396b2",
+        storageBucket: "casemd4-396b2.appspot.com",
+        messagingSenderId: "1097484466354",
+        appId: "1:1097484466354:web:6042c0aa2459ef207ab1ab",
+        measurementId: "G-1Q15XKV9QR"
+    };
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const axiosConfig = {
+        headers: {
+            'Authorization': `Bearer` + getToken() // Thiết lập header 'Authorization' với giá trị token Bearer
+            // 'Content-Type': 'application/json', // Có thể thay đổi kiểu dữ liệu nếu cần thiết
+        }
+    };
     const API_URL_HOME = "http://localhost:8080/homes"
-
+    let API_IMAGE = "http://localhost:8080/images";
     function findByProvince(){
         let province =
              document.getElementById("province").value
@@ -1067,6 +1085,53 @@
             document.getElementById("searchProvince").innerHTML = str
         })
     }
+    function showAllHome(){
+        document.getElementById("showAllHome").innerHTML = ""
+        Promise.all([
+            axios.get(API_URL_HOME, axiosConfig),
+            axios.get(API_IMAGE, axiosConfig)
+        ])
+       .then((res) =>{
+            let listHome = res[0].data;
+            let listImg = res[1].data;
+            let str = "";
+            for (let i = 0; i < list.length; i++) {
+                str += `
+            <div class="property-item">`
+                for (let j = 0; j < listImg.length; j++) {
+                    if (listImg[j].home.id === listHome[i].id) {
+                        str += `
+                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
+                        break;
+                    }
+                }
+
+                str += `
+                <div class="property-content">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                        </div>
+                    </div>
+                </div>
+            `
+            }
+           document.getElementById("showAllHome").innerHTML = str;
+        })
+    }
+    showAllHome();
 </script>
 </body>
 </html>
