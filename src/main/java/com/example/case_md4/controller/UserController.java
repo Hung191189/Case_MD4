@@ -49,14 +49,14 @@ public class UserController {
         if (!userService.isCorrectConfirmPassword(user)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (user.getRoles() != null) {
-            Role role = roleService.findById(1L).get();
+        if (user.getRoles().equals(null) || user.getRoles().equals(2L)) {
+            Role role = roleService.findById(2L).get();
             Set<Role> roles = new HashSet<>();
             roles.add(role);
             user.setRoles(roles);
-        } else {
-            System.out.println(roleService.findById(2L));
-            Role role1 = roleService.findById(2L).get();
+        } else if (user.getRoles().equals(3L)){
+            System.out.println(roleService.findById(3L));
+            Role role1 = roleService.findById(3L).get();
             Set<Role> roles1 = new HashSet<>();
             roles1.add(role1);
             user.setRoles(roles1);
