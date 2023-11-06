@@ -92,6 +92,7 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         homeOptional.get().setStatus(3);
+        iHomeService.save(homeOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
