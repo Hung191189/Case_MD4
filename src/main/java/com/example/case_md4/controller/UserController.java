@@ -72,6 +72,7 @@ public class UserController {
     }
     @PutMapping
     public ResponseEntity<?> put(@RequestBody User user_new){
+        userService.updateUser(user_new);
         user_new.setPassword(passwordEncoder.encode(user_new.getPassword()));
         user_new.setConfirmPassword(passwordEncoder.encode(user_new.getConfirmPassword()));
         userService.save(user_new);

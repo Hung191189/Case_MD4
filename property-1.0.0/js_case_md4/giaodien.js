@@ -180,6 +180,7 @@ function showHome_GD() {
           if (list_img[i].url == null){
               list_img[i].url = "images/img_5.jpg";
           }
+          console.log("nháy = " + list_img[i].home.id)
             document.getElementById("img_" + list_img[i].home.id).src = list_img[i].url;
         }
     })
@@ -207,8 +208,8 @@ function showOneHome() {
                 "            </div>\n" +
                 "            <div class=\"row justify-content-between mb-5\">\n" +
                 "                <div class=\"col-lg-7 mb-5 mb-lg-0 order-lg-2\">\n" +
-                "                    <div class=\"img-about dots\">\n" +
-                "                        <img src=\"images/hero_bg_3.jpg\" id=\"img-" + list_home[0].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                    <div class=\"img-about dots\" id=\"anh2\">\n" +
+                "                        <img style=\"width: 746px; height: 546px\" src=\"images/hero_bg_3.jpg\" id=\"img-1\" alt=\"Image\" class=\"img-fluid\"/>\n" +
                 "                    </div>\n" +
                 "                </div>\n" +
                 "                <div class=\"col-lg-4\">\n" +
@@ -245,7 +246,9 @@ function showOneHome() {
                 "            </div>";
         document.getElementById("home_number_one").innerHTML = content;
     })
-    axios.post("http://localhost:8080/images/img/" + list_home[0].id, config).then((response)=>{
-        document.getElementById("img-" + list_home[0].id).src = response.data.url;
+    axios.post("http://localhost:8080/images/img/" + 1, config).then((response)=>{
+        let data = response.data.url
+        // let img = `<img src="${data}" alt="Image" class="img-fluid"/>`
+        document.getElementById("img-1").src = response.data.url;
     })
 }
