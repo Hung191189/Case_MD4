@@ -91,7 +91,7 @@ public class UserService implements IUserService {
         boolean isCorrectUser = false;
         for (User currentUser : users) {
             if (currentUser.getUserName().equals(user.getUserName())
-                    && user.getPassword().equals(currentUser.getPassword())&&
+                    && user.getPassword().equals(currentUser.getPassword()) &&
                     currentUser.isEnabled()) {
                 isCorrectUser = true;
             }
@@ -115,7 +115,7 @@ public class UserService implements IUserService {
     @Override
     public boolean isCorrectConfirmPassword(User user) {
         boolean isCorrentConfirmPassword = false;
-        if(user.getPassword().equals(user.getConfirmPassword())){
+        if (user.getPassword().equals(user.getConfirmPassword())) {
             isCorrentConfirmPassword = true;
         }
         return isCorrentConfirmPassword;
@@ -124,5 +124,37 @@ public class UserService implements IUserService {
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public User updateUser(User user_new) {
+        User user = findById(user_new.getId()).get();
+        if (user_new.getAddress().isEmpty()) {
+            user_new.setAddress(user.getAddress());
+        }
+        if (user_new.getAge() == 0) {
+            user_new.setAge(user.getAge());
+        }
+        if (user_new.getSex().isEmpty()) {
+            user_new.setSex(user.getSex());
+        }
+        if (user_new.getPhone().isEmpty()) {
+            user_new.setPhone(user.getPhone());
+        }
+        if (user_new.getImage().isEmpty()) {
+            user_new.setImage(user.getImage());
+        }
+        if (user_new.getAdvertisementSet().isEmpty()) {
+            user_new.setAdvertisementSet(user.getAdvertisementSet());
+        }
+        if (user_new.getConfirmPassword().isEmpty()) {
+            user_new.setConfirmPassword(user.getConfirmPassword());
+        }
+        if (user_new.getPassword().isEmpty()) {
+            user_new.setPassword(user.getPassword());
+        }
+        if (user.getUserName().isEmpty()) {
+            user_new.setUserName(user.getUserName());
+        }
+        return user_new;
     }
 }
