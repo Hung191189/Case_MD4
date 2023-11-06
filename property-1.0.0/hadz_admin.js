@@ -163,6 +163,69 @@ function searchAdmin(){
 
     });
 }
+
+function searchOwner() {
+    axios.get('http://localhost:8080/api/users', axiosConfig).then((res)=>{
+        let list = res.data
+        let listOwner = []
+        let name = document.getElementById("nameOwnerSearch").value;
+        if (name === ""){
+            return
+        } else {
+            for (let i = 0; i<list.length; i++) {
+                if (list[i].name.includes(name) && list[i].roles[0].name === "ROLE_OWNER") {
+                    listOwner.push(list[i])
+                }
+            }
+            if (listOwner.length === 0) {
+                document.getElementById("abc").innerHTML = "<h2 style='text-align: center'><b>Không có Owner nào có tên bạn đang tìm</b></h2>"
+                document.getElementById("nameOwnerSearch").value = ""
+            } else {
+                let str = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List Owner
+                </h2>
+                <p class="text-black-50">
+                </p>
+            </div>
+        </div>
+        <div class="row">`
+                for (let j = 0; j<listOwner.length; j++) {
+                    str += `<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" style="margin-top: 60px">
+                    <div class="h-100 person">
+                        <img
+                                src="${listOwner[j].image}"
+                                alt="Image"
+                                class="img-fluid"
+                        />
+    
+                        <div class="person-contents">
+                            <h2 class="mb-0"><a style="cursor: pointer" data-target="#modal_profile" onclick="showOwnerDetail(${listOwner[j].id})"><b>${listOwner[j].name}</b></a></h2>
+                            <ul class="social list-unstyled list-inline dark-hover">
+                                <div style="margin-top: 20px">
+                                    <li class="list-inline-item">
+                                        <a href="https://www.facebook.com/zuck"><span class="icon-facebook"></span></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="https://www.youtube.com/"><span class="icon-github"></span></a>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`
+                }
+                str += `</div>
+    </div>`
+                document.getElementById('abc').innerHTML = str
+                document.getElementById("nameOwnerSearch").value = ""
+                document.getElementById("xyz").value = ""
+            }
+        }
+    });
+}
 function showOwner(){
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
                         Enter The Owner Name You Want To Find
@@ -264,10 +327,6 @@ function showOwner(){
         document.getElementById('abc').innerHTML = str
         document.getElementById('xyz').innerHTML = str2
     })
-
-function searchOwner() {
-
-}
 
 }
 function showOwnerDetail(id) {
