@@ -61,7 +61,7 @@ public class ImageController {
         imageService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping("/img/id_home")
+    @PostMapping("/img/{id_home}")
     public ResponseEntity<Image> findOneImg(@PathVariable("id_home") Long id_home){
         return new ResponseEntity<>(imageService.findOneImg(id_home), HttpStatus.OK);
     }
