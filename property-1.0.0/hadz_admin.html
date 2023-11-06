@@ -6,7 +6,6 @@
 */ -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,7 +32,6 @@
     <title>
         Property &mdash; Free Bootstrap 5 Website Template by Untree.co
     </title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
 </head>
 <body>
 <div class="site-mobile-menu site-navbar-target">
@@ -49,7 +47,7 @@
     <div class="container">
         <div class="menu-bg-wrap">
             <div class="site-navigation">
-                <a href="index.html" class="logo m-0 float-start">Home for rent</a>
+                <a href="index.html" class="logo m-0 float-start">Property</a>
 
                 <ul
                         class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
@@ -73,8 +71,6 @@
                     <li><a href="services.html">Services</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="contact.html">Log out</a></li>
-                    <li><a href="contact.html">Ảnh đại diện</a></li>
                 </ul>
 
                 <a
@@ -112,7 +108,8 @@
                 <h1 class="heading" data-aos="fade-up">
                     Easiest way to find your dream home
                 </h1>
-                <div
+                <form
+                        action="#"
                         class="narrow-w form-search d-flex align-items-stretch mb-3"
                         data-aos="fade-up"
                         data-aos-delay="200"
@@ -120,16 +117,15 @@
                     <input
                             type="text"
                             class="form-control px-4"
-                            id = "province"
-                            placeholder="Place you want arrive"
+                            placeholder="Your ZIP code or City. e.g. New York"
                     />
-                    <button type="submit" class="btn btn-primary" onclick="findByProvince()">Search</button>
-                </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<div style="display: flex;" id="searchProvince">23456789</div>
+
 <div class="section">
     <div class="container">
         <div class="row mb-5 align-items-center">
@@ -1044,30 +1040,5 @@
 <script src="js/navbar.js"></script>
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>
-<script>
-    const API_URL_HOME = "http://localhost:8080/homes"
-
-    function findByProvince(){
-        let province =
-             document.getElementById("province").value
-
-        axios.get(API_URL_HOME + "/" + "findByProvince" + "/" + province).then((res) =>{
-            let list = res.data;
-            let str = "";
-            for (let i = 0; i < list.length; i++) {
-             str += `<div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                         <h5 class="card-title">${list[i].name}</h5>
-                         <p class="card-text">${list[i].description}</p>
-                         <a href="#" class="btn btn-primary">Go somewhere</a>
-                         </div>
-                    </div>`
-            }
-            document.getElementById("searchProvince").innerHTML = str
-        })
-    }
-</script>
 </body>
 </html>
-

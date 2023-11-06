@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+</head>
+<body>
+<input id="hadz1">
+<button onclick="showHome()">Tìm nhà</button>
+<div id="ha123"></div>
+<script>
+    const API_URL_HOME = "http://localhost:8080/homes"
+
+    function showHome(){
+        let province = document.getElementById("hadz1").value
+
+        axios.post(API_URL_HOME + "/" + "findByProvince", province).then((res) =>{
+            console.log(res.data)
+            let list = res.data;
+            let str = "";
+            for (let i = 0; i < list.length; i++) {
+                str += `${list[i].name}`;
+                str += '--------------------'
+            }
+            document.getElementById("ha123").innerHTML = str
+        })
+    }
+</script>
+</body>
+</html>
