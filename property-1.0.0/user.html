@@ -49,8 +49,16 @@
     <div class="container">
         <div class="menu-bg-wrap">
             <div class="site-navigation">
-                <a href="index.html" class="logo m-0 float-start">Home for rent</a>
-
+                <span id="a"><a href="scss/index.html" id="user" class="logo m-0 float-start">OWNER MANAGER</a></span>
+                <span id="b">
+                    <img id="img"
+                         src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                         class="rounded-circle"
+                         height="41"
+                         alt="Black and White Portrait of a Man"
+                         loading="lazy"
+                    />
+                </span>
                 <ul
                         class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
                 >
@@ -74,7 +82,6 @@
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
                     <li><a href="contact.html">Log out</a></li>
-                    <li><a href="contact.html">Ảnh đại diện</a></li>
                 </ul>
 
                 <a
@@ -129,8 +136,10 @@
         </div>
     </div>
 </div>
-<div style="display: flex" id="showAllHome">1234</div>
+
+
 <div style="display: flex" id="searchProvince">23456789</div>
+
 <div class="section">
     <div class="container">
         <div class="row mb-5 align-items-center">
@@ -487,7 +496,7 @@
         </div>
     </div>
 </div>
-
+<div style="display: flex" id="showAllHome">1234</div>
 <section class="features-1">
     <div class="container">
         <div class="row">
@@ -741,7 +750,7 @@
             >
                 <div class="counter-wrap mb-5 mb-lg-0">
               <span class="number"
-              ><span class="countup text-primary">3298</span></span
+                  ><span class="countup text-primary">3298</span></span
               >
                     <span class="caption text-black-50"># of Buy Properties</span>
                 </div>
@@ -1046,44 +1055,63 @@
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>
 <script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyDFEUMA9f_4sbJtYuq2RYdAKvEx6z9VtyA",
-        authDomain: "casemd4-396b2.firebaseapp.com",
-        projectId: "casemd4-396b2",
-        storageBucket: "casemd4-396b2.appspot.com",
-        messagingSenderId: "1097484466354",
-        appId: "1:1097484466354:web:6042c0aa2459ef207ab1ab",
-        measurementId: "G-1Q15XKV9QR"
-    };
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    let idLogin = localStorage.getItem("idLogin");
+    let getToken = localStorage.getItem("token");
     const axiosConfig = {
         headers: {
-            'Authorization': `Bearer` + getToken() // Thiết lập header 'Authorization' với giá trị token Bearer
+            'Authorization': `Bearer` + getToken // Thiết lập header 'Authorization' với giá trị token Bearer
             // 'Content-Type': 'application/json', // Có thể thay đổi kiểu dữ liệu nếu cần thiết
         }
     };
     const API_URL_HOME = "http://localhost:8080/homes"
     let API_IMAGE = "http://localhost:8080/images";
+    let API_USER = "http://localhost:8080/api/users";
     function findByProvince(){
         let province =
              document.getElementById("province").value
+        Promise.all([
+            axios.get(API_URL_HOME + "/" + "findByProvince" + "/" + province, axiosConfig),
+            axios.get(API_IMAGE, axiosConfig)
+        ])
+      .then((res) =>{
+          let listHome = res[0].data;
+          let listImg = res[1].data;
+          let str = "";
+          for (let i = 0; i < listHome.length; i++) {
+              str += `
+            <div class="property-item">`
+              for (let j = 0; j < listImg.length; j++) {
+                  if (listImg[j].home.id === listHome[i].id) {
+                      str += `
+                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
+                      break;
+                  }
+              }
 
-        axios.get(API_URL_HOME + "/" + "findByProvince" + "/" + province).then((res) =>{
-            let list = res.data;
-            let str = "";
-            for (let i = 0; i < list.length; i++) {
-             str += `<div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                         <h5 class="card-title">${list[i].name}</h5>
-                         <p class="card-text">${list[i].description}</p>
-                         <a href="#" class="btn btn-primary">Go somewhere</a>
-                         </div>
-                    </div>`
-            }
-            document.getElementById("searchProvince").innerHTML = str
-        })
+              str += `
+                <div class="property-content">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                        </div>
+                    </div>
+                </div>
+            `
+          }
+          document.getElementById("showAllHome").innerHTML = str;
+      })
     }
     function showAllHome(){
         document.getElementById("showAllHome").innerHTML = ""
@@ -1095,7 +1123,7 @@
             let listHome = res[0].data;
             let listImg = res[1].data;
             let str = "";
-            for (let i = 0; i < list.length; i++) {
+            for (let i = 0; i < listHome.length; i++) {
                 str += `
             <div class="property-item">`
                 for (let j = 0; j < listImg.length; j++) {
@@ -1131,6 +1159,21 @@
            document.getElementById("showAllHome").innerHTML = str;
         })
     }
+    function loadUser() {
+        axios.get(API_USER + "/" + idLogin).then((res) =>{
+            let curUser = res.data
+            console.log(curUser)
+            document.getElementById("a").innerHTML = `<a href="scss/index.html" id="user" class="logo m-0 float-start">${curUser.name}</a>`;
+            document.getElementById("b").innerHTML = `<img id="img" style="margin-left: 20px; width: 41px"
+                            src=${curUser.image}
+                            class="rounded-circle"
+                            height="41"
+                            alt="Black and White Portrait of a Man"
+                            loading="lazy"
+                />`;
+        })
+    }
+    loadUser();
     showAllHome();
 </script>
 </body>
