@@ -97,9 +97,14 @@ public class UserController {
     public ResponseEntity<User> findById(@PathVariable("id")Long id_user){
         return new ResponseEntity<>(userService.findById(id_user).get(), HttpStatus.OK);
     }
-    @DeleteMapping
+    @PostMapping("/true_false")
     public ResponseEntity<?> delete(@PathVariable("id")Long id_user){
-        userService.delete(id_user);
+        userService.updateEnableTrue_false(id_user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @DeleteMapping("/false_true")
+    public ResponseEntity<?> updateEnable(@PathVariable("id") Long id_user){
+        userService.updateEnableFalse_true(id_user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

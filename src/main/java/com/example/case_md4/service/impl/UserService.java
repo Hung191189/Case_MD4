@@ -157,4 +157,11 @@ public class UserService implements IUserService {
         }
         return user_new;
     }
+
+    public void updateEnableTrue_false(Long id_user){
+        userRepository.updateEnable_1(id_user);
+    }
+    public void updateEnableFalse_true(Long id_user){
+        userRepository.updateEnable_2(id_user);
+    }
 }
