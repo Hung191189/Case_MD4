@@ -72,10 +72,8 @@ function showOneUser() {
     let config = {
         headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
-
         }
     }
-
     axios.get(URL + idLogin, config).then((response) => {
         localStorage.setItem("user", JSON.stringify(response.data));
     })
@@ -127,18 +125,21 @@ function register() {
         alert("Xác nhận mật khẩu chưa đúng")
     }
 }
-
-
-showHome_GD()
+showHome_GD();
 function showHome_GD() {
-    axios.get("http://localhost:8080/homes", ).then((response)=>{
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    }
+    axios.get("http://localhost:8080/homes", config).then((response)=>{
         let list_home = response.data;
         let content = "";
         for (let i = 0; i < list_home.length; i++) {
 
             content += "<div class=\"property-item\">\n" +
                 "                                <a class=\"img\">\n" +
-                "                                    <img src=\"" + list_home[i].image +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                                    <img src=\"images/img_5.jpg\" id=\" img" + list_home[i].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
                 "                                </a>\n" +
                 "\n" +
                 "                                <div class=\"property-content\">\n" +
@@ -166,6 +167,75 @@ function showHome_GD() {
                 "                            </div>"
         }
         document.getElementById("property_list").innerHTML = content;
-
     })
+    axios.get("http://localhost:8080/images", config).then((response) =>{
+        let list_img = response.data;
+        for (let i = 0; i < list_img.length; i++) {
+          document.getElementById("img" + list_img[i].home.id).src = list_img[i].url;
+        }
+    })
+}
+
+
+showOneHome()
+function showOneHome() {
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    }
+    axios.get("http://localhost:8080/homes",config).then((response) =>{
+        let list_home = response.data;
+        let content = " <div class=\"row justify-content-center text-center mb-5\">\n" +
+                "                <div class=\"col-lg-5\">\n" +
+                "                    <h2 class=\"font-weight-bold heading text-primary mb-4\">\n" +
+                "                        <!--              Let's find home that's perfect for you-->\n" +
+                "                        Phòng nổi bật\n" +
+                "                    </h2>\n" +
+                "                    <p class=\"text-black-50\">Căn phòng nổi bật với nhiều tiện nghi," +
+                "                  ghế tình yêu, phòng phòng tắm, phòng xông hơi, giường ngủ 2 người nằm ôm nhau phê tận nóc</p>\n" +
+                "                </div>\n" +
+                "            </div>\n" +
+                "            <div class=\"row justify-content-between mb-5\">\n" +
+                "                <div class=\"col-lg-7 mb-5 mb-lg-0 order-lg-2\">\n" +
+                "                    <div class=\"img-about dots\">\n" +
+                "                        <img src=\"images/hero_bg_3.jpg\" id=\"img-" + list_home[0].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "                <div class=\"col-lg-4\">\n" +
+                "                    <div class=\"d-flex feature-h\">\n" +
+                "              <span class=\"wrap-icon me-3\">\n" +
+                "                <span class=\"icon-bed\"></span>\n" +
+                "              </span>\n" +
+                "                        <div class=\"feature-text\">\n" +
+                "                            <h3 class=\"heading\">Description</h3>\n" +
+                "                            <p class=\"text-black-50\">" + list_home[0].description +"</p>\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "\n" +
+                "                    <div class=\"d-flex feature-h\">\n" +
+                "              <span class=\"wrap-icon me-3\">\n" +
+                "                <span class=\"icon-bath\"></span>\n" +
+                "              </span>\n" +
+                "                        <div class=\"feature-text\">\n" +
+                "                            <h3 class=\"heading\">Batroom</h3>\n" +
+                "                            <p class=\"text-black-50\">Phòng có " + list_home[0].bathroom +" phòng tắm </p>\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "\n" +
+                "                    <div class=\"d-flex feature-h\">\n" +
+                "              <span class=\"wrap-icon me-3\">\n" +
+                "                <span class=\"icon-security\"></span>\n" +
+                "              </span>\n" +
+                "                        <div class=\"feature-text\">\n" +
+                "                            <h3 class=\"heading\">BetRoom</h3>\n" +
+                "                            <p class=\"text-black-50\">Phòng có " + list_home[0].bedroom+" phòng ngủ </p>\n" +
+                "                        </div>\n" +
+                "                    </div>\n" +
+                "                </div>\n" +
+                "            </div>";
+        document.getElementById("home_number_one").innerHTML = content;
+    })
+
+    axios.post()
 }

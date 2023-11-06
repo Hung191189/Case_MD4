@@ -6574,7 +6574,8 @@ textarea.form-control-lg {
   margin-right: auto !important; }
 
 .mb-0 {
-  margin-bottom: 0 !important; }
+  margin-bottom: 0 !important;}
+
 
 .mb-1 {
   margin-bottom: 0.25rem !important; }
@@ -6589,7 +6590,7 @@ textarea.form-control-lg {
   margin-bottom: 1.5rem !important; }
 
 .mb-5 {
-  margin-bottom: 3rem !important; }
+  margin-bottom: 0 !important; }
 
 .mb-auto {
   margin-bottom: auto !important; }
