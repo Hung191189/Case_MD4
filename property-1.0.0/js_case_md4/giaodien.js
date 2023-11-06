@@ -58,6 +58,7 @@ function login() {
         } else if (response.data.roles[0].authority === "ROLE_USER") {
             showOneUser();
             console.log("user")
+            window.location.href="user.html"
         } else {
             // showOneUser();
             console.log("chủ nhà")
