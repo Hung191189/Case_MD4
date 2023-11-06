@@ -158,7 +158,9 @@ function showAdminDetail(id) {
             <h2 class="heading text-primary">Address: ${list.address}</h2>
           `
         if (id == idLogin) {
-            str += `<button type="button" class="btn btn-primary" style="background-color: #0d6efd" onclick="showEditAdmin()">Edit Profile</button>`
+            console.log(typeof id)
+            console.log(typeof idLogin)
+            str += `<button class="btn btn-primary" style="background-color: #0d6efd" onclick="showEditAdmin(${list.id})">Edit Profile</button>`
         }
         str += `</div>
         </div>
@@ -167,5 +169,42 @@ function showAdminDetail(id) {
         document.getElementById("showProfile").innerHTML = str
 
     })
+}
+function showEditAdmin(id){
+    document.getElementById('id01').style.display='none'
+    document.getElementById('id02').style.display='block'
+    axios.get('http://localhost:8080/api/users' + '/' + id).then((res)=>{
+        let user = res.data
+        let str = ""
+        str += `<div class="modal_overlay" style="text-align: center">
+                    <div class="image_editImage" style="text-align: center; margin-bottom: 20px">
+            <img src="${user.image}" alt="no image" style="width: 100px; height: 100px; border-radius: 50%; text-align: center">
+            <input type="file">
+        </div>
+        <div class="info_edit" style="margin-bottom: 20px; margin-top: 20px; text-align: center; display: flex">
+            <h3 style="margin-left: 20px">Name <input type="text" id="nameEdit" value="${user.name}" style="width: 300px; height: 40px; margin-right: 20px"></h3>
+            <h3 style="margin-left: 40px">Age <input type="number" id="ageEdit" value="${user.age}" style="width: 300px; height: 40px;"></h3>
+        </div>
+        <div class="info_edit" style="margin-bottom: 20px; margin-top: 20px; text-align: center; display: flex">
+            <h3 style="margin-left: 20px">Phone <input type="number" id="phoneEdit" value="${user.phone}" style="width: 300px; height: 40px; margin-right: 20px"></h3>
+            <h3>Gender <input type="text" id="genderEdit" value="${user.sex}" style="width: 300px; height: 40px;"></h3>
+        </div>
+        <div class="info_edit" style="margin-bottom: 20px; margin-top: 20px; text-align: center; display: flex">
+            <h3>Address <input type="text" id="addressEdit" value="${user.address}" style="width: 707px; height: 40px; margin-right: 20px"></h3>
+        </div>
+        <div class="info_edit" style="margin-bottom: 20px; margin-top: 20px; text-align: center; display: flex;">
+            <h3>New Password &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" id="passwordEdit" style="width: 300px; height: 40px; margin-right: 50px"></h3>
+        </div>
+        <div class="info_edit" style="margin-bottom: 20px; margin-top: 20px; text-align: center; display: flex;">
+            <h3>Confirm Password <input type="password" id="confirmPasswordEdit" style="width: 300px; height: 40px; margin-right: 20px"></h3>
+        </div>
+        <button class="btn btn-primary" style="background-color: #0d6efd; margin-bottom: 40px" onclick="confirmEdit()">Save Profile</button>
+                </div>
+                `
+        document.getElementById('modal_register').innerHTML = str
+    })
+}
+function confirmEdit() {
+
 }
 
