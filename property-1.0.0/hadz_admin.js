@@ -30,9 +30,7 @@ function showInfoLogin() {
                 style="margin-left: 20px"/>`;
 }
 showAdmin()
-function statusShowAdmin() {
-    document.getElementById("abc").style.display = "none"
-}
+
 function showAdmin() {
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
                         Enter The Admin Name You Want To Find
@@ -65,7 +63,7 @@ function showAdmin() {
                     />
 
                     <div class="person-contents">
-                        <h2 class="mb-0"><a style="cursor: pointer" onclick="showAdminDetail(${list[i].id})">${list[i].name}</a></h2>
+                        <h2 class="mb-0"><a style="cursor: pointer" data-target="#modal_profile" onclick="showAdminDetail(${list[i].id})"><b>${list[i].name}</b></a></h2>
                         <ul class="social list-unstyled list-inline dark-hover">
                             <div style="margin-top: 20px">
                                 <li class="list-inline-item">
@@ -139,59 +137,35 @@ function showHouse(){
                     </form>`
 }
 function showAdminDetail(id) {
+    document.getElementById('id01').style.display='block'
     axios.get('http://localhost:8080/api/users' + '/' + id).then((res)=>{
         let list = res.data
-        document.getElementById("abc").innerHTML = `<div class="section">
+        let str = `<div class="section">
       <div class="container">
         <div class="row justify-content-between">
           <div class="col-lg-7">
             <div class="img-property-slide-wrap">
-              <div class="img-property-slide">
+              <div class="img-property-slide" style="margin-right: 0">
                 <img src="${list.image}" alt="Image" class="img-fluid" />
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
-            <h2 class="heading text-primary">${list.name}</h2>
+          <div class="col-lg-4" style="margin-left: 0">
+            <h2 class="heading text-primary"><b>${list.name}</b></h2>
             <h2 class="heading text-primary">Age: ${list.age}</h2>
-
-<!--            <div class="d-block agent-box p-5">-->
-<!--              <div class="img mb-4">-->
-<!--                <img-->
-<!--                  src="images/person_2-min.jpg"-->
-<!--                  alt="Image"-->
-<!--                  class="img-fluid"-->
-<!--                />-->
-<!--              </div>-->
-<!--              <div class="text">-->
-<!--                <h3 class="mb-0">Alicia Huston</h3>-->
-<!--                <div class="meta mb-3">Real Estate</div>-->
-<!--                <p>-->
-<!--                  Lorem ipsum dolor sit amet consectetur adipisicing elit.-->
-<!--                  Ratione laborum quo quos omnis sed magnam id ducimus saepe-->
-<!--                </p>-->
-<!--                <ul class="list-unstyled social dark-hover d-flex">-->
-<!--                  <li class="me-1">-->
-<!--                    <a href="#"><span class="icon-instagram"></span></a>-->
-<!--                  </li>-->
-<!--                  <li class="me-1">-->
-<!--                    <a href="#"><span class="icon-twitter"></span></a>-->
-<!--                  </li>-->
-<!--                  <li class="me-1">-->
-<!--                    <a href="#"><span class="icon-facebook"></span></a>-->
-<!--                  </li>-->
-<!--                  <li class="me-1">-->
-<!--                    <a href="#"><span class="icon-linkedin"></span></a>-->
-<!--                  </li>-->
-<!--                </ul>-->
-<!--              </div>-->
-<!--            </div>-->
-          </div>
+            <h2 class="heading text-primary">Gender: ${list.sex}</h2>
+            <h2 class="heading text-primary">Phone: ${list.phone}</h2>
+            <h2 class="heading text-primary">Address: ${list.address}</h2>
+          `
+        if (id == idLogin) {
+            str += `<button type="button" class="btn btn-primary" style="background-color: #0d6efd" onclick="showEditAdmin()">Edit Profile</button>`
+        }
+        str += `</div>
         </div>
       </div>
     </div>`
+        document.getElementById("showProfile").innerHTML = str
 
     })
-
 }
 
