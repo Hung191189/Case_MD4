@@ -232,6 +232,9 @@ function showHomeDetail(idHome) {
 </div>
 <div class="col-6 round3">
     <div class="row">
+        <input type="hidden" id="home-id" value="${home.id}">
+    </div>
+    <div class="row">
         <div class="col-4 h4">House name:</div>
         <div class="col-8 h4">${home.name}</div>
     </div>
@@ -253,13 +256,26 @@ function showHomeDetail(idHome) {
     </div>
     <div class="row">
         <div class="col-4 h4">Price:</div>
-        <div class="col-8 h4">${home.price}</div>
+        <div class="col-8 h4">${home.price} $</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Trạng thái:</div>
+        <div class="col-8 h4">${(home.status === 1) ? 'Đang trống' : (home.status === 2) ? 'Đang được thuê' : 'Đang ngừng cho thuê'}</div>
     </div>
     <div class="row justify-content-lg-center">
-        <div class="col-3 btn btn-primary h4">Edit</div>
-        <div class="col-3 btn btn-primary h4">Delete</div>
+        <div class="col-3 btn btn-primary h4" onclick="showFormEditHome(${home.id})">Edit</div>
+        <div class="col-3 btn btn-primary h4" onclick="changeStatus3(${home.id})">Delete</div>
     </div>
 </div>
     `
     })
+}
+function changeStatus3(idHome) {
+    axios.delete(API_HOME + "/" + idHome,axiosConfig).then(() => {
+    alert("Đã xóa!!!")
+        location.reload()
+    })
+}
+function showFormEditHome(idHome) {
+
 }
