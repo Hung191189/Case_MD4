@@ -4,6 +4,7 @@ let nameLogin = localStorage.getItem("nameLogin");
 let imageLogin = localStorage.getItem("image");
 let nameUserLogin = localStorage.getItem("name")
 
+
 const axiosConfig = {
     headers: {
         'Authorization': `Bearer` + token, // Thiết lập header 'Authorization' với giá trị token Bearer
@@ -176,8 +177,8 @@ function showEditAdmin(id){
         let str = ""
         str += `<div class="modal_overlay" style="text-align: center">
                     <div class="image_editImage" style="text-align: center; margin-bottom: 20px">
-            <img src="${user.image}" alt="no image" style="width: 100px; height: 100px; border-radius: 50%; text-align: center">
-            <input type="file">
+            <img src="${user.image}" alt="no image" style="width: 100px; height: 100px; border-radius: 50%; text-align: center" id="oldImage">
+            <input type="file" id="newImage">
         </div>
         <div class="info_edit" style="margin-bottom: 20px; margin-top: 20px; text-align: center; display: flex">
             <h3 style="margin-left: 20px">Name <input type="text" id="nameEdit" value="${user.name}" style="width: 300px; height: 40px; margin-right: 20px"></h3>
@@ -196,13 +197,93 @@ function showEditAdmin(id){
         <div class="info_edit" style="margin-bottom: 20px; margin-top: 20px; text-align: center; display: flex;">
             <h3>Confirm Password <input type="password" id="confirmPasswordEdit" style="width: 300px; height: 40px; margin-right: 20px"></h3>
         </div>
-        <button class="btn btn-primary" style="background-color: #0d6efd; margin-bottom: 40px" onclick="confirmEdit()">Save Profile</button>
+        <button class="btn btn-primary" style="background-color: #0d6efd; margin-bottom: 40px" onclick="confirmEdit(${user.id})">Save Profile</button>
                 </div>
                 `
         document.getElementById('modal_register').innerHTML = str
+
+        const fileInput = document.getElementById("newImage");
+        const previewImage = document.getElementById("oldImage");
+        fileInput.addEventListener("change", function () {
+            const selectedFile = fileInput.files[0];
+
+            if (selectedFile) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                };
+                reader.readAsDataURL(selectedFile);
+            } else {
+                previewImage.src = "${user.image}";
+            }
+        });
     })
 }
-function confirmEdit() {
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAuBODAbx1pgiDbJiz2uPZkrL7hFC6rByw",
+    authDomain: "test1-80dfc.firebaseapp.com",
+    projectId: "test1-80dfc",
+    storageBucket: "test1-80dfc.appspot.com",
+    messagingSenderId: "528601700988",
+    appId: "1:528601700988:web:7c1232ade7277d79e047f9",
+    measurementId: "G-38560WPBYY"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const storage = firebase.storage();
+
+function confirmEdit(id) {
+    let password = document.getElementById("passwordEdit").value;
+    let confirm_pass_word = document.getElementById("confirmPasswordEdit").value;
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    }
+    if (password == confirm_pass_word) {
+
+        const fileInput = document.getElementById("newImage");
+        // const imageURL = document.getElementById("imageURL");
+        // Lấy file hình ảnh từ input
+        const file = fileInput.files[0];
+        // Tạo tham chiếu đến nơi bạn muốn lưu trữ ảnh trong Storage
+        const storageRef = storage.ref("images/" + file.name);
+        // Tải file lên Firebase Storage
+        storageRef.put(file).then((snapshot) => {
+            // console.log("Uploaded a file!");
+            // Lấy URL của ảnh sau khi đã tải lên
+            storageRef.getDownloadURL().then((url) => {
+                console.log(url)
+                let user = {
+                    id: id,
+                    name: document.getElementById("nameEdit").value,
+                    age: document.getElementById("ageEdit").value,
+                    sex: document.getElementById("genderEdit").value,
+                    phone: document.getElementById("phoneEdit").value,
+                    address: document.getElementById("addressEdit").value,
+                    userName: nameLogin,
+                    image: url,
+                    password: password,
+                    advertisementSet: [
+                        {
+                            id: 1
+                        }
+                    ],
+                    confirmPassword: confirm_pass_word,
+                    enabled: true
+                }
+                axios.post("http://localhost:8080/api/" + "users/register", user, config).then((response) => {
+                    alert("tạo mới thành công")
+                })
+
+            });
+        });
+    } else {
+        alert("Xác nhận mật khẩu chưa đúng")
+    }
 
 }
 
