@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="css/tiny-slider.css" />
     <link rel="stylesheet" href="css/aos.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <title>
         Property &mdash; Free Bootstrap 5 Website Template by Untree.co
@@ -44,12 +45,31 @@
     </div>
     <div class="site-mobile-menu-body"></div>
 </div>
-
+<div class="w3-container">
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div id="showProfile"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w3-container">
+    <div id="id02" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div id="showFormEditProfile"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <nav class="site-nav">
     <div class="container">
         <div class="menu-bg-wrap">
             <div class="site-navigation">
-                <span id="a"><a href="scss/index.html" id="user" class="logo m-0 float-start">OWNER MANAGER</a></span>
+                <span id="a"><a id="user" class="logo m-0 float-start">OWNER MANAGER</a></span>
                 <span id="b">
                     <img id="img"
                          src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
@@ -62,7 +82,7 @@
                 <ul
                         class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
                 >
-                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="active"><a href="giao_dien_home.html">Home</a></li>
                     <li class="has-children">
                         <a href="properties.html">Properties</a>
                         <ul class="dropdown">
@@ -1129,7 +1149,7 @@
                 for (let j = 0; j < listImg.length; j++) {
                     if (listImg[j].home.id === listHome[i].id) {
                         str += `
-                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
+                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 200px; height: 200px " /></a>`;
                         break;
                     }
                 }
@@ -1163,7 +1183,7 @@
         axios.get(API_USER + "/" + idLogin).then((res) =>{
             let curUser = res.data
             console.log(curUser)
-            document.getElementById("a").innerHTML = `<a href="scss/index.html" id="user" class="logo m-0 float-start">${curUser.name}</a>`;
+            document.getElementById("a").innerHTML = `<span id="user" class="logo m-0 float-start" onclick="showAdminDetail(${curUser.id})">${curUser.name}</span>`;
             document.getElementById("b").innerHTML = `<img id="img" style="margin-left: 20px; width: 41px"
                             src=${curUser.image}
                             class="rounded-circle"
@@ -1171,6 +1191,49 @@
                             alt="Black and White Portrait of a Man"
                             loading="lazy"
                 />`;
+        })
+    }
+    function showAdminDetail(id) {
+        document.getElementById('id01').style.display='block'
+        axios.get('http://localhost:8080/api/users' + '/' + id).then((res)=>{
+            let list = res.data
+            let str = `<div class="section">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-lg-7">
+            <div class="img-property-slide-wrap">
+              <div class="img-property-slide" style="margin-right: 0">
+                <img src="${list.image}" alt="Image" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4" style="margin-left: 0">
+            <h2 class="heading text-primary"><b>${list.name}</b></h2>
+            <h2 class="heading text-primary">Age: ${list.age}</h2>
+            <h2 class="heading text-primary">Gender: ${list.sex}</h2>
+            <h2 class="heading text-primary">Phone: ${list.phone}</h2>
+            <h2 class="heading text-primary">Address: ${list.address}</h2>
+          `
+            if (id == idLogin) {
+                str += `<button type="button" class="btn btn-primary" style="background-color: #0d6efd" onclick="showEditUser(${list.id})">Edit Profile</button>`
+            }
+            str += `</div>
+        </div>
+      </div>
+    </div>`
+            document.getElementById("showProfile").innerHTML = str
+
+        })
+    }
+    function showEditUser(id){
+        document.getElementById('id01').style.display='none'
+        document.getElementById('id02').style.display='block'
+        axios.get('http://localhost:8080/api/users' + '/' + id).then((res) =>{
+            let curUser = res.data;
+            let str = '';
+
+            document.getElementById("showFormEditProfile").innerHTML = str
+
         })
     }
     loadUser();
