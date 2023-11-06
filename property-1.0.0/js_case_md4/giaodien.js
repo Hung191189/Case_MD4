@@ -245,8 +245,8 @@ function showOneHome() {
                 "                </div>\n" +
                 "            </div>";
         document.getElementById("home_number_one").innerHTML = content;
-        // axios.post("http://localhost:8080/images/img/" + list_home[0].id, config).then((response)=>{
-        //     document.getElementById("img-" + list_home[0].id).src = response.data.url;
-        // })
+    })
+    axios.post("http://localhost:8080/images/img/" + list_home[0].id, config).then((response)=>{
+        document.getElementById("img-" + list_home[0].id).src = response.data.url;
     })
 }
