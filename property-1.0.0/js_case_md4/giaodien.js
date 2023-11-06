@@ -115,15 +115,14 @@ function register() {
                     password: password,
                     advertisementSet: [
                         {
-                            id: document.getElementById("role").value
+                            id: 1
                         }
                     ],
                     confirmPassword: confirm_pass_word,
                     enabled: true
                 }
                 axios.post(URL + "users/register", user, config).then((response) => {
-                    alert("tạo mới thành công")
-                    document.getElementById("modal_register").style.display = "none";
+                    alert("update thành công")
                 })
                 event.preventDefault();
             });
