@@ -53,7 +53,18 @@ function showAdmin() {
 
     axios.get('http://localhost:8080/api/users', axiosConfig).then((res)=>{
         let list = res.data;
-        let str = ""
+        let str = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List Admin
+                </h2>
+                <p class="text-black-50">
+                    Hội mực lệch cân điêu.
+                </p>
+            </div>
+        </div>
+        <div class="row">`
         for (let i = 0; i<list.length; i++) {
             if (list[i].roles[0].name === "ROLE_ADMIN") {
                 str += `<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" style="margin-top: 60px">
@@ -81,7 +92,9 @@ function showAdmin() {
             </div>`
             }
         }
-        document.getElementById('list_admin').innerHTML = str
+        str += `</div>
+    </div>`
+        document.getElementById('abc').innerHTML = str
     })
 }
 
@@ -139,21 +152,64 @@ function searchAdmin(){
 }
 function showOwner(){
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
-                        Enter The Name Of The Homeowner You Want To Find
+                        Enter The Owner Name You Want To Find
                     </h1>
-                    <form
-                            action="#"
-                            class="narrow-w form-search d-flex align-items-stretch mb-3"
-                            data-aos="fade-up"
-                            data-aos-delay="200"
-                    >
-                        <input
-                                type="text"
-                                class="form-control px-4"
-                                placeholder="Name Owner..."
-                        />
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>`
+                        <div style="display: flex">
+                            <input
+                                    type="text"
+                                    class="form-control px-4"
+                                    placeholder="Name Owner..."
+                                    id="nameAdminSearch"
+                                    style="border-radius: 30px"
+                            />
+                            <button type="submit" class="btn btn-primary" >Search</button>
+                        </div>
+                    `
+    axios.get('http://localhost:8080/api/users', axiosConfig).then((res)=>{
+        let list = res.data;
+        let str = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List Owner
+                </h2>
+                <p class="text-black-50">
+                
+                </p>
+            </div>
+        </div>
+        <div class="row">`
+        for (let i = 0; i<list.length; i++) {
+            if (list[i].roles[0].name === "ROLE_OWNER") {
+                str += `<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" style="margin-top: 60px">
+                <div class="h-100 person">
+                    <img
+                            src="${list[i].image}"
+                            alt="Image"
+                            class="img-fluid"
+                    />
+
+                    <div class="person-contents">
+                        <h2 class="mb-0"><a style="cursor: pointer" data-target="#modal_profile" onclick="showAdminDetail(${list[i].id})"><b>${list[i].name}</b></a></h2>
+                        <ul class="social list-unstyled list-inline dark-hover">
+                            <div style="margin-top: 20px">
+                                <li class="list-inline-item">
+                                    <a href="https://www.facebook.com/zuck"><span class="icon-facebook"></span></a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="https://www.youtube.com/"><span class="icon-github"></span></a>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>`
+            }
+        }
+        str += `</div>
+    </div>`
+        document.getElementById('abc').innerHTML = str
+    })
 }
 function showUser(){
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
