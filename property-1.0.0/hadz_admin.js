@@ -21,14 +21,17 @@ axios.get('http://localhost:8080/api/users' + "/" + idLogin, axiosConfig).then((
 
 showInfoLogin()
 function showInfoLogin() {
-    document.getElementById("a").innerHTML = `<a href="scss/index.html" id="user" class="logo m-0 float-start">${nameUserLogin}</a>`;
-    document.getElementById("b").innerHTML = `<img id="img"
-                            src=${imageLogin}
+    axios.get('http://localhost:8080/api/users/' + idLogin).then((res)=>{
+        let user = res.data
+        document.getElementById("a").innerHTML = `<a style="cursor: pointer" onclick="showAdminDetail(idLogin)" id="user" class="logo m-0 float-start">${user.name}</a>`;
+        document.getElementById("b").innerHTML = `<img id="img"
+                            src=${user.image}
                             class="rounded-circle"
                             height="41"
                             alt="Black and White Portrait of a Man"
                             loading="lazy"
                 style="margin-left: 20px"/>`;
+    })
 }
 showAdmin()
 
@@ -178,7 +181,7 @@ function showEditAdmin(id){
         str += `<div class="modal_overlay" style="text-align: center">
                     <div class="image_editImage" style="text-align: center; margin-bottom: 20px">
             <img src="${user.image}" alt="no image" style="width: 100px; height: 100px; border-radius: 50%; text-align: center" id="oldImage">
-            <input type="file" id="newImage">
+            <input value="${user.image}" type="file" id="newImage">
         </div>
         <div class="info_edit" style="margin-bottom: 20px; margin-top: 20px; text-align: center; display: flex">
             <h3 style="margin-left: 20px">Name <input type="text" id="nameEdit" value="${user.name}" style="width: 300px; height: 40px; margin-right: 20px"></h3>
@@ -244,20 +247,12 @@ function confirmEdit(id) {
         }
     }
     if (password == confirm_pass_word) {
-
-        const fileInput = document.getElementById("newImage");
-        // const imageURL = document.getElementById("imageURL");
-        // Lấy file hình ảnh từ input
-        const file = fileInput.files[0];
-        // Tạo tham chiếu đến nơi bạn muốn lưu trữ ảnh trong Storage
-        const storageRef = storage.ref("images/" + file.name);
-        // Tải file lên Firebase Storage
-        storageRef.put(file).then((snapshot) => {
-            // console.log("Uploaded a file!");
-            // Lấy URL của ảnh sau khi đã tải lên
-            storageRef.getDownloadURL().then((url) => {
-                console.log(url)
-                let user = {
+        let newImage = document.getElementById("newImage").value;
+        if (newImage === "") {
+            axios.get('http://localhost:8080/api/users/' + idLogin).then((res)=>{
+                let user = res.data
+                newImage = user.image
+                let user1 = {
                     id: id,
                     name: document.getElementById("nameEdit").value,
                     age: document.getElementById("ageEdit").value,
@@ -265,7 +260,7 @@ function confirmEdit(id) {
                     phone: document.getElementById("phoneEdit").value,
                     address: document.getElementById("addressEdit").value,
                     userName: nameLogin,
-                    image: url,
+                    image: newImage,
                     password: password,
                     advertisementSet: [
                         {
@@ -275,12 +270,50 @@ function confirmEdit(id) {
                     confirmPassword: confirm_pass_word,
                     enabled: true
                 }
-                axios.post("http://localhost:8080/api/" + "users/register", user, config).then((response) => {
-                    alert("tạo mới thành công")
+                axios.put("http://localhost:8080/api/" + "users", user1).then((response) => {
+                    alert("update thành công")
+                    window.location.href = 'hadz_admin.html'
                 })
-
             });
-        });
+        } else {
+            const fileInput = document.getElementById("newImage");
+            // const imageURL = document.getElementById("imageURL");
+            // Lấy file hình ảnh từ input
+            const file = fileInput.files[0];
+            // Tạo tham chiếu đến nơi bạn muốn lưu trữ ảnh trong Storage
+            const storageRef = storage.ref("images/" + file.name);
+            // Tải file lên Firebase Storage
+            storageRef.put(file).then((snapshot) => {
+                // console.log("Uploaded a file!");
+                // Lấy URL của ảnh sau khi đã tải lên
+                storageRef.getDownloadURL().then((url) => {
+                    let user = {
+                        id: id,
+                        name: document.getElementById("nameEdit").value,
+                        age: document.getElementById("ageEdit").value,
+                        sex: document.getElementById("genderEdit").value,
+                        phone: document.getElementById("phoneEdit").value,
+                        address: document.getElementById("addressEdit").value,
+                        userName: nameLogin,
+                        image: url,
+                        password: password,
+                        advertisementSet: [
+                            {
+                                id: 1
+                            }
+                        ],
+                        confirmPassword: confirm_pass_word,
+                        enabled: true
+                    }
+                    axios.put("http://localhost:8080/api/" + "users", user).then((response) => {
+                        alert("update thành công")
+                        window.location.href = 'hadz_admin.html'
+                    })
+
+                });
+            });
+        }
+
     } else {
         alert("Xác nhận mật khẩu chưa đúng")
     }
