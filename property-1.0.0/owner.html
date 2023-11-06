@@ -60,6 +60,8 @@
             padding: 5px;
         }
     </style>
+
+
 </head>
 <body>
 <div class="site-mobile-menu site-navbar-target">
@@ -138,7 +140,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <!--                <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                <h4 class="modal-title">ADD NEW HOUSE</h4>
+                <h4 class="modal-title">HOUSE INFORMATION</h4>
             </div>
             <div class="modal-body">
                 <div>
@@ -207,59 +209,7 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-<script>
-    const host = "https://provinces.open-api.vn/api/";
-    var callAPI = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data, "city");
-            });
-    }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
-    var callApiDistrict = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.districts, "district");
-            });
-    }
-    var callApiWard = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.wards, "ward");
-            });
-    }
-
-    var renderData = (array, select) => {
-        let row = '<option disable value="">Select</option>';
-        array.forEach(element => {
-            row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
-        });
-        document.querySelector("#" + select).innerHTML = row
-    }
-
-    $("#city").change(() => {
-        callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
-        printResult();
-    });
-    $("#district").change(() => {
-        callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
-        printResult();
-    });
-    $("#ward").change(() => {
-        printResult();
-    })
-
-    var printResult = () => {
-        if ($("#district").find(':selected').data('id') != "" && $("#city").find(':selected').data('id') != "" &&
-            $("#ward").find(':selected').data('id') != "") {
-            let result = $("#city option:selected").text() +
-                " | " + $("#district option:selected").text() + " | " +
-                $("#ward option:selected").text();
-            $("#result").text(result)
-        }
-
-    }
-</script>
+<script src="apiAddress.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/tiny-slider.js"></script>
 <script src="js/aos.js"></script>
