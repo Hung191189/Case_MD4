@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+</head>
+<body>
+<div id="searchProvince"></div>
+<div
+        class="narrow-w form-search d-flex align-items-stretch mb-3"
+        data-aos="fade-up"
+        data-aos-delay="200"
+>
+    <input
+            type="text"
+            class="form-control px-4"
+            id = "province"
+            placeholder="Place you want arrive"
+    />
+    <button type="submit" class="btn btn-primary" onclick="findByProvince()">Search</button>
+</div>
+<script>
+    const API_URL_HOME = "http://localhost:8080/homes"
+    function findByProvince(){
+        let data = {
+            province : document.getElementById("province").value
+        }
+        axios.get(API_URL_HOME + "/" + "findByProvince", data).then((res) =>{
+            let list = res.data;
+            let str = "";
+            for (let i = 0; i < list.length; i++) {
+                str += `${list[i].name}`;
+                str += `${list[i].province}`
+                str += `${list[i].district}`
+                str += `${list[i].ward}`
+                str += `${list[i].address}`
+                str += `${list[i].price}`
+                str += '--------------------'
+            }
+            document.getElementById("searchProvince").innerHTML = str
+        })
+    }
+</script>
+</body>
+</html>
