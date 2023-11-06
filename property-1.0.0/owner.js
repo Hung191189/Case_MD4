@@ -70,7 +70,8 @@ function showAllHouse() {
             }
             str += `
                 <div class="property-content">
-                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                <input type="hidden" value="${listHome[i].id}"> 
+                    <div class="price mb-2"><span id="name-home">${listHome[i].name}</span></div>
                         <div>
                             <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
                             <span class="city d-block mb-3">${listHome[i].province}</span>
@@ -84,7 +85,7 @@ function showAllHouse() {
                                     <span class="caption"></span>
                                 </span>
                             </div>
-                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                            <a class="btn btn-primary py-2 px-3" onclick="showHomeDetail(${listHome[i].id})">See details</a>
                         </div>
                     </div>
                 </div>
@@ -161,4 +162,104 @@ function createNewHomeAndImg() {
     let nameHouse = document.getElementById("house-name").value
     createNewHome()
     setTimeout(saveNewImage(nameHouse),0)
+}
+function showHomeDetail(idHome) {
+    document.getElementById("content2").innerHTML = ""
+    document.getElementById("content1").innerHTML = `
+                <div class="col-lg-6">
+                    <h2 class="font-weight-bold text-primary heading" >Home Detail</h2>
+                </div>
+`
+    let listImgOfHome = [];
+    Promise.all([
+        axios.get(API_HOME + "/" + idHome, axiosConfig),
+        axios.get(API_IMAGE, axiosConfig)
+    ])
+.then((res) => {
+        let home = res[0].data;
+        let listImg = res[1].data;
+
+    for (let i = 0; i < listImg.length; i++) {
+        if (home.id === listImg[i].home.id) {
+            console.log(listImg[i])
+            listImgOfHome.push(listImg[i])
+        }
+    }
+    console.log(listImgOfHome[0])
+    console.log(listImgOfHome[1])
+    console.log(listImgOfHome[2])
+    console.log(listImgOfHome[3])
+    console.log(listImgOfHome[4])
+    document.getElementById("content2").innerHTML = `
+<div id="demo" class="carousel slide col-6" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" data-slide-to="3"></li>
+    <li data-target="#demo" data-slide-to="4"></li>
+  </ul>
+  
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src=${listImgOfHome[0].url} alt="Los Angeles" width="500" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src=${listImgOfHome[1].url} alt="Chicago" width="500" height="500">
+    </div>
+        <div class="carousel-item">
+      <img src=${listImgOfHome[2].url} alt="Chicago" width="500" height="500">
+    </div>
+        <div class="carousel-item">
+      <img src=${listImgOfHome[3].url} alt="Chicago" width="500" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src=${listImgOfHome[4].url} alt="New York" width="500" height="500">
+    </div>
+  </div>
+  
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+<div class="col-6 round3">
+    <div class="row">
+        <div class="col-4 h4">House name:</div>
+        <div class="col-8 h4">${home.name}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Number of bedroom:</div>
+        <div class="col-8 h4">${home.bedroom}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Number of bathroom:</div>
+        <div class="col-8 h4">${home.bathroom}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Address:</div>
+        <div class="col-8 h4">${home.address}, ${home.ward}, ${home.district}, ${home.province}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Description</div>
+        <div class="col-8 h4">${home.description}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Price:</div>
+        <div class="col-8 h4">${home.price}</div>
+    </div>
+    <div class="row justify-content-lg-center">
+        <div class="col-3 btn btn-primary h4">Edit</div>
+        <div class="col-3 btn btn-primary h4">Delete</div>
+    </div>
+</div>
+    `
+    })
 }
