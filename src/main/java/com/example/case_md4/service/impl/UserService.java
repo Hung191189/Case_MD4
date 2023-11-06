@@ -120,4 +120,9 @@ public class UserService implements IUserService {
         }
         return isCorrentConfirmPassword;
     }
+
+    @Override
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
 }
