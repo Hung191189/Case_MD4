@@ -127,6 +127,7 @@ function register() {
                 }
                 axios.post(URL + "users/register", user, config).then((response) => {
                     alert("update thành công")
+                    document.getElementById("modal_register").style.display = "none"
                 })
                 event.preventDefault();
             });
