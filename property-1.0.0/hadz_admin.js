@@ -721,7 +721,82 @@ function showHouse(){
 }
 
 function searchHome() {
-
+    let name = document.getElementById("nameHouseSearch").value;
+    if (name === ""){
+        return
+    } else {
+        document.getElementById("abc").innerHTML = ""
+        document.getElementById("xyz").innerHTML = ""
+        Promise.all([
+            axios.get('http://localhost:8080/homes/findByProvince/' + name, axiosConfig),
+            axios.get('http://localhost:8080/images', axiosConfig)
+        ])
+            .then((res)=>{
+                let listAllHome = res[0].data;
+                let listHome = []
+                let listImg = res[1].data;
+                for (let i = 0; i <listAllHome.length; i ++) {
+                    if (listAllHome[i].status !== 3) {
+                        listHome.push(listAllHome[i])
+                    }
+                }
+                if (listHome.length === 0) {
+                    document.getElementById("abc").innerHTML = "<h2 style='text-align: center'><b>Không có nhà nào tại tỉnh bạn đang tìm</b></h2>"
+                    document.getElementById("nameHouseSearch").value = ""
+                    document.getElementById("xyz").innerHTML = ""
+                } else {
+                    let str = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List User Valid
+                </h2>
+                <p class="text-black-50">
+                
+                </p>
+            </div>
+        </div>
+        <div class="row">`
+                    for (let i = 0; i < listHome.length; i++) {
+                        for (let j = 0; j < listImg.length; j++) {
+                            if (listImg[j].home.id === listHome[i].id) {
+                                str +=`
+                                    <div class = "col-3">
+                                    <div class="property-item">`
+                                str += `
+                                     <a style="margin-bottom: 100px"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 262px " /></a>`;
+                                break;
+                            }
+                        }
+                        str += `
+                <div class="property-content" style="margin-top: 0; margin-bottom: 20px">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a onclick="viewHomeDetail(${listHome[i].id})" class="btn btn-primary py-2 px-3">See details</a>
+                        </div>
+                    </div>
+                </div>
+                </div>`
+                    }
+                    str +=  `</div>`
+                    str += `</div>`
+                    document.getElementById("abc").innerHTML = str;
+                    document.getElementById("xyz").innerHTML = '';
+                }
+            })
+    }
 }
 
 function viewHomeDetail(id) {
