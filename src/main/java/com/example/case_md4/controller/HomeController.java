@@ -85,13 +85,23 @@ public class HomeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Home> deleteHome(@PathVariable Long id) {
         Optional<Home> homeOptional = iHomeService.findById(id);
         if (!homeOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         homeOptional.get().setStatus(3);
+        iHomeService.save(homeOptional.get());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @DeleteMapping("/restore/{id}")
+    public ResponseEntity<Home> restoreHome(@PathVariable Long id) {
+        Optional<Home> homeOptional = iHomeService.findById(id);
+        if (!homeOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        homeOptional.get().setStatus(1);
         iHomeService.save(homeOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
