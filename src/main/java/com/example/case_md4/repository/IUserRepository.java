@@ -8,8 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
     User findByUserName(String username);
-    @Query(value = "update user set enable = false where id = ?", nativeQuery = true)
-    void updateEnable_1(Long id);
-    @Query(value = "update user set enable = true where id = ?", nativeQuery = true)
-    void updateEnable_2(Long id);
 }

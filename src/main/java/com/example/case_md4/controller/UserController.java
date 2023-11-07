@@ -97,14 +97,18 @@ public class UserController {
     public ResponseEntity<User> findById(@PathVariable("id")Long id_user){
         return new ResponseEntity<>(userService.findById(id_user).get(), HttpStatus.OK);
     }
-    @PostMapping("/true_false")
+    @PutMapping("/true_false/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")Long id_user){
-        userService.updateEnableTrue_false(id_user);
+        User user = userService.findById(id_user).get();
+        user.setEnabled(false);
+        userService.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @DeleteMapping("/false_true")
+    @PutMapping("/false_true/{id}")
     public ResponseEntity<?> updateEnable(@PathVariable("id") Long id_user){
-        userService.updateEnableFalse_true(id_user);
+        User user = userService.findById(id_user).get();
+        user.setEnabled(true);
+        userService.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
