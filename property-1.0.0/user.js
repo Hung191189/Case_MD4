@@ -163,7 +163,7 @@ function showAdminDetail(id) {
 }
 
 loadUser();
-showAllHome();
+// showAllHome();
 
 function showEditUser(id) {
 
@@ -472,5 +472,56 @@ function viewHomeDetail(idHome) {
         })
 }
 function showAllHomeByStatus(){
+    document.getElementById("showAllHome").innerHTML = ""
+    Promise.all([
+        axios.get(API_URL_HOME + "/" + "findValid", axiosConfig),
+        axios.get(API_IMAGE, axiosConfig)
+    ])
+        .then((res) => {
+            let listHome = res[0].data;
+            let listImg = res[1].data;
+            let str = "";
+            str += `<div class = "container">
+                <div class = "row">`
 
+            for (let i = 0; i < listHome.length; i++) {
+                str += `
+            <div class = "col-3">
+            <div class="property-item" style="margin-top: 10px " >`
+                for (let j = 0; j < listImg.length; j++) {
+                    if (listImg[j].home.id === listHome[i].id) {
+                        str += `
+                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 200px " /></a>`;
+                        break;
+                    }
+                }
+
+                str += `
+                <div class="property-content"  style="margin-top: 0px">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a onclick="viewHomeDetail(${listHome[i].id})" class="btn btn-primary py-2 px-3">See details</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            `
+            }
+            str += `</div>`
+            str += `</div>`
+            document.getElementById("showAllHome").innerHTML = str;
+        })
 }
+showAllHomeByStatus();
