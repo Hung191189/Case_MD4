@@ -72,9 +72,18 @@ public class UserController {
     }
     @PutMapping
     public ResponseEntity<?> put(@RequestBody User user_new){
+        User user = userService.findById(user_new.getId()).get();
         userService.updateUser(user_new);
-        user_new.setPassword(passwordEncoder.encode(user_new.getPassword()));
-        user_new.setConfirmPassword(passwordEncoder.encode(user_new.getConfirmPassword()));
+        if (user_new.getConfirmPassword() == "") {
+            user_new.setConfirmPassword(user.getConfirmPassword());
+        } else {
+            user_new.setConfirmPassword(passwordEncoder.encode(user_new.getConfirmPassword()));
+        }
+        if (user_new.getPassword() == "") {
+            user_new.setPassword(user.getPassword());
+        } else {
+            user_new.setPassword(passwordEncoder.encode(user_new.getPassword()));
+        }
         userService.save(user_new);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -79,6 +79,10 @@ function showOneUser() {
         localStorage.setItem("user", JSON.stringify(response.data));
     })
 }
+function LogOut() {
+    localStorage.clear()
+    window.location.href = "giao_dien_home.html"
+}
 
 function register() {
     let password = document.getElementById("pass_word_register").value;
@@ -115,7 +119,7 @@ function register() {
                     password: password,
                     advertisementSet: [
                         {
-                            id: 1
+                            id: document.getElementById("role").value
                         }
                     ],
                     confirmPassword: confirm_pass_word,
@@ -123,6 +127,7 @@ function register() {
                 }
                 axios.post(URL + "users/register", user, config).then((response) => {
                     alert("update thành công")
+                    document.getElementById("modal_register").style.display = "none"
                 })
                 event.preventDefault();
             });
@@ -247,8 +252,6 @@ function showOneHome() {
         document.getElementById("home_number_one").innerHTML = content;
     })
     axios.post("http://localhost:8080/images/img/" + 1, config).then((response)=>{
-        let data = response.data.url
-        // let img = `<img src="${data}" alt="Image" class="img-fluid"/>`
         document.getElementById("img-1").src = response.data.url;
     })
 }
