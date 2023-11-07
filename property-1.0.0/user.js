@@ -151,7 +151,7 @@ function showAdminDetail(id) {
             <h2 class="heading text-primary">Address: ${list.address}</h2>
           `
         if (id == idLogin) {
-            str += `<button type="button" class="btn btn-primary" style="background-color: #0d6efd" onclick="showEditUser(${list.id})">Edit Profile</button>`
+            str += `<button type="button" class="btn btn-primary" style="background-color: #0d6efd" onclick="rentHome(${list.id})">Edit Profile</button>`
         }
         str += `</div>
         </div>
@@ -462,10 +462,10 @@ function viewHomeDetail(idHome) {
         <div class="col-4 h4">Trạng thái:</div>
         <div class="col-8 h4">${(home.status === 1) ? 'Đang trống' : (home.status === 2) ? 'Đang được thuê' : 'Đang ngừng cho thuê'}</div>
     </div>
-    <div class="row justify-content-lg-center">
-        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="showFormEditHome(${home.id})">Edit</div>
+    <div class="row justify-content-lg-center" id="formRent">
+        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="rentHome(${home.id})">Rent House</div>
 <!--        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#editHome">Edit</div>-->
-        <div class="col-3 btn btn-primary h4"  onclick="changeStatus3(home)">Delete</div>
+<!--        <div class="col-3 btn btn-primary h4"  onclick="changeStatus3(home)">Delete</div>-->
     </div>
 </div>
     `
@@ -525,3 +525,54 @@ function showAllHomeByStatus(){
         })
 }
 showAllHomeByStatus();
+
+function rentHome(idHome) {
+    document.getElementById("formRent").innerHTML =
+        `
+    <label for="checkInDate">Check In:</label>
+    <input type="text" id="checkInDate">
+    <label for="checkOutDate">Check Out:</label>
+    <input type="text" id="checkOutDate">
+    <button>OK</button>
+        `
+    var checkInDateInput = document.getElementById("checkInDate");
+    flatpickr(checkInDateInput, {
+        dateFormat: "Y-m-d", // Định dạng ngày
+        locale: {
+            firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
+        },
+        disable: [disableDates("2023-08-12", "2023-08-15")], // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
+        onChange: function(selectedDates, dateStr, instance) {
+            // Khi người dùng chọn ngày check-in, cập nhật điều kiện cho ngày check-out
+            var checkOutDateInput = document.getElementById("checkOutDate");
+            checkOutDateInput._flatpickr.set("minDate", selectedDates[0]); // Set ngày check-in là ngày tối thiểu cho ngày check-out
+        }
+    });
+
+    // Lấy ô input check-out và kích hoạt Flatpickr
+    var checkOutDateInput = document.getElementById("checkOutDate");
+    flatpickr(checkOutDateInput, {
+        dateFormat: "Y-m-d", // Định dạng ngày
+        locale: {
+            firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
+        },
+        disable: [disableDates("2023-08-12", "2023-08-15")] // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
+    });
+}
+function disableDates(a, b) {
+    let disableStartDate = new Date(a);
+    let disableEndDate = new Date(b);
+    let currentDate = new Date();
+    let nextDay = new Date(currentDate);
+    nextDay.setDate(currentDate.getDate() + 1);
+
+    return function(date) {
+        if (date < nextDay) {
+            return true;
+        }
+        if (date >= disableStartDate && date <= disableEndDate) {
+            return true;
+        }
+        return false;
+    };
+}
