@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -145,12 +146,6 @@ public class UserService implements IUserService {
         }
         if (user_new.getAdvertisementSet().isEmpty()) {
             user_new.setAdvertisementSet(user.getAdvertisementSet());
-        }
-        if (user_new.getConfirmPassword().isEmpty()) {
-            user_new.setConfirmPassword(user.getConfirmPassword());
-        }
-        if (user_new.getPassword().isEmpty()) {
-            user_new.setPassword(user.getPassword());
         }
         if (user.getUserName().isEmpty()) {
             user_new.setUserName(user.getUserName());
