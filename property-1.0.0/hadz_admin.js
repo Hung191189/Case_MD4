@@ -606,41 +606,33 @@ function showHouse(){
                             <button type="submit" class="btn btn-primary" onclick="searchUser()">Search</button>
                         </div>
                     `
-    document.getElementById("house-slider").innerHTML = "";
+    document.getElementById("abc").innerHTML = ""
     Promise.all([
-        axios.get("http://localhost:8080/homes",axiosConfig),
-        axios.get("http://localhost:8080/images",axiosConfig)
+        axios.get('http://localhost:8080/homes', axiosConfig),
+        axios.get('http://localhost:8080/images', axiosConfig)
     ])
         .then((res) => {
             let listHome = res[0].data;
             let listImg = res[1].data;
-            let listImgOfHome;
-            let str = `<div class="section" id="detail">
-    <div class="container">
-        <div class="row mb-5 align-items-center" id="content1">
-            <div class="col-lg-6">
-                <h2 class="font-weight-bold text-primary heading" >Popular Properties</h2>
-            </div>
-        </div>
-        <div class="row d-flex" id="content2"  style="display: flex">
-            <div class="col-12">
-                <div class="property-slider-wrap mt-xl-5">
-                    <div id="house-slider" class="property-slider" style="display: flex; gap: 10px">
-                    </div>`;
+            let str = "";
+            str += `<div class = "container">
+                <div class = "row">`
+
             for (let i = 0; i < listHome.length; i++) {
                 str += `
+            <div class = "col-3">
             <div class="property-item">`
                 for (let j = 0; j < listImg.length; j++) {
                     if (listImg[j].home.id === listHome[i].id) {
                         str += `
-                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
+                    <a style="margin-bottom: 100px"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 262px " /></a>`;
                         break;
                     }
                 }
+
                 str += `
-                <div class="property-content">
-                <input type="hidden" value="${listHome[i].id}"> 
-                    <div class="price mb-2"><span id="name-home">${listHome[i].name}</span></div>
+                <div class="property-content" style="margin-top: 0; margin-bottom: 20px">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
                         <div>
                             <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
                             <span class="city d-block mb-3">${listHome[i].province}</span>
@@ -654,18 +646,17 @@ function showHouse(){
                                     <span class="caption"></span>
                                 </span>
                             </div>
-                            <a class="btn btn-primary py-2 px-3" onclick="showHomeDetail(${listHome[i].id})">See details</a>
+                            <a onclick="showHomeDetail()" class="btn btn-primary py-2 px-3">See details</a>
                         </div>
                     </div>
                 </div>
+                </div>
             `
             }
-            str += `</div>
-                    </div>
-                </div>
-            </div>
-        </div>`
+            str +=  `</div>`
+            str += `</div>`
             document.getElementById("abc").innerHTML = str;
+            document.getElementById("xyz").innerHTML = ''
         })
 }
 function showAdminDetail(id) {
