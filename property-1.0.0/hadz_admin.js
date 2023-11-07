@@ -646,7 +646,7 @@ function showHouse(){
                                     <span class="caption"></span>
                                 </span>
                             </div>
-                            <a onclick="showHomeDetail()" class="btn btn-primary py-2 px-3">See details</a>
+                            <a onclick="viewHomeDetail(${listHome[i].id})" class="btn btn-primary py-2 px-3">See details</a>
                         </div>
                     </div>
                 </div>
@@ -659,6 +659,125 @@ function showHouse(){
             document.getElementById("xyz").innerHTML = ''
         })
 }
+
+function viewHomeDetail(id) {
+    document.getElementById('id01').style.display='block'
+    let listImgOfHome = [];
+    Promise.all([
+        axios.get('http://localhost:8080/homes' + "/" + id, axiosConfig),
+        axios.get('http://localhost:8080/images', axiosConfig)
+    ])
+        .then((res) => {
+            let home = res[0].data;
+            let listImg = res[1].data;
+
+            for (let i = 0; i < listImg.length; i++) {
+                if (home.id === listImg[i].home.id) {
+                    console.log(listImg[i])
+                    listImgOfHome.push(listImg[i])
+                    // Hàm so sánh
+                    const compareById = (a, b) => {
+                        return b.id - a.id;
+                    };
+
+                    // Sắp xếp mảng
+                    listImgOfHome.sort(compareById);
+                }
+            }
+        let str =  `<div style = "display: flex">
+                             <div id="demo" class="carousel slide col-6" data-ride="carousel">
+                          <!-- Indicators -->
+                          <ul class="carousel-indicators">
+                            <li data-target="#demo" data-slide-to="0" class="active"></li>
+                            <li data-target="#demo" data-slide-to="1"></li>
+                            <li data-target="#demo" data-slide-to="2"></li>
+                            <li data-target="#demo" data-slide-to="3"></li>
+                            <li data-target="#demo" data-slide-to="4"></li>
+                          </ul>
+                          
+                          <!-- The slideshow -->
+                          <div class="carousel-inner" style="margin-left: 0">
+                            <div class="carousel-item active">
+                              <img src=${listImgOfHome[0].url} alt="Los Angeles" width="500" height="500">
+                            </div>
+                            <div class="carousel-item">
+                              <img src=${listImgOfHome[1].url} alt="Chicago" width="500" height="500">
+                            </div>
+                                <div class="carousel-item">
+                              <img src=${listImgOfHome[2].url} alt="Chicago" width="500" height="500">
+                            </div>
+                                <div class="carousel-item">
+                              <img src=${listImgOfHome[3].url} alt="Chicago" width="500" height="500">
+                            </div>
+                            <div class="carousel-item">
+                              <img src=${listImgOfHome[4].url} alt="New York" width="500" height="500">
+                            </div>
+                          </div>
+                          
+                          
+                          <!-- Left and right controls -->
+                          <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                          </a>
+                          <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                          </a>
+                        </div>
+                        <div class="col-6 round3">
+                            <div class="row">
+                                <input type="hidden" id="home-id" value="${home.id}">
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">House name:</div>
+                                <div class="col-8 h4">${home.name}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Number of bedroom:</div>
+                                <div class="col-8 h4">${home.bedroom}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Number of bathroom:</div>
+                                <div class="col-8 h4">${home.bathroom}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Address:</div>
+                                <div class="col-8 h4">${home.address}, ${home.ward}, ${home.district}, ${home.province}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Description</div>
+                                <div class="col-8 h4">${home.description}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Price:</div>
+                                <div class="col-8 h4">${home.price} $</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Trạng thái:</div>
+                                <div class="col-8 h4">${(home.status === 1) ? 'Đang trống' : (home.status === 2) ? 'Đang được thuê' : 'Đang ngừng cho thuê'}</div>
+                            </div>
+                            <div class="row justify-content-lg-center">`
+                        if (home.status === 3) {
+                            str += `<div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="restoreHome(${home.id})">Restore</div>`
+
+                        } else {
+                            str += `<div class="col-3 btn btn-primary h4"  onclick="deleteHome(${home.id})">Delete</div>`
+                        }
+
+                        str +=`</div>
+                        </div>
+                            </div>`
+        document.getElementById("showProfile").innerHTML = str;
+    })
+}
+
+function restoreHome(id) {
+
+}
+
+function deleteHome(id) {
+
+}
+
 function showAdminDetail(id) {
     document.getElementById('id01').style.display='block'
     axios.get('http://localhost:8080/api/users' + '/' + id).then((res)=>{
