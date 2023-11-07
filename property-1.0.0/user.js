@@ -76,17 +76,17 @@ function showAllHome() {
             for (let i = 0; i < listHome.length; i++) {
                 str += `
             <div class = "col-3">
-            <div class="property-item">`
+            <div class="property-item" style="margin-top: 10px " >`
                 for (let j = 0; j < listImg.length; j++) {
                     if (listImg[j].home.id === listHome[i].id) {
                         str += `
-                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 200px; height: 200px " /></a>`;
+                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 200px " /></a>`;
                         break;
                     }
                 }
 
                 str += `
-                <div class="property-content">
+                <div class="property-content"  style="margin-top: 0px">
                     <div class="price mb-2"><span>${listHome[i].name}</span></div>
                         <div>
                             <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
@@ -108,8 +108,8 @@ function showAllHome() {
                 </div>
             `
             }
-            str +=  `</div>`
-           str += `</div>`
+            str += `</div>`
+            str += `</div>`
             document.getElementById("showAllHome").innerHTML = str;
         })
 }
@@ -300,88 +300,62 @@ function confirmEdit(id) {
         alert("Xác nhận mật khẩu chưa đúng")
     }
 }
+
 function showCarousel() {
     Promise.all([axios.get(API_URL_HOME, axiosConfig),
         axios.get(API_IMAGE, axiosConfig)]).then((res) => {
-        let listHome = res[0].data;
-        let listImg = res[1].data;
+        let list_home = res[0].data;
+        let list_img = res[1].data;
 
         let str = "";
         for (let i = 0; i < listHome.length; i++) {
-            str += `
-                  <a href="property-single.html" class="img"><img src="images/img_1.jpg" alt="Image" class="img-fluid" /></a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>$1,291,000</span></div>
-                    <div>
-                      <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
-                      <span class="city d-block mb-3">California, USA</span>
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center me-3">
-                          <span class="icon-bed me-2"></span>
-                          <span class="caption">2 beds</span>
-                        </span>
-                        <span class="d-block d-flex align-items-center">
-                          <span class="icon-bath me-2"></span>
-                          <span class="caption">2 baths</span>
-                        </span>
-                      </div>
-                      <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
-                    </div>
-                  </div>
-          
-              <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
-                <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
-                <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
-              </div>
-      
-      `
-            // for (let j = 0; j < listImg.length; j++) {
-            //     if (listImg[j].home.id === listHome[i].id) {
-            //         str += `
-            //            <a href="property-single.html" class="img">
-            //                     <img src="${listImg[j].url}" alt="Image" class="img-fluid" />
-            //                 </a>`
-            //         break;
-            //     }
-            // }
-            // str += `
-            //       <div class="property-content">
-            //                     <div class="price mb-2"><span>${listHome[i].price}</span></div>
-            //                     <div>
-            //           <span class="d-block mb-2 text-black-50"
-            //           >${listHome[i].address}</span
-            //           >
-            //                         <span class="city d-block mb-3">${listHome[i].province}</span>
-            //
-            //                         <div class="specs d-flex mb-4">
-            //             <span class="d-block d-flex align-items-center me-3">
-            //               <span class="icon-bed me-2"></span>
-            //               <span class="caption">${listHome[i].bedroom}</span>
-            //             </span>
-            //                             <span class="d-block d-flex align-items-center">
-            //               <span class="icon-bath me-2"></span>
-            //               <span class="caption">${listHome[i].bathroom}</span>
-            //             </span>
-            //                         </div>
-            //
-            //                         <a
-            //                                 onclick="showHomeDetail(${listHome[i].id})"
-            //                                 class="btn btn-primary py-2 px-3"
-            //                         >See details</a
-            //                         >
-            //                     </div>
-            //                 </div>
-            //             </div>
+            str += "<div class=\"property-item\">\n" +
+                "                                <a class=\"img\">\n" +
+                "                                    <img style=\"width: 412px; height: 412px\" src=\"images/img_5.jpg\" id=\"img_" + list_home[i].id +"\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                                </a>\n" +
+                "\n" +
+                "                                <div class=\"property-content\">\n" +
+                "                                    <div class=\"price mb-2\"><span>" + "$" +list_home[i].price +"</span></div>\n" +
+                "                                    <div>\n" +
+                "                      <span class=\"d-block mb-2 text-black-50\"\n" +
+                "                      >" + list_home[i].province + ", " +list_home[i].district + ", " + list_home[i].ward +"</span\n" +
+                "                      >\n" +
+                "                                        <span class=\"city d-block mb-3\">" + list_home[i].address +"</span>\n" +
+                "\n" +
+                "                                        <div class=\"specs d-flex mb-4\">\n" +
+                "                        <span class=\"d-block d-flex align-items-center me-3\">\n" +
+                "                          <span class=\"icon-bed me-2\"></span>\n" +
+                "                          <span class=\"caption\">" + list_home[i].bathroom +"</span>\n" +
+                "                        </span>\n" +
+                "                                            <span class=\"d-block d-flex align-items-center\">\n" +
+                "                          <span class=\"icon-bath me-2\"></span>\n" +
+                "                          <span class=\"caption\">" + list_home[i].bedroom +"</span>\n" +
+                "                        </span>\n" +
+                "                                        </div>\n" +
+                "\n" +
+                "                                        <a onclick=\"\" class=\"btn btn-primary py-2 px-3\">See Home</a>\n" +
+                "                                    </div>\n" +
+                "                                </div>\n" +
+                "                            </div>"
 
+    }
+        for (let j = 0; j < list_img.length; j++) {
+            if (list_img[j].url == null){
+                list_img[j].url = "images/img_5.jpg";
+            }
+            console.log("nháy = " + list_img[j].home.id)
+            document.getElementById("img_" + list_img[j].home.id).src = list_img[j].url;
         }
-        console.log(document.getElementById("property-item"))
-        document.getElementById("property-item").innerHTML = str;
-    })
+        document.getElementById("showCarousel").innerHTML = str;
+})
 }
-function logOut(){
+showCarousel();
+
+function logOut() {
     localStorage.clear();
     window.location.href = "giao_dien_home.html";
 }
+
 function viewHomeDetail(idHome) {
     document.getElementById("content2").innerHTML = ""
     document.getElementById("showAllHome").innerHTML = `
@@ -496,4 +470,7 @@ function viewHomeDetail(idHome) {
 </div>
     `
         })
+}
+function showAllHomeByStatus(){
+
 }
