@@ -47,5 +47,4 @@ var printResult = () => {
             $("#ward option:selected").text();
         $("#result").text(result)
     }
-
 }

@@ -10,9 +10,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 // ----------
-let API_USER = "http://localhost:8080/api/users";
-let API_HOME = "http://localhost:8080/homes";
-let API_IMAGE = "http://localhost:8080/images";
+let API_USER = "http://localhost:8080/api/users"
+let API_HOME = "http://localhost:8080/homes"
+let API_IMAGE = "http://localhost:8080/images"
+let API_HISTORY_BILL = "http://localhost:8080/historybills"
 // localStorage.setItem("nameLogin", "dat2")
 // localStorage.setItem("idLogin", "2")
 // localStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXQyIiwiaWF0IjoxNjk4OTc1OTc2LCJleHAiOjg4MDk4OTc1OTc2fQ.03fZhgd6VMh5zgHqlOpGhAJRWzEsg7mVi9uNOMXbNA6kiFUBcRcQHs7ywyIQfStZ2Ic12bU5Mv12llmXz4YC4g")
@@ -157,7 +158,6 @@ function createNewHome() {
                     id: localStorage.getItem("idLogin")
                 }
         }
-        // axios.post(API)
     } else {
         data = {
             name: document.getElementById("house-name").value,
@@ -175,8 +175,16 @@ function createNewHome() {
                 }
         }
     }
+    axios.post(API_HISTORY_BILL, {
+        price: document.getElementById("price").value,
+        home: {
+            id: document.getElementById("house-id").value
+        }
+    }).then(() => {
+        console.log("Đã thay đổi giá nhà!")
+    })
     axios.post(API_HOME,data,axiosConfig).then(() => {
-        console.log("Tạo mới home")
+        console.log("OK")
     })
 }
 function createNewHomeAndImg() {
