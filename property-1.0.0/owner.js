@@ -181,8 +181,9 @@ function createNewHome() {
         }
     }
 
-    axios.post(API_HOME,data,axiosConfig).then(() => {
+    axios.post(API_HOME,data,axiosConfig).then((res) => {
         console.log("OK")
+        let
     })
 }
 function createNewHomeAndImg() {
