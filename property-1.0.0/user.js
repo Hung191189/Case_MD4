@@ -298,56 +298,81 @@ function showCarousel() {
         axios.get(API_IMAGE, axiosConfig)]).then((res) => {
         let listHome = res[0].data;
         let listImg = res[1].data;
-        console.log(listHome);
-        console.log(listImg)
+
         let str = "";
         for (let i = 0; i < listHome.length; i++) {
             str += `
-                 <div class="property-item">`
-            for (let j = 0; j < listImg.length; j++) {
-                if (listImg[j].home.id === listHome[i].id) {
-                    str += `
-                       <a href="property-single.html" class="img">
-                                <img src="${listImg[j].url}" alt="Image" class="img-fluid" />                         
-                            </a>`
-                    break;
-                }
-            }
-            str += `
+                  <a href="property-single.html" class="img"><img src="images/img_1.jpg" alt="Image" class="img-fluid" /></a>
                   <div class="property-content">
-                                <div class="price mb-2"><span>${listHome[i].price}</span></div>
-                                <div>
-                      <span class="d-block mb-2 text-black-50"
-                      >${listHome[i].address}</span
-                      >
-                                    <span class="city d-block mb-3">${listHome[i].province}</span>
-
-                                    <div class="specs d-flex mb-4">
+                    <div class="price mb-2"><span>$1,291,000</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
+                      <span class="city d-block mb-3">California, USA</span>
+                      <div class="specs d-flex mb-4">
                         <span class="d-block d-flex align-items-center me-3">
                           <span class="icon-bed me-2"></span>
-                          <span class="caption">${listHome[i].bedroom}</span>
+                          <span class="caption">2 beds</span>
                         </span>
-                                        <span class="d-block d-flex align-items-center">
+                        <span class="d-block d-flex align-items-center">
                           <span class="icon-bath me-2"></span>
-                          <span class="caption">${listHome[i].bathroom}</span>
+                          <span class="caption">2 baths</span>
                         </span>
-                                    </div>
+                      </div>
+                      <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                    </div>
+                  </div>
+          
+              <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
+                <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
+                <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
+              </div>
+      
+      `
+            // for (let j = 0; j < listImg.length; j++) {
+            //     if (listImg[j].home.id === listHome[i].id) {
+            //         str += `
+            //            <a href="property-single.html" class="img">
+            //                     <img src="${listImg[j].url}" alt="Image" class="img-fluid" />
+            //                 </a>`
+            //         break;
+            //     }
+            // }
+            // str += `
+            //       <div class="property-content">
+            //                     <div class="price mb-2"><span>${listHome[i].price}</span></div>
+            //                     <div>
+            //           <span class="d-block mb-2 text-black-50"
+            //           >${listHome[i].address}</span
+            //           >
+            //                         <span class="city d-block mb-3">${listHome[i].province}</span>
+            //
+            //                         <div class="specs d-flex mb-4">
+            //             <span class="d-block d-flex align-items-center me-3">
+            //               <span class="icon-bed me-2"></span>
+            //               <span class="caption">${listHome[i].bedroom}</span>
+            //             </span>
+            //                             <span class="d-block d-flex align-items-center">
+            //               <span class="icon-bath me-2"></span>
+            //               <span class="caption">${listHome[i].bathroom}</span>
+            //             </span>
+            //                         </div>
+            //
+            //                         <a
+            //                                 onclick="showHomeDetail(${listHome[i].id})"
+            //                                 class="btn btn-primary py-2 px-3"
+            //                         >See details</a
+            //                         >
+            //                     </div>
+            //                 </div>
+            //             </div>
 
-                                    <a
-                                            onclick="showHomeDetail(${listHome[i].id})"
-                                            class="btn btn-primary py-2 px-3"
-                                    >See details</a
-                                    >
-                                </div>
-                            </div>
-                        </div>
-                 `
         }
-
-        document.getElementById("123456").innerHTML = str;
+        console.log(document.getElementById("property-item"))
+        document.getElementById("property-item").innerHTML = str;
     })
 }
 function logOut(){
-
+    localStorage.clear();
+    window.location.href = "giao_dien_home.html";
 }
 showCarousel();
