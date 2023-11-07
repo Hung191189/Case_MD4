@@ -71,7 +71,7 @@ public class HomeController {
     @PostMapping("")
     public ResponseEntity<Home> saveHome(@RequestBody Home home) {
         iHomeService.save(home);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(iHomeService.save(home), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
