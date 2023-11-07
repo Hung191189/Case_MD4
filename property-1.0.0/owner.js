@@ -157,7 +157,7 @@ function createNewHome() {
                     id: localStorage.getItem("idLogin")
                 }
         }
-        axios.post(API)
+        // axios.post(API)
     } else {
         data = {
             name: document.getElementById("house-name").value,
