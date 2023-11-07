@@ -603,7 +603,7 @@ function showHouse(){
                                     id="nameHouseSearch"
                                     style="border-radius: 30px"
                             />
-                            <button type="submit" class="btn btn-primary" onclick="searchUser()">Search</button>
+                            <button type="submit" class="btn btn-primary" onclick="searchHome()">Search</button>
                         </div>
                     `
     document.getElementById("abc").innerHTML = ""
@@ -714,9 +714,14 @@ function showHouse(){
             str1 += `</div>`
             str2 +=  `</div>`
             str2 += `</div>`
+            console.log(str2)
             document.getElementById("abc").innerHTML = str2;
             document.getElementById("xyz").innerHTML = str1;
         })
+}
+
+function searchHome() {
+
 }
 
 function viewHomeDetail(id) {
@@ -830,11 +835,17 @@ function viewHomeDetail(id) {
 }
 
 function restoreHome(id) {
-
+    axios.delete('http://localhost:8080/homes/restore/' + id).then((res)=>{
+        alert("Restore Home thành công")
+        showHouse()
+    })
 }
 
 function deleteHome(id) {
-
+    axios.delete('http://localhost:8080/homes/delete/' + id).then((res)=>{
+        alert("Delete Home thành công")
+        showHouse()
+    })
 }
 
 function showAdminDetail(id) {
