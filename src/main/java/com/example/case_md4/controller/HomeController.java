@@ -95,6 +95,13 @@ public class HomeController {
         iHomeService.save(homeOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @GetMapping("/findValid")
+    public ResponseEntity<Iterable<Home>> findAllByStatus12() {
+        List<Home> homeList = (List<Home>) ((HomeService) iHomeService).findAllByStatus12();
+        if (homeList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(homeList, HttpStatus.OK);
+    }
 
 }
