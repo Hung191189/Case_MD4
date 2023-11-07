@@ -155,6 +155,14 @@ function createNewHome() {
                     id: localStorage.getItem("idLogin")
                 }
         }
+        axios.post(API_HISTORY_BILL, {
+            price: document.getElementById("price").value,
+            home: {
+                id: document.getElementById("house-id").value
+            }
+        }).then(() => {
+            console.log("Đã thay đổi giá nhà!")
+        })
     } else {
         data = {
             name: document.getElementById("house-name").value,
@@ -172,14 +180,7 @@ function createNewHome() {
                 }
         }
     }
-    axios.post(API_HISTORY_BILL, {
-        price: document.getElementById("price").value,
-        home: {
-            id: document.getElementById("house-id").value
-        }
-    }).then(() => {
-        console.log("Đã thay đổi giá nhà!")
-    })
+
     axios.post(API_HOME,data,axiosConfig).then(() => {
         console.log("OK")
     })
@@ -298,13 +299,13 @@ function showHomeDetail(idHome) {
     <div class="row justify-content-lg-center">
         <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="showFormEditHome(${home.id})">Edit</div>
 <!--        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#editHome">Edit</div>-->
-        <div class="col-3 btn btn-primary h4"  onclick="changeStatus3(home)">Delete</div>
+        <div class="col-3 btn btn-primary h4"  onclick="changeStatus3(${home.id})">Delete</div>
     </div>
 </div>
     `
     })
 }
-function changeStatus3(home) {
+function changeStatus3(idHome) {
     axios.delete(API_HOME + "/" + idHome,axiosConfig).then(() => {
     alert("Đã xóa!!!")
         location.reload()
