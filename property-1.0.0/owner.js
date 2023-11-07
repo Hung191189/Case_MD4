@@ -9,14 +9,12 @@ const firebaseConfig = {
 }
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
+
 // ----------
 let API_USER = "http://localhost:8080/api/users"
 let API_HOME = "http://localhost:8080/homes"
 let API_IMAGE = "http://localhost:8080/images"
 let API_HISTORY_BILL = "http://localhost:8080/historybills"
-// localStorage.setItem("nameLogin", "dat2")
-// localStorage.setItem("idLogin", "2")
-// localStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXQyIiwiaWF0IjoxNjk4OTc1OTc2LCJleHAiOjg4MDk4OTc1OTc2fQ.03fZhgd6VMh5zgHqlOpGhAJRWzEsg7mVi9uNOMXbNA6kiFUBcRcQHs7ywyIQfStZ2Ic12bU5Mv12llmXz4YC4g")
 function getToken() {
     return localStorage.getItem("token")
 }
@@ -32,11 +30,12 @@ const axiosConfig = {
 let currentUser = localStorage.getItem("currentUser");
 axios.get(API_USER + "/" + getIdLogin(),axiosConfig).then((res) => {
     localStorage.setItem("currentUser",JSON.stringify(res.data));
+    showAllHouse()
+    loadUser()
 })
-let curUser = JSON.parse(localStorage.getItem("currentUser"))
-console.log(curUser)
 
 function loadUser() {
+    let curUser = JSON.parse(localStorage.getItem("currentUser"))
     document.getElementById("a").innerHTML = `<a href="scss/index.html" id="user" class="logo m-0 float-start">${curUser.name}</a>`;
     document.getElementById("b").innerHTML = `<img id="img" style="margin-left: 20px; width: 41px"
                             src=${curUser.image}
@@ -46,8 +45,7 @@ function loadUser() {
                             loading="lazy"
                 />`;
 }
-loadUser()
-showAllHouse()
+
 function showAllHouse() {
     document.getElementById("house-slider").innerHTML = "Danh sách này rỗng!!!";
     Promise.all([
@@ -57,7 +55,6 @@ function showAllHouse() {
     .then((res) => {
         let listHome = res[0].data;
         let listImg = res[1].data;
-        let listImgOfHome;
         let str = "";
         for (let i = 0; i < listHome.length; i++) {
             str += `
@@ -324,4 +321,8 @@ function showFormEditHome(idHome) {
         document.querySelector("#price").value = home.price
         document.querySelector("#house-id").value = home.id
     })
+}
+function logOut() {
+    localStorage.clear()
+    window.location.href = 'giao_dien_home.html'
 }
