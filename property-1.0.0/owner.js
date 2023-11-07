@@ -180,10 +180,17 @@ function createNewHome() {
                 }
         }
     }
-
     axios.post(API_HOME,data,axiosConfig).then((res) => {
         console.log("OK")
-        let
+        let newHome = res.data
+        axios.post(API_HISTORY_BILL, {
+            price: newHome.price,
+            home: {
+                id: newHome.id
+            }
+        }).then(() => {
+            console.log("Đã thêm mới giá nhà!")
+        })
     })
 }
 function createNewHomeAndImg() {
