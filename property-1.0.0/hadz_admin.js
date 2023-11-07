@@ -180,6 +180,7 @@ function searchOwner() {
             if (listOwner.length === 0) {
                 document.getElementById("abc").innerHTML = "<h2 style='text-align: center'><b>Không có Owner nào có tên bạn đang tìm</b></h2>"
                 document.getElementById("nameOwnerSearch").value = ""
+                document.getElementById("xyz").value = ""
             } else {
                 let str = `<div class="container">
         <div class="row justify-content-center text-center mb-5">
@@ -371,7 +372,67 @@ function restoreUser(id) {
 }
 
 function searchUser(){
-
+    axios.get('http://localhost:8080/api/users', axiosConfig).then((res)=>{
+        let list = res.data
+        let listUser = []
+        let name = document.getElementById("nameUserSearch").value;
+        if (name === ""){
+            return
+        } else {
+            for (let i = 0; i<list.length; i++) {
+                if (list[i].name.includes(name) && list[i].roles[0].name === "ROLE_USER") {
+                    listUser.push(list[i])
+                }
+            }
+            if (listUser.length === 0) {
+                document.getElementById("abc").innerHTML = "<h2 style='text-align: center'><b>Không có User nào có tên bạn đang tìm</b></h2>"
+                document.getElementById("nameUserSearch").value = ""
+                document.getElementById("xyz").value = ""
+            } else {
+                let str = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List User
+                </h2>
+                <p class="text-black-50">
+                </p>
+            </div>
+        </div>
+        <div class="row">`
+                for (let j = 0; j<listUser.length; j++) {
+                    str += `<div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" style="margin-top: 60px">
+                    <div class="h-100 person">
+                        <img
+                                src="${listUser[j].image}"
+                                alt="Image"
+                                class="img-fluid"
+                        />
+    
+                        <div class="person-contents">
+                            <h2 class="mb-0"><a style="cursor: pointer" data-target="#modal_profile" onclick="showUserDetail(${listUser[j].id})"><b>${listUser[j].name}</b></a></h2>
+                            <ul class="social list-unstyled list-inline dark-hover">
+                                <div style="margin-top: 20px">
+                                    <li class="list-inline-item">
+                                        <a href="https://www.facebook.com/zuck"><span class="icon-facebook"></span></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="https://www.youtube.com/"><span class="icon-github"></span></a>
+                                    </li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>`
+                }
+                str += `</div>
+    </div>`
+                document.getElementById('abc').innerHTML = str
+                document.getElementById("nameUserSearch").value = ""
+                document.getElementById('xyz').value = ""
+            }
+        }
+    });
 }
 
 function showUserDetail(id) {
