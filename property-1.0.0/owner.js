@@ -155,6 +155,14 @@ function createNewHome() {
                     id: localStorage.getItem("idLogin")
                 }
         }
+        axios.post(API_HISTORY_BILL, {
+            price: document.getElementById("price").value,
+            home: {
+                id: document.getElementById("house-id").value
+            }
+        }).then(() => {
+            console.log("Đã thay đổi giá nhà!")
+        })
     } else {
         data = {
             name: document.getElementById("house-name").value,
@@ -172,16 +180,17 @@ function createNewHome() {
                 }
         }
     }
-    axios.post(API_HISTORY_BILL, {
-        price: document.getElementById("price").value,
-        home: {
-            id: document.getElementById("house-id").value
-        }
-    }).then(() => {
-        console.log("Đã thay đổi giá nhà!")
-    })
-    axios.post(API_HOME,data,axiosConfig).then(() => {
+    axios.post(API_HOME,data,axiosConfig).then((res) => {
         console.log("OK")
+        let newHome = res.data
+        axios.post(API_HISTORY_BILL, {
+            price: newHome.price,
+            home: {
+                id: newHome.id
+            }
+        }).then(() => {
+            console.log("Đã thêm mới giá nhà!")
+        })
     })
 }
 function createNewHomeAndImg() {
