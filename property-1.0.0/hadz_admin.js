@@ -378,7 +378,16 @@ function restoreUser(id) {
     })
 }
 function deleteOwner(id) {
-    axios.put('http://localhost:8080/api/users/true_false/' + id).then((res)=>{
+    Promise.all([
+        axios.put('http://localhost:8080/api/users/true_false/' + id),
+        axios.get('http://localhost:8080/homes')
+    ]).then((res)=>{
+        let listAllHome = res[1].data
+        for (let i = 0; i < listAllHome.length; i++) {
+            if (listAllHome[i].user.id === id) {
+                axios.delete('http://localhost:8080/homes/delete/' + listAllHome[i].id).then(()=>{})
+            }
+        }
         alert('Xoá Owner thành công')
         showOwner()
     })
