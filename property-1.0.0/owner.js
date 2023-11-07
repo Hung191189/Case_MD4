@@ -139,20 +139,40 @@ function saveNewImage(nameHome) {
         });
 }
 function createNewHome() {
-    let data = {
-        name: document.getElementById("house-name").value,
-        bathroom: document.getElementById("baths").value,
-        bedroom: document.getElementById("beds").value,
-        description: document.getElementById("description").value,
-        price: document.getElementById("price").value,
-        province: document.getElementById("city").value,
-        district: document.getElementById("district").value,
-        ward: document.getElementById("ward").value,
-        address: document.getElementById("house-address").value,
-        user:
-            {
-                id: localStorage.getItem("idLogin")
-            }
+    let data = {}
+    if (document.getElementById("house-id").value !==  null) {
+        data = {
+            id: document.getElementById("house-id").value,
+            name: document.getElementById("house-name").value,
+            bathroom: document.getElementById("baths").value,
+            bedroom: document.getElementById("beds").value,
+            description: document.getElementById("description").value,
+            price: document.getElementById("price").value,
+            province: document.getElementById("city").value,
+            district: document.getElementById("district").value,
+            ward: document.getElementById("ward").value,
+            address: document.getElementById("house-address").value,
+            user:
+                {
+                    id: localStorage.getItem("idLogin")
+                }
+        }
+    } else {
+        data = {
+            name: document.getElementById("house-name").value,
+            bathroom: document.getElementById("baths").value,
+            bedroom: document.getElementById("beds").value,
+            description: document.getElementById("description").value,
+            price: document.getElementById("price").value,
+            province: document.getElementById("city").value,
+            district: document.getElementById("district").value,
+            ward: document.getElementById("ward").value,
+            address: document.getElementById("house-address").value,
+            user:
+                {
+                    id: localStorage.getItem("idLogin")
+                }
+        }
     }
     axios.post(API_HOME,data,axiosConfig).then(() => {
         console.log("Tạo mới home")
@@ -183,6 +203,13 @@ function showHomeDetail(idHome) {
         if (home.id === listImg[i].home.id) {
             console.log(listImg[i])
             listImgOfHome.push(listImg[i])
+            // Hàm so sánh
+            const compareById = (a, b) => {
+                return b.id - a.id;
+            };
+
+            // Sắp xếp mảng
+            listImgOfHome.sort(compareById);
         }
     }
     console.log(listImgOfHome[0])
@@ -286,5 +313,6 @@ function showFormEditHome(idHome) {
         document.querySelector("#house-address").value = home.address
         document.querySelector("#description").value = home.description
         document.querySelector("#price").value = home.price
+        document.querySelector("#house-id").value = home.id
     })
 }
