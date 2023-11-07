@@ -387,19 +387,19 @@ function restoreUser(id) {
 
 =======
     axios.put('http://localhost:8080/api/users/true_false/' + id).then((res)=>{
-        alert('dm a Hùng')
+        alert('Xoá User thành công')
         showUser()
     })
 }
 function restoreUser(id) {
     axios.put('http://localhost:8080/api/users/false_true/' + id).then((res)=>{
-        alert('Xoá User thành công')
+        alert('Restore User thành công')
         showUser()
     })
 }
 function deleteOwner(id) {
     axios.put('http://localhost:8080/api/users/true_false/' + id).then((res)=>{
-        alert('Restore User thành công')
+        alert('Xoá Owner thành công')
         showOwner()
     })
 }
@@ -622,21 +622,80 @@ function showUser(){
 }
 function showHouse(){
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
-                        Enter the name of the province you want to search
+                        Enter The UserName You Want To Find
                     </h1>
-                    <form
-                            action="#"
-                            class="narrow-w form-search d-flex align-items-stretch mb-3"
-                            data-aos="fade-up"
-                            data-aos-delay="200"
-                    >
-                        <input
-                                type="text"
-                                class="form-control px-4"
-                                placeholder="Name Province..."
-                        />
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>`
+                        <div style="display: flex">
+                            <input
+                                    type="text"
+                                    class="form-control px-4"
+                                    placeholder="Name User..."
+                                    id="nameHouseSearch"
+                                    style="border-radius: 30px"
+                            />
+                            <button type="submit" class="btn btn-primary" onclick="searchUser()">Search</button>
+                        </div>
+                    `
+    document.getElementById("house-slider").innerHTML = "";
+    Promise.all([
+        axios.get("http://localhost:8080/homes",axiosConfig),
+        axios.get("http://localhost:8080/images",axiosConfig)
+    ])
+        .then((res) => {
+            let listHome = res[0].data;
+            let listImg = res[1].data;
+            let listImgOfHome;
+            let str = `<div class="section" id="detail">
+    <div class="container">
+        <div class="row mb-5 align-items-center" id="content1">
+            <div class="col-lg-6">
+                <h2 class="font-weight-bold text-primary heading" >Popular Properties</h2>
+            </div>
+        </div>
+        <div class="row d-flex" id="content2"  style="display: flex">
+            <div class="col-12">
+                <div class="property-slider-wrap mt-xl-5">
+                    <div id="house-slider" class="property-slider" style="display: flex; gap: 10px">
+                    </div>`;
+            for (let i = 0; i < listHome.length; i++) {
+                str += `
+            <div class="property-item">`
+                for (let j = 0; j < listImg.length; j++) {
+                    if (listImg[j].home.id === listHome[i].id) {
+                        str += `
+                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
+                        break;
+                    }
+                }
+                str += `
+                <div class="property-content">
+                <input type="hidden" value="${listHome[i].id}"> 
+                    <div class="price mb-2"><span id="name-home">${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a class="btn btn-primary py-2 px-3" onclick="showHomeDetail(${listHome[i].id})">See details</a>
+                        </div>
+                    </div>
+                </div>
+            `
+            }
+            str += `</div>
+                    </div>
+                </div>
+            </div>
+        </div>`
+            document.getElementById("abc").innerHTML = str;
+        })
 }
 function showAdminDetail(id) {
     document.getElementById('id01').style.display='block'
@@ -816,5 +875,9 @@ function confirmEdit(id) {
         alert("Xác nhận mật khẩu chưa đúng")
     }
 
+}
+function logOut() {
+    localStorage.clear()
+    window.location.href = 'giao_dien_home.html'
 }
 
