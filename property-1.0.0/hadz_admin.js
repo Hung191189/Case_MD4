@@ -33,7 +33,7 @@ function showInfoLogin() {
                 style="margin-left: 20px"/>`;
     })
 }
-showAdmin()
+// showAdmin()
 
 function showAdmin() {
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
@@ -95,6 +95,7 @@ function showAdmin() {
         str += `</div>
     </div>`
         document.getElementById('abc').innerHTML = str
+        document.getElementById('xyz').innerHTML = ""
     })
 }
 
@@ -180,7 +181,11 @@ function searchOwner() {
             if (listOwner.length === 0) {
                 document.getElementById("abc").innerHTML = "<h2 style='text-align: center'><b>Không có Owner nào có tên bạn đang tìm</b></h2>"
                 document.getElementById("nameOwnerSearch").value = ""
+<<<<<<< HEAD
                 document.getElementById("xyz").value = ""
+=======
+                document.getElementById("xyz").innerHTML = ""
+>>>>>>> 2fbad409361ba0d3736e5c5b6b3ef97e1331c770
             } else {
                 let str = `<div class="container">
         <div class="row justify-content-center text-center mb-5">
@@ -222,7 +227,11 @@ function searchOwner() {
     </div>`
                 document.getElementById('abc').innerHTML = str
                 document.getElementById("nameOwnerSearch").value = ""
+<<<<<<< HEAD
                 document.getElementById("xyz").value = ""
+=======
+                document.getElementById("xyz").innerHTML = ""
+>>>>>>> 2fbad409361ba0d3736e5c5b6b3ef97e1331c770
             }
         }
     });
@@ -352,9 +361,15 @@ function showOwnerDetail(id) {
             <h2 class="heading text-primary">Address: ${list.address}</h2>
           `
         if (list.enabled === true) {
+<<<<<<< HEAD
             str += `<button class="btn btn-primary" style="background-color: #0d6efd" onclick="deleteUser(${list.id})">Delete Owner</button>`
         } else {
             str += `<button class="btn btn-primary" style="background-color: #0d6efd" onclick="restoreUser(${list.id})">Restore Owner</button>`
+=======
+            str += `<button class="btn btn-primary" style="background-color: #0d6efd" onclick="deleteOwner(${list.id})">Delete Owner</button>`
+        } else {
+            str += `<button class="btn btn-primary" style="background-color: #0d6efd" onclick="restoreOwner(${list.id})">Restore Owner</button>`
+>>>>>>> 2fbad409361ba0d3736e5c5b6b3ef97e1331c770
         }
         str += `</div>
         </div>
@@ -365,10 +380,35 @@ function showOwnerDetail(id) {
     })
 }
 function deleteUser(id) {
+<<<<<<< HEAD
 
 }
 function restoreUser(id) {
 
+=======
+    axios.put('http://localhost:8080/api/users/true_false/' + id).then((res)=>{
+        alert('dm a Hùng')
+        showUser()
+    })
+}
+function restoreUser(id) {
+    axios.put('http://localhost:8080/api/users/false_true/' + id).then((res)=>{
+        alert('Xoá User thành công')
+        showUser()
+    })
+}
+function deleteOwner(id) {
+    axios.put('http://localhost:8080/api/users/true_false/' + id).then((res)=>{
+        alert('Restore User thành công')
+        showOwner()
+    })
+}
+function restoreOwner(id) {
+    axios.put('http://localhost:8080/api/users/false_true/' + id).then((res)=>{
+        alert('Restore Owner thành công')
+        showOwner()
+    })
+>>>>>>> 2fbad409361ba0d3736e5c5b6b3ef97e1331c770
 }
 
 function searchUser(){
@@ -387,7 +427,11 @@ function searchUser(){
             if (listUser.length === 0) {
                 document.getElementById("abc").innerHTML = "<h2 style='text-align: center'><b>Không có User nào có tên bạn đang tìm</b></h2>"
                 document.getElementById("nameUserSearch").value = ""
+<<<<<<< HEAD
                 document.getElementById("xyz").value = ""
+=======
+                document.getElementById("xyz").innerHTML = ""
+>>>>>>> 2fbad409361ba0d3736e5c5b6b3ef97e1331c770
             } else {
                 let str = `<div class="container">
         <div class="row justify-content-center text-center mb-5">
@@ -429,7 +473,11 @@ function searchUser(){
     </div>`
                 document.getElementById('abc').innerHTML = str
                 document.getElementById("nameUserSearch").value = ""
+<<<<<<< HEAD
                 document.getElementById('xyz').value = ""
+=======
+                document.getElementById('xyz').innerHTML = ""
+>>>>>>> 2fbad409361ba0d3736e5c5b6b3ef97e1331c770
             }
         }
     });

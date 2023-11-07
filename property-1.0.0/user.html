@@ -31,10 +31,16 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
+
+
     <title>
         Property &mdash; Free Bootstrap 5 Website Template by Untree.co
     </title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+
+
 </head>
 <body>
 <div class="site-mobile-menu site-navbar-target">
@@ -59,8 +65,8 @@
     <div id="id02" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
-                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                <div id="showFormEditProfile"></div>
+                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button">&times;</span>
+                <div id="modal_register"></div>
             </div>
         </div>
     </div>
@@ -101,7 +107,7 @@
                     <li><a href="services.html">Services</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="contact.html">Log out</a></li>
+                    <li><a href="giao_dien_home.html">Log out</a></li>
                 </ul>
 
                 <a
@@ -1074,171 +1080,8 @@
 <script src="js/navbar.js"></script>
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>
-<script>
-    let idLogin = localStorage.getItem("idLogin");
-    let getToken = localStorage.getItem("token");
-    const axiosConfig = {
-        headers: {
-            'Authorization': `Bearer` + getToken // Thiết lập header 'Authorization' với giá trị token Bearer
-            // 'Content-Type': 'application/json', // Có thể thay đổi kiểu dữ liệu nếu cần thiết
-        }
-    };
-    const API_URL_HOME = "http://localhost:8080/homes"
-    let API_IMAGE = "http://localhost:8080/images";
-    let API_USER = "http://localhost:8080/api/users";
-    function findByProvince(){
-        let province =
-             document.getElementById("province").value
-        Promise.all([
-            axios.get(API_URL_HOME + "/" + "findByProvince" + "/" + province, axiosConfig),
-            axios.get(API_IMAGE, axiosConfig)
-        ])
-      .then((res) =>{
-          let listHome = res[0].data;
-          let listImg = res[1].data;
-          let str = "";
-          for (let i = 0; i < listHome.length; i++) {
-              str += `
-            <div class="property-item">`
-              for (let j = 0; j < listImg.length; j++) {
-                  if (listImg[j].home.id === listHome[i].id) {
-                      str += `
-                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
-                      break;
-                  }
-              }
-
-              str += `
-                <div class="property-content">
-                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
-                        <div>
-                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
-                            <span class="city d-block mb-3">${listHome[i].province}</span>
-                            <div class="specs d-flex mb-4">
-                                <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
-                                    <span class="caption"></span>
-                                </span>
-                                <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
-                                    <span class="caption"></span>
-                                </span>
-                            </div>
-                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
-                        </div>
-                    </div>
-                </div>
-            `
-          }
-          document.getElementById("showAllHome").innerHTML = str;
-      })
-    }
-    function showAllHome(){
-        document.getElementById("showAllHome").innerHTML = ""
-        Promise.all([
-            axios.get(API_URL_HOME, axiosConfig),
-            axios.get(API_IMAGE, axiosConfig)
-        ])
-       .then((res) =>{
-            let listHome = res[0].data;
-            let listImg = res[1].data;
-            let str = "";
-            for (let i = 0; i < listHome.length; i++) {
-                str += `
-            <div class="property-item">`
-                for (let j = 0; j < listImg.length; j++) {
-                    if (listImg[j].home.id === listHome[i].id) {
-                        str += `
-                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 200px; height: 200px " /></a>`;
-                        break;
-                    }
-                }
-
-                str += `
-                <div class="property-content">
-                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
-                        <div>
-                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
-                            <span class="city d-block mb-3">${listHome[i].province}</span>
-                            <div class="specs d-flex mb-4">
-                                <span class="d-block d-flex align-items-center me-3">
-                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
-                                    <span class="caption"></span>
-                                </span>
-                                <span class="d-block d-flex align-items-center">
-                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
-                                    <span class="caption"></span>
-                                </span>
-                            </div>
-                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
-                        </div>
-                    </div>
-                </div>
-            `
-            }
-           document.getElementById("showAllHome").innerHTML = str;
-        })
-    }
-    function loadUser() {
-        axios.get(API_USER + "/" + idLogin).then((res) =>{
-            let curUser = res.data
-            console.log(curUser)
-            document.getElementById("a").innerHTML = `<span id="user" class="logo m-0 float-start" onclick="showAdminDetail(${curUser.id})">${curUser.name}</span>`;
-            document.getElementById("b").innerHTML = `<img id="img" style="margin-left: 20px; width: 41px"
-                            src=${curUser.image}
-                            class="rounded-circle"
-                            height="41"
-                            alt="Black and White Portrait of a Man"
-                            loading="lazy"
-                />`;
-        })
-    }
-    function showAdminDetail(id) {
-        document.getElementById('id01').style.display='block'
-        axios.get('http://localhost:8080/api/users' + '/' + id).then((res)=>{
-            let list = res.data
-            let str = `<div class="section">
-      <div class="container">
-        <div class="row justify-content-between">
-          <div class="col-lg-7">
-            <div class="img-property-slide-wrap">
-              <div class="img-property-slide" style="margin-right: 0">
-                <img src="${list.image}" alt="Image" class="img-fluid" />
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4" style="margin-left: 0">
-            <h2 class="heading text-primary"><b>${list.name}</b></h2>
-            <h2 class="heading text-primary">Age: ${list.age}</h2>
-            <h2 class="heading text-primary">Gender: ${list.sex}</h2>
-            <h2 class="heading text-primary">Phone: ${list.phone}</h2>
-            <h2 class="heading text-primary">Address: ${list.address}</h2>
-          `
-            if (id == idLogin) {
-                str += `<button type="button" class="btn btn-primary" style="background-color: #0d6efd" onclick="showEditUser(${list.id})">Edit Profile</button>`
-            }
-            str += `</div>
-        </div>
-      </div>
-    </div>`
-            document.getElementById("showProfile").innerHTML = str
-
-        })
-    }
-    function showEditUser(id){
-        document.getElementById('id01').style.display='none'
-        document.getElementById('id02').style.display='block'
-        axios.get('http://localhost:8080/api/users' + '/' + id).then((res) =>{
-            let curUser = res.data;
-            let str = '';
-
-            document.getElementById("showFormEditProfile").innerHTML = str
-
-        })
-    }
-    loadUser();
-    showAllHome();
-</script>
+<script src="scss/fireBaseUser.js"></script>
+<script src="user.js"></script>
 </body>
 </html>
 

@@ -139,20 +139,41 @@ function saveNewImage(nameHome) {
         });
 }
 function createNewHome() {
-    let data = {
-        name: document.getElementById("house-name").value,
-        bathroom: document.getElementById("baths").value,
-        bedroom: document.getElementById("beds").value,
-        description: document.getElementById("description").value,
-        price: document.getElementById("price").value,
-        province: document.getElementById("city").value,
-        district: document.getElementById("district").value,
-        ward: document.getElementById("ward").value,
-        address: document.getElementById("house-address").value,
-        user:
-            {
-                id: localStorage.getItem("idLogin")
-            }
+    let data = {}
+    if (document.getElementById("house-id").value !==  null) {
+        data = {
+            id: document.getElementById("house-id").value,
+            name: document.getElementById("house-name").value,
+            bathroom: document.getElementById("baths").value,
+            bedroom: document.getElementById("beds").value,
+            description: document.getElementById("description").value,
+            price: document.getElementById("price").value,
+            province: document.getElementById("city").value,
+            district: document.getElementById("district").value,
+            ward: document.getElementById("ward").value,
+            address: document.getElementById("house-address").value,
+            user:
+                {
+                    id: localStorage.getItem("idLogin")
+                }
+        }
+        // axios.post(API)
+    } else {
+        data = {
+            name: document.getElementById("house-name").value,
+            bathroom: document.getElementById("baths").value,
+            bedroom: document.getElementById("beds").value,
+            description: document.getElementById("description").value,
+            price: document.getElementById("price").value,
+            province: document.getElementById("city").value,
+            district: document.getElementById("district").value,
+            ward: document.getElementById("ward").value,
+            address: document.getElementById("house-address").value,
+            user:
+                {
+                    id: localStorage.getItem("idLogin")
+                }
+        }
     }
     axios.post(API_HOME,data,axiosConfig).then(() => {
         console.log("Tạo mới home")
@@ -183,6 +204,13 @@ function showHomeDetail(idHome) {
         if (home.id === listImg[i].home.id) {
             console.log(listImg[i])
             listImgOfHome.push(listImg[i])
+            // Hàm so sánh
+            const compareById = (a, b) => {
+                return b.id - a.id;
+            };
+
+            // Sắp xếp mảng
+            listImgOfHome.sort(compareById);
         }
     }
     console.log(listImgOfHome[0])
@@ -263,19 +291,29 @@ function showHomeDetail(idHome) {
         <div class="col-8 h4">${(home.status === 1) ? 'Đang trống' : (home.status === 2) ? 'Đang được thuê' : 'Đang ngừng cho thuê'}</div>
     </div>
     <div class="row justify-content-lg-center">
-        <div class="col-3 btn btn-primary h4" onclick="showFormEditHome(${home.id})">Edit</div>
-        <div class="col-3 btn btn-primary h4" onclick="changeStatus3(${home.id})">Delete</div>
+        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="showFormEditHome(${home.id})">Edit</div>
+<!--        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#editHome">Edit</div>-->
+        <div class="col-3 btn btn-primary h4"  onclick="changeStatus3(home)">Delete</div>
     </div>
 </div>
     `
     })
 }
-function changeStatus3(idHome) {
+function changeStatus3(home) {
     axios.delete(API_HOME + "/" + idHome,axiosConfig).then(() => {
     alert("Đã xóa!!!")
         location.reload()
     })
 }
 function showFormEditHome(idHome) {
-
+    axios.get(API_HOME + "/" + idHome, axiosConfig).then((res) => {
+        let home = res.data
+        document.querySelector("#house-name").value = home.name
+        document.querySelector("#beds").value = home.bedroom
+        document.querySelector("#baths").value = home.bathroom
+        document.querySelector("#house-address").value = home.address
+        document.querySelector("#description").value = home.description
+        document.querySelector("#price").value = home.price
+        document.querySelector("#house-id").value = home.id
+    })
 }
