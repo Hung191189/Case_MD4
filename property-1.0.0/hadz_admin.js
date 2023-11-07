@@ -593,7 +593,7 @@ function showUser(){
 }
 function showHouse(){
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
-                        Enter The UserName You Want To Find
+                        Enter The Province You Want To Find
                     </h1>
                         <div style="display: flex">
                             <input
@@ -607,6 +607,7 @@ function showHouse(){
                         </div>
                     `
     document.getElementById("abc").innerHTML = ""
+    document.getElementById("xyz").innerHTML = ""
     Promise.all([
         axios.get('http://localhost:8080/homes', axiosConfig),
         axios.get('http://localhost:8080/images', axiosConfig)
@@ -614,23 +615,54 @@ function showHouse(){
         .then((res) => {
             let listHome = res[0].data;
             let listImg = res[1].data;
-            let str = "";
-            str += `<div class = "container">
-                <div class = "row">`
+            let str1 = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List User Illegal
+                </h2>
+                <p class="text-black-50">
+                
+                </p>
+            </div>
+        </div>
+        <div class="row">`
+            let str2 = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List User Valid
+                </h2>
+                <p class="text-black-50">
+                
+                </p>
+            </div>
+        </div>
+        <div class="row">`
 
             for (let i = 0; i < listHome.length; i++) {
-                str += `
-            <div class = "col-3">
-            <div class="property-item">`
                 for (let j = 0; j < listImg.length; j++) {
                     if (listImg[j].home.id === listHome[i].id) {
-                        str += `
+                        if (listHome[i].status === 3) {
+                            str1 +=`
+            <div class = "col-3">
+            <div class="property-item">`
+                            str1 += `
                     <a style="margin-bottom: 100px"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 262px " /></a>`;
-                        break;
+                            break;
+                        } else {
+                            str2 += `
+            <div class = "col-3">
+            <div class="property-item">`
+                            str2 += `
+                    <a style="margin-bottom: 100px"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 262px " /></a>`;
+                            break;
+                        }
+
                     }
                 }
-
-                str += `
+                if (listHome[i].status === 3) {
+                    str1 += `
                 <div class="property-content" style="margin-top: 0; margin-bottom: 20px">
                     <div class="price mb-2"><span>${listHome[i].name}</span></div>
                         <div>
@@ -652,11 +684,38 @@ function showHouse(){
                 </div>
                 </div>
             `
+                } else {
+                    str2 += `
+                <div class="property-content" style="margin-top: 0; margin-bottom: 20px">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a onclick="viewHomeDetail(${listHome[i].id})" class="btn btn-primary py-2 px-3">See details</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            `
+                }
+
             }
-            str +=  `</div>`
-            str += `</div>`
-            document.getElementById("abc").innerHTML = str;
-            document.getElementById("xyz").innerHTML = ''
+            str1 +=  `</div>`
+            str1 += `</div>`
+            str2 +=  `</div>`
+            str2 += `</div>`
+            document.getElementById("abc").innerHTML = str2;
+            document.getElementById("xyz").innerHTML = str1;
         })
 }
 
