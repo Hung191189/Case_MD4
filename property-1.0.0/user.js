@@ -70,8 +70,12 @@ function showAllHome() {
             let listHome = res[0].data;
             let listImg = res[1].data;
             let str = "";
+            str += `<div class = "container">
+                <div class = "row">`
+
             for (let i = 0; i < listHome.length; i++) {
                 str += `
+            <div class = "col-3">
             <div class="property-item">`
                 for (let j = 0; j < listImg.length; j++) {
                     if (listImg[j].home.id === listHome[i].id) {
@@ -97,12 +101,15 @@ function showAllHome() {
                                     <span class="caption"></span>
                                 </span>
                             </div>
-                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                            <a onclick="viewHomeDetail(${listHome[i].id})" class="btn btn-primary py-2 px-3">See details</a>
                         </div>
                     </div>
                 </div>
+                </div>
             `
             }
+            str +=  `</div>`
+           str += `</div>`
             document.getElementById("showAllHome").innerHTML = str;
         })
 }
@@ -375,4 +382,118 @@ function logOut(){
     localStorage.clear();
     window.location.href = "giao_dien_home.html";
 }
-showCarousel();
+function viewHomeDetail(idHome) {
+    document.getElementById("content2").innerHTML = ""
+    document.getElementById("showAllHome").innerHTML = `
+                <div class="col-lg-6">
+                    <h2 class="font-weight-bold text-primary heading" >Home Detail</h2>
+                </div>
+`
+    let listImgOfHome = [];
+    Promise.all([
+        axios.get(API_URL_HOME + "/" + idHome, axiosConfig),
+        axios.get(API_IMAGE, axiosConfig)
+    ])
+        .then((res) => {
+            let home = res[0].data;
+            let listImg = res[1].data;
+
+            for (let i = 0; i < listImg.length; i++) {
+                if (home.id === listImg[i].home.id) {
+                    console.log(listImg[i])
+                    listImgOfHome.push(listImg[i])
+                    // Hàm so sánh
+                    const compareById = (a, b) => {
+                        return b.id - a.id;
+                    };
+
+                    // Sắp xếp mảng
+                    listImgOfHome.sort(compareById);
+                }
+            }
+            console.log(listImgOfHome[0])
+            console.log(listImgOfHome[1])
+            console.log(listImgOfHome[2])
+            console.log(listImgOfHome[3])
+            console.log(listImgOfHome[4])
+            document.getElementById("content2").innerHTML = `
+<div id="demo" class="carousel slide col-6" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" data-slide-to="3"></li>
+    <li data-target="#demo" data-slide-to="4"></li>
+  </ul>
+  
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src=${listImgOfHome[0].url} alt="Los Angeles" width="500" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src=${listImgOfHome[1].url} alt="Chicago" width="500" height="500">
+    </div>
+        <div class="carousel-item">
+      <img src=${listImgOfHome[2].url} alt="Chicago" width="500" height="500">
+    </div>
+        <div class="carousel-item">
+      <img src=${listImgOfHome[3].url} alt="Chicago" width="500" height="500">
+    </div>
+    <div class="carousel-item">
+      <img src=${listImgOfHome[4].url} alt="New York" width="500" height="500">
+    </div>
+  </div>
+  
+  
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+<div class="col-6 round3">
+    <div class="row">
+        <input type="hidden" id="home-id" value="${home.id}">
+    </div>
+    <div class="row">
+        <div class="col-4 h4">House name:</div>
+        <div class="col-8 h4">${home.name}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Number of bedroom:</div>
+        <div class="col-8 h4">${home.bedroom}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Number of bathroom:</div>
+        <div class="col-8 h4">${home.bathroom}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Address:</div>
+        <div class="col-8 h4">${home.address}, ${home.ward}, ${home.district}, ${home.province}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Description</div>
+        <div class="col-8 h4">${home.description}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Price:</div>
+        <div class="col-8 h4">${home.price} $</div>
+    </div>
+    <div class="row">
+        <div class="col-4 h4">Trạng thái:</div>
+        <div class="col-8 h4">${(home.status === 1) ? 'Đang trống' : (home.status === 2) ? 'Đang được thuê' : 'Đang ngừng cho thuê'}</div>
+    </div>
+    <div class="row justify-content-lg-center">
+        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="showFormEditHome(${home.id})">Edit</div>
+<!--        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#editHome">Edit</div>-->
+        <div class="col-3 btn btn-primary h4"  onclick="changeStatus3(home)">Delete</div>
+    </div>
+</div>
+    `
+        })
+}
