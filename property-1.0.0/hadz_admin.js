@@ -755,16 +755,29 @@ function viewHomeDetail(id) {
                                 <div class="col-4 h4">Trạng thái:</div>
                                 <div class="col-8 h4">${(home.status === 1) ? 'Đang trống' : (home.status === 2) ? 'Đang được thuê' : 'Đang ngừng cho thuê'}</div>
                             </div>
-                            <div class="row justify-content-lg-center">
-                                <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="showFormEditHome(${home.id})">Edit</div>
-                        <!--        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#editHome">Edit</div>-->
-                                <div class="col-3 btn btn-primary h4"  onclick="changeStatus3(${home.id})">Delete</div>
-                            </div>
+                            <div class="row justify-content-lg-center">`
+                        if (home.status === 3) {
+                            str += `<div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="restoreHome(${home.id})">Restore</div>`
+
+                        } else {
+                            str += `<div class="col-3 btn btn-primary h4"  onclick="deleteHome(${home.id})">Delete</div>`
+                        }
+
+                        str +=`</div>
                         </div>
                             </div>`
         document.getElementById("showProfile").innerHTML = str;
     })
 }
+
+function restoreHome(id) {
+
+}
+
+function deleteHome(id) {
+
+}
+
 function showAdminDetail(id) {
     document.getElementById('id01').style.display='block'
     axios.get('http://localhost:8080/api/users' + '/' + id).then((res)=>{
