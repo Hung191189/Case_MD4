@@ -88,8 +88,8 @@
                     />
                 </span>
                 <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-                    <li><a onclick="showAllHouse()">ALL HOUSE</a></li>
-                    <li><a onclick="showAllHouse()">MY HOUSE LIST</a></li>
+                    <li><a onclick="refresh()">ALL HOUSE</a></li>
+                    <li><a onclick="refresh()">MY HOUSE LIST</a></li>
                     <li><a data-toggle="modal" data-target="#myModal">ADD HOUSE</a></li>
                     <li><a>RENTAL HISTORY</a></li>
                     <li><a>MANAGER ACCOUNT</a></li>
@@ -122,10 +122,6 @@
                 <div class="property-slider-wrap mt-xl-5">
                     <div id="house-slider" class="property-slider" style="display: flex; gap: 10px">Danh sách này
                         rỗng!!!
-                    </div>
-                    <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
-                        <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
-                        <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
                     </div>
                 </div>
             </div>
@@ -201,12 +197,6 @@
     </div>
 </div>
 <!--MODAL THÊM MỚI HOUSE-->
-<div id="overlayer"></div>
-<div class="loader">
-    <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script src="apiAddress.js"></script>
