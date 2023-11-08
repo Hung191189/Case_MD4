@@ -550,7 +550,8 @@ function rentHome(idHome) {
             locale: {
                 firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
             },
-            disable: [disableDates("2023-11-12", "2023-11-15")], // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
+
+            disable: [disableDates("2023-1-1", "2023-1-2")], // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
             onChange: function(selectedDates, dateStr, instance) {
                 // Khi người dùng chọn ngày check-in, cập nhật điều kiện cho ngày check-out
                 let checkOutDateInput = document.getElementById("checkOutDate");
@@ -565,7 +566,7 @@ function rentHome(idHome) {
             locale: {
                 firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
             },
-            disable: [disableDates("2023-11-12", "2023-11-15")] // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
+            disable: [disableDates("2023-1-1", "2023-1-2")] // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
         });
     })
 
@@ -609,15 +610,16 @@ function calculate(idHome) {
         for (let i = 0; i < list.length; i++) {
             if (list[i].home.id === idHome) {
                 listPrice.push(list[i])
-                // }
-                // let compareByDate = (a, b) => {
-                //     return b.date - a.date;
-                // }
-                // // Sắp xếp mảng
-                // listPrice.sort(compareByDate);
-                // console.log(listPrice)
+                }
+                let compareByDate = (a, b) => {
+                    return b.date - a.date;
+                }
+                // Sắp xếp mảng
+                listPrice.sort(compareByDate);
+                console.log(listPrice)
             }
             console.log(listPrice[0])
+            console.log(listPrice[listPrice.length - 1])
             let price = listPrice[listPrice.length - 1].price * deltaDay
             document.getElementById("formRent").innerHTML =
                 `
@@ -644,7 +646,6 @@ function calculate(idHome) {
             </div>
         </div>
             `
-        }
     })
 }
 function createBill(idHome) {

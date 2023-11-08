@@ -100,7 +100,6 @@ function saveNewImage(nameHome) {
     const uploadPromises = files.map((file) => {
         // Tạo tham chiếu đến nơi bạn muốn lưu trữ ảnh trong Storage
         const storageRef = storage.ref("images/" + file.name);
-
         // Tải file lên Firebase Storage và trả về Promise của việc lấy URL
         return storageRef.put(file).then((snapshot) => {
             console.log("Uploaded a file: " + file.name);
@@ -112,6 +111,7 @@ function saveNewImage(nameHome) {
     // Sử dụng Promise.all để đợi tất cả các Promise hoàn thành
     Promise.all(uploadPromises)
         .then((urls) => {
+            console.log(urls)
             // urls chứa một mảng các URL của các ảnh đã tải lên
             axios.get(API_HOME).then((res) => {
                 let listHome = res.data
@@ -197,6 +197,8 @@ function createNewHomeAndImg() {
     let nameHouse = document.getElementById("house-name").value
     createNewHome()
     setTimeout(saveNewImage(nameHouse),0)
+    // setTimeout(location.reload(),1000)
+    // location.reload()
 }
 function showHomeDetail(idHome) {
     document.getElementById("content2").innerHTML = ""
