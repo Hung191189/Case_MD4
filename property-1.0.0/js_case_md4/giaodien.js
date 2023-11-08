@@ -126,7 +126,7 @@ function register() {
                     enabled: true
                 }
                 axios.post(URL + "users/register", user, config).then((response) => {
-                    alert("update thành công")
+                    alert("Đăng ký thành công")
                     document.getElementById("modal_register").style.display = "none"
                 })
                 event.preventDefault();
