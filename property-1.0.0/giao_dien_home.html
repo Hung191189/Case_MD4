@@ -837,11 +837,13 @@
                                            style="margin-left: 200px">Name</label>
                                     <input type="text" class="form-control" id="name_register"
                                            aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                    <p id="nameError"></p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="age_register" class="form-label" style="margin-left: 210px">Age</label>
                                     <input type="text" class="form-control" id="age_register"
                                            aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                    <p id="ageError"></p>
                                 </div>
                             </div>
                             <div style="display: flex">
@@ -855,20 +857,22 @@
                                     <label for="sex_register" class="form-label" style="margin-left: 210px">Sex</label>
                                     <input type="text" class="form-control" id="sex_register"
                                            aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                    <p id="sexError"></p>
                                 </div>
                             </div>
                             <div style="display: flex">
                                 <div class="mb-3">
-                                    <label for="user_name_register" class="form-label" style="margin-left: 200px">User
-                                        name</label>
+                                    <label for="user_name_register" class="form-label" style="margin-left: 200px">Email</label>
                                     <input type="text" class="form-control" id="user_name_register"
                                            aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                    <p id="emailError"></p>
                                 </div>
                                 <div class="mb-3">
                                     <label for="phone_register" class="form-label"
                                            style="margin-left: 200px">Phone</label>
                                     <input type="text" class="form-control" id="phone_register"
                                            aria-describedby="emailHelp" style="width: 400px; margin-left: 20px">
+                                    <p id="phoneError"></p>
                                 </div>
                             </div>
 
@@ -907,7 +911,7 @@
                         <div style="text-align: center">
                             <button type="submit" class="btn btn-primary" onclick="home()" style="width: 100px">back
                             </button>
-                            <button type="submit" class="btn btn-primary" onclick="register()" style="width: 100px">
+                            <button type="submit" class="btn btn-primary" onclick="validateForm()" style="width: 100px">
                                 Register
                             </button>
                         </div>
@@ -925,7 +929,7 @@
 <script src="js/navbar.js"></script>
 <script src="js/counter.js"></script>
 <script src="js/custom.js"></script>
-
+<script src="validate.js"></script>
 
 </body>
 </html>
