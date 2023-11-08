@@ -71,7 +71,7 @@ public class HomeController {
     @PostMapping("")
     public ResponseEntity<Home> saveHome(@RequestBody Home home) {
         iHomeService.save(home);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(iHomeService.save(home), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -85,7 +85,7 @@ public class HomeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Home> deleteHome(@PathVariable Long id) {
         Optional<Home> homeOptional = iHomeService.findById(id);
         if (!homeOptional.isPresent()) {
@@ -95,6 +95,23 @@ public class HomeController {
         iHomeService.save(homeOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @DeleteMapping("/restore/{id}")
+    public ResponseEntity<Home> restoreHome(@PathVariable Long id) {
+        Optional<Home> homeOptional = iHomeService.findById(id);
+        if (!homeOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        homeOptional.get().setStatus(1);
+        iHomeService.save(homeOptional.get());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/findValid")
+    public ResponseEntity<Iterable<Home>> findAllByStatus12() {
+        List<Home> homeList = (List<Home>) ((HomeService) iHomeService).findAllByStatus12();
+        if (homeList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(homeList, HttpStatus.OK);
+    }
 
 }

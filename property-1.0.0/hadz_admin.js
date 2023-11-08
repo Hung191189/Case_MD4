@@ -593,7 +593,7 @@ function showUser(){
 }
 function showHouse(){
     document.getElementById('showOption').innerHTML= `<h1 class="heading" data-aos="fade-up">
-                        Enter The UserName You Want To Find
+                        Enter The Province You Want To Find
                     </h1>
                         <div style="display: flex">
                             <input
@@ -603,44 +603,68 @@ function showHouse(){
                                     id="nameHouseSearch"
                                     style="border-radius: 30px"
                             />
-                            <button type="submit" class="btn btn-primary" onclick="searchUser()">Search</button>
+                            <button type="submit" class="btn btn-primary" onclick="searchHome()">Search</button>
                         </div>
                     `
-    document.getElementById("house-slider").innerHTML = "";
+    document.getElementById("abc").innerHTML = ""
+    document.getElementById("xyz").innerHTML = ""
     Promise.all([
-        axios.get("http://localhost:8080/homes",axiosConfig),
-        axios.get("http://localhost:8080/images",axiosConfig)
+        axios.get('http://localhost:8080/homes', axiosConfig),
+        axios.get('http://localhost:8080/images', axiosConfig)
     ])
         .then((res) => {
             let listHome = res[0].data;
             let listImg = res[1].data;
-            let listImgOfHome;
-            let str = `<div class="section" id="detail">
-    <div class="container">
-        <div class="row mb-5 align-items-center" id="content1">
-            <div class="col-lg-6">
-                <h2 class="font-weight-bold text-primary heading" >Popular Properties</h2>
+            let str1 = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List User Illegal
+                </h2>
+                <p class="text-black-50">
+                
+                </p>
             </div>
         </div>
-        <div class="row d-flex" id="content2"  style="display: flex">
-            <div class="col-12">
-                <div class="property-slider-wrap mt-xl-5">
-                    <div id="house-slider" class="property-slider" style="display: flex; gap: 10px">
-                    </div>`;
+        <div class="row">`
+            let str2 = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List User Valid
+                </h2>
+                <p class="text-black-50">
+                
+                </p>
+            </div>
+        </div>
+        <div class="row">`
+
             for (let i = 0; i < listHome.length; i++) {
-                str += `
-            <div class="property-item">`
                 for (let j = 0; j < listImg.length; j++) {
                     if (listImg[j].home.id === listHome[i].id) {
-                        str += `
-                    <a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
-                        break;
+                        if (listHome[i].status === 3) {
+                            str1 +=`
+            <div class = "col-3">
+            <div class="property-item">`
+                            str1 += `
+                    <a style="margin-bottom: 100px"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 262px " /></a>`;
+                            break;
+                        } else {
+                            str2 += `
+            <div class = "col-3">
+            <div class="property-item">`
+                            str2 += `
+                    <a style="margin-bottom: 100px"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 262px " /></a>`;
+                            break;
+                        }
+
                     }
                 }
-                str += `
-                <div class="property-content">
-                <input type="hidden" value="${listHome[i].id}"> 
-                    <div class="price mb-2"><span id="name-home">${listHome[i].name}</span></div>
+                if (listHome[i].status === 3) {
+                    str1 += `
+                <div class="property-content" style="margin-top: 0; margin-bottom: 20px">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
                         <div>
                             <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
                             <span class="city d-block mb-3">${listHome[i].province}</span>
@@ -654,20 +678,251 @@ function showHouse(){
                                     <span class="caption"></span>
                                 </span>
                             </div>
-                            <a class="btn btn-primary py-2 px-3" onclick="showHomeDetail(${listHome[i].id})">See details</a>
+                            <a onclick="viewHomeDetail(${listHome[i].id})" class="btn btn-primary py-2 px-3">See details</a>
                         </div>
                     </div>
                 </div>
+                </div>
             `
-            }
-            str += `</div>
+                } else {
+                    str2 += `
+                <div class="property-content" style="margin-top: 0; margin-bottom: 20px">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a onclick="viewHomeDetail(${listHome[i].id})" class="btn btn-primary py-2 px-3">See details</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>`
-            document.getElementById("abc").innerHTML = str;
+                </div>
+            `
+                }
+
+            }
+            str1 +=  `</div>`
+            str1 += `</div>`
+            str2 +=  `</div>`
+            str2 += `</div>`
+            console.log(str2)
+            document.getElementById("abc").innerHTML = str2;
+            document.getElementById("xyz").innerHTML = str1;
         })
 }
+
+function searchHome() {
+    let name = document.getElementById("nameHouseSearch").value;
+    if (name === ""){
+        return
+    } else {
+        document.getElementById("abc").innerHTML = ""
+        document.getElementById("xyz").innerHTML = ""
+        Promise.all([
+            axios.get('http://localhost:8080/homes/findByProvince/' + name, axiosConfig),
+            axios.get('http://localhost:8080/images', axiosConfig)
+        ])
+            .then((res)=>{
+                let listAllHome = res[0].data;
+                let listHome = []
+                let listImg = res[1].data;
+                for (let i = 0; i <listAllHome.length; i ++) {
+                    if (listAllHome[i].status !== 3) {
+                        listHome.push(listAllHome[i])
+                    }
+                }
+                if (listHome.length === 0) {
+                    document.getElementById("abc").innerHTML = "<h2 style='text-align: center'><b>Không có nhà nào tại tỉnh bạn đang tìm</b></h2>"
+                    document.getElementById("nameHouseSearch").value = ""
+                    document.getElementById("xyz").innerHTML = ""
+                } else {
+                    let str = `<div class="container">
+        <div class="row justify-content-center text-center mb-5">
+            <div class="col-lg-6 mb-5">
+                <h2 class="font-weight-bold heading text-primary mb-4" style="margin-bottom: 20px">
+                    List User Valid
+                </h2>
+                <p class="text-black-50">
+                
+                </p>
+            </div>
+        </div>
+        <div class="row">`
+                    for (let i = 0; i < listHome.length; i++) {
+                        for (let j = 0; j < listImg.length; j++) {
+                            if (listImg[j].home.id === listHome[i].id) {
+                                str +=`
+                                    <div class = "col-3">
+                                    <div class="property-item">`
+                                str += `
+                                     <a style="margin-bottom: 100px"><img src="${listImg[j].url}" alt="Image" class="img-fluid" style="width: 100%; height: 262px " /></a>`;
+                                break;
+                            }
+                        }
+                        str += `
+                <div class="property-content" style="margin-top: 0; margin-bottom: 20px">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a onclick="viewHomeDetail(${listHome[i].id})" class="btn btn-primary py-2 px-3">See details</a>
+                        </div>
+                    </div>
+                </div>
+                </div>`
+                    }
+                    str +=  `</div>`
+                    str += `</div>`
+                    document.getElementById("abc").innerHTML = str;
+                    document.getElementById("xyz").innerHTML = '';
+                }
+            })
+    }
+}
+
+function viewHomeDetail(id) {
+    document.getElementById('id01').style.display='block'
+    let listImgOfHome = [];
+    Promise.all([
+        axios.get('http://localhost:8080/homes' + "/" + id, axiosConfig),
+        axios.get('http://localhost:8080/images', axiosConfig)
+    ])
+        .then((res) => {
+            let home = res[0].data;
+            let listImg = res[1].data;
+
+            for (let i = 0; i < listImg.length; i++) {
+                if (home.id === listImg[i].home.id) {
+                    console.log(listImg[i])
+                    listImgOfHome.push(listImg[i])
+                    // Hàm so sánh
+                    const compareById = (a, b) => {
+                        return b.id - a.id;
+                    };
+
+                    // Sắp xếp mảng
+                    listImgOfHome.sort(compareById);
+                }
+            }
+        let str =  `<div style = "display: flex">
+                             <div id="demo" class="carousel slide col-6" data-ride="carousel">
+                          <!-- Indicators -->
+                          <ul class="carousel-indicators">
+                            <li data-target="#demo" data-slide-to="0" class="active"></li>
+                            <li data-target="#demo" data-slide-to="1"></li>
+                            <li data-target="#demo" data-slide-to="2"></li>
+                            <li data-target="#demo" data-slide-to="3"></li>
+                            <li data-target="#demo" data-slide-to="4"></li>
+                          </ul>
+                          
+                          <!-- The slideshow -->
+                          <div class="carousel-inner" style="margin-left: 0">
+                            <div class="carousel-item active">
+                              <img src=${listImgOfHome[0].url} alt="Los Angeles" width="500" height="500">
+                            </div>
+                            <div class="carousel-item">
+                              <img src=${listImgOfHome[1].url} alt="Chicago" width="500" height="500">
+                            </div>
+                                <div class="carousel-item">
+                              <img src=${listImgOfHome[2].url} alt="Chicago" width="500" height="500">
+                            </div>
+                                <div class="carousel-item">
+                              <img src=${listImgOfHome[3].url} alt="Chicago" width="500" height="500">
+                            </div>
+                            <div class="carousel-item">
+                              <img src=${listImgOfHome[4].url} alt="New York" width="500" height="500">
+                            </div>
+                          </div>
+                          
+                          
+                          <!-- Left and right controls -->
+                          <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                          </a>
+                          <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                          </a>
+                        </div>
+                        <div class="col-6 round3">
+                            <div class="row">
+                                <input type="hidden" id="home-id" value="${home.id}">
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">House name:</div>
+                                <div class="col-8 h4">${home.name}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Number of bedroom:</div>
+                                <div class="col-8 h4">${home.bedroom}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Number of bathroom:</div>
+                                <div class="col-8 h4">${home.bathroom}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Address:</div>
+                                <div class="col-8 h4">${home.address}, ${home.ward}, ${home.district}, ${home.province}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Description</div>
+                                <div class="col-8 h4">${home.description}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Price:</div>
+                                <div class="col-8 h4">${home.price} $</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 h4">Trạng thái:</div>
+                                <div class="col-8 h4">${(home.status === 1) ? 'Đang trống' : (home.status === 2) ? 'Đang được thuê' : 'Đang ngừng cho thuê'}</div>
+                            </div>
+                            <div class="row justify-content-lg-center">`
+                        if (home.status === 3) {
+                            str += `<div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="restoreHome(${home.id})">Restore</div>`
+
+                        } else {
+                            str += `<div class="col-3 btn btn-primary h4"  onclick="deleteHome(${home.id})">Delete</div>`
+                        }
+
+                        str +=`</div>
+                        </div>
+                            </div>`
+        document.getElementById("showProfile").innerHTML = str;
+    })
+}
+
+function restoreHome(id) {
+    axios.delete('http://localhost:8080/homes/restore/' + id).then((res)=>{
+        alert("Restore Home thành công")
+        showHouse()
+    })
+}
+
+function deleteHome(id) {
+    axios.delete('http://localhost:8080/homes/delete/' + id).then((res)=>{
+        alert("Delete Home thành công")
+        showHouse()
+    })
+}
+
 function showAdminDetail(id) {
     document.getElementById('id01').style.display='block'
     axios.get('http://localhost:8080/api/users' + '/' + id).then((res)=>{

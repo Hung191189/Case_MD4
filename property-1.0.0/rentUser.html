@@ -1,0 +1,450 @@
+<!-- /*
+* Template Name: Property
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Untree.co" />
+    <link rel="shortcut icon" href="favicon.png" />
+
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap5" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css" />
+
+    <link rel="stylesheet" href="css/tiny-slider.css" />
+    <link rel="stylesheet" href="css/aos.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <title>
+        USER_VIP_PRO
+    </title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+</head>
+<body>
+<div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close">
+            <span class="icofont-close js-menu-toggle"></span>
+        </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+</div>
+<div class="w3-container">
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div id="showProfile"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w3-container">
+    <div id="id02" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <div id="showFormEditProfile"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="site-nav">
+    <div class="container">
+        <div class="menu-bg-wrap">
+            <div class="site-navigation">
+                <span id="a"><a id="user" class="logo m-0 float-start">OWNER MANAGER</a></span>
+                <span id="b">
+                    <img id="img"
+                         src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                         class="rounded-circle"
+                         height="41"
+                         alt="Black and White Portrait of a Man"
+                         loading="lazy"
+                    />
+                </span>
+                <ul
+                        class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
+                >
+                    <li class="active"><a href="giao_dien_home.html">Home</a></li>
+                    <li class="has-children">
+                        <a href="properties.html">Properties</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Buy Property</a></li>
+                            <li><a href="#">Sell Property</a></li>
+                            <li class="has-children">
+                                <a href="#">Dropdown</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">Sub Menu One</a></li>
+                                    <li><a href="#">Sub Menu Two</a></li>
+                                    <li><a href="#">Sub Menu Three</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="contact.html">Log out</a></li>
+                </ul>
+
+                <a
+                        href="#"
+                        class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
+                        data-toggle="collapse"
+                        data-target="#main-navbar"
+                >
+                    <span></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="hero">
+    <div class="hero-slide">
+        <div class="img overlay" style="background-image: url('images/hero_bg_3.jpg')"></div>
+        <div class="img overlay" style="background-image: url('images/hero_bg_2.jpg')"></div>
+        <div class="img overlay" style="background-image: url('images/hero_bg_1.jpg')"></div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-9 text-center">
+                <h1 class="heading" data-aos="fade-up">FIND HOME HERE</h1>
+                <div class="narrow-w form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
+                    <label for="province"></label><input type="text" class="form-control px-4" id = "province" placeholder="Text here!!!"/>
+                    <button type="submit" class="btn btn-primary" onclick="findByProvince()">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Hiện danh sách nhà-->
+<div class="section">
+    <div class="container">
+        <div class="row mb-5 align-items-center">
+            <div class="col-lg-6">
+                <h2 class="font-weight-bold text-primary heading">ALL HOME FOR RENT</h2>
+            </div>
+            <div class="col-lg-6 text-lg-end">
+                <p><a href="#" target="_blank" class="btn btn-primary text-white py-3 px-4">VIEW ALL</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="property-slider-wrap">
+                    <div class="property-slider">
+<!--                        ITEM 1-->
+                        <div class="property-item">
+                            <a href="property-single.html" class="img"><img src="images/img_1.jpg" alt="Image" class="img-fluid" /></a>
+                            <div class="property-content">
+                                <div class="price mb-2"><span>$1,291,000</span></div>
+                                <div>
+                                    <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
+                                    <span class="city d-block mb-3">California, USA</span>
+                                    <div class="specs d-flex mb-4">
+                                        <span class="d-block d-flex align-items-center me-3">
+                                            <span class="icon-bed me-2"></span>
+                                            <span class="caption">2 beds</span>
+                                        </span>
+                                        <span class="d-block d-flex align-items-center">
+                                            <span class="icon-bath me-2"></span>
+                                            <span class="caption">2 baths</span>
+                                        </span>
+                                    </div>
+                                    <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                                </div>
+                            </div>
+                        </div>
+<!--                        ITEM 1-->
+                        <!--                        ITEM 1-->
+                        <div class="property-item">
+                            <a href="property-single.html" class="img"><img src="images/img_1.jpg" alt="Image" class="img-fluid" /></a>
+                            <div class="property-content">
+                                <div class="price mb-2"><span>$1,291,000</span></div>
+                                <div>
+                                    <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
+                                    <span class="city d-block mb-3">California, USA</span>
+                                    <div class="specs d-flex mb-4">
+                                        <span class="d-block d-flex align-items-center me-3">
+                                            <span class="icon-bed me-2"></span>
+                                            <span class="caption">2 beds</span>
+                                        </span>
+                                        <span class="d-block d-flex align-items-center">
+                                            <span class="icon-bath me-2"></span>
+                                            <span class="caption">2 baths</span>
+                                        </span>
+                                    </div>
+                                    <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                        ITEM 1-->
+                        <!--                        ITEM 1-->
+                        <div class="property-item">
+                            <a href="property-single.html" class="img"><img src="images/img_1.jpg" alt="Image" class="img-fluid" /></a>
+                            <div class="property-content">
+                                <div class="price mb-2"><span>$1,291,000</span></div>
+                                <div>
+                                    <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
+                                    <span class="city d-block mb-3">California, USA</span>
+                                    <div class="specs d-flex mb-4">
+                                        <span class="d-block d-flex align-items-center me-3">
+                                            <span class="icon-bed me-2"></span>
+                                            <span class="caption">2 beds</span>
+                                        </span>
+                                        <span class="d-block d-flex align-items-center">
+                                            <span class="icon-bath me-2"></span>
+                                            <span class="caption">2 baths</span>
+                                        </span>
+                                    </div>
+                                    <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                        ITEM 1-->
+                        <!--                        ITEM 1-->
+                        <div class="property-item">
+                            <a href="property-single.html" class="img"><img src="images/img_1.jpg" alt="Image" class="img-fluid" /></a>
+                            <div class="property-content">
+                                <div class="price mb-2"><span>$1,291,000</span></div>
+                                <div>
+                                    <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
+                                    <span class="city d-block mb-3">California, USA</span>
+                                    <div class="specs d-flex mb-4">
+                                        <span class="d-block d-flex align-items-center me-3">
+                                            <span class="icon-bed me-2"></span>
+                                            <span class="caption">2 beds</span>
+                                        </span>
+                                        <span class="d-block d-flex align-items-center">
+                                            <span class="icon-bath me-2"></span>
+                                            <span class="caption">2 baths</span>
+                                        </span>
+                                    </div>
+                                    <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                        ITEM 1-->
+                        <!--                        ITEM 1-->
+                        <div class="property-item">
+                            <a href="property-single.html" class="img"><img src="images/img_1.jpg" alt="Image" class="img-fluid" /></a>
+                            <div class="property-content">
+                                <div class="price mb-2"><span>$1,291,000</span></div>
+                                <div>
+                                    <span class="d-block mb-2 text-black-50">5232 California Fake, Ave. 21BC</span>
+                                    <span class="city d-block mb-3">California, USA</span>
+                                    <div class="specs d-flex mb-4">
+                                        <span class="d-block d-flex align-items-center me-3">
+                                            <span class="icon-bed me-2"></span>
+                                            <span class="caption">2 beds</span>
+                                        </span>
+                                        <span class="d-block d-flex align-items-center">
+                                            <span class="icon-bath me-2"></span>
+                                            <span class="caption">2 baths</span>
+                                        </span>
+                                    </div>
+                                    <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                        ITEM 1-->
+                    </div>
+                    <div id="property-nav" class="controls" tabindex="0" aria-label="Carousel Navigation">
+                        <span class="prev" data-controls="prev" aria-controls="property" tabindex="-1">Prev</span>
+                        <span class="next" data-controls="next" aria-controls="property" tabindex="-1">Next</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Hiện danh sách nhà-->
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/tiny-slider.js"></script>
+<script src="js/aos.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/counter.js"></script>
+<script src="js/custom.js"></script>
+<script>
+    let idLogin = localStorage.getItem("idLogin");
+    let getToken = localStorage.getItem("token");
+    const axiosConfig = {
+        headers: {
+            'Authorization': `Bearer` + getToken // Thiết lập header 'Authorization' với giá trị token Bearer
+            // 'Content-Type': 'application/json', // Có thể thay đổi kiểu dữ liệu nếu cần thiết
+        }
+    };
+    const API_URL_HOME = "http://localhost:8080/homes"
+    let API_IMAGE = "http://localhost:8080/images";
+    let API_USER = "http://localhost:8080/api/users";
+    function findByProvince(){
+        let province =
+             document.getElementById("province").value
+        Promise.all([
+            axios.get(API_URL_HOME + "/" + "findByProvince" + "/" + province, axiosConfig),
+            axios.get(API_IMAGE, axiosConfig)
+        ])
+      .then((res) =>{
+          let listHome = res[0].data;
+          let listImg = res[1].data;
+          let str = "";
+          for (let i = 0; i < listHome.length; i++) {
+              str += `
+            <div class="property-item">`
+              for (let j = 0; j < listImg.length; j++) {
+                  if (listImg[j].home.id === listHome[i].id) {
+                      str += `<a href="property-single.html" class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
+                      break;
+                  }
+              }
+              str += `
+                <div class="property-content">
+                    <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                        <div>
+                            <span class="d-block mb-2 text-black-50" style="height: 30px">${listHome[i].address}</span>
+                            <span class="city d-block mb-3">${listHome[i].province}</span>
+                            <div class="specs d-flex mb-4">
+                                <span class="d-block d-flex align-items-center me-3">
+                                    <span class="icon-bed me-2"> ${listHome[i].bedroom} Beds</span>
+                                    <span class="caption"></span>
+                                </span>
+                                <span class="d-block d-flex align-items-center">
+                                    <span class="icon-bath me-2"> ${listHome[i].bathroom} Baths</span>
+                                    <span class="caption"></span>
+                                </span>
+                            </div>
+                            <a href="property-single.html" class="btn btn-primary py-2 px-3">See details</a>
+                        </div>
+                    </div>
+                </div>
+            `
+          }
+          document.getElementById("showAllHome").innerHTML = str;
+      })
+    }
+    function showAllHome(){
+        document.querySelector(".property-slider").innerHTML = "Danh sách này rỗng!!!";
+        Promise.all([
+            axios.get(API_URL_HOME,axiosConfig),
+            axios.get(API_IMAGE,axiosConfig)
+        ])
+            .then((res) => {
+                let listHome = res[0].data;
+                let listImg = res[1].data;
+                let listImgOfHome;
+                let str = "";
+                for (let i = 0; i < listHome.length; i++) {
+                    str += `<div class="property-item">`
+                    for (let j = 0; j < listImg.length; j++) {
+                        if (listImg[j].home.id === listHome[i].id) {
+                            str += `<a class="img"><img src="${listImg[j].url}" alt="Image" class="img-fluid" /></a>`;
+                            break;
+                        }
+                    }
+                    str +=
+                        `
+                            <div class="property-content">
+                                <div class="price mb-2"><span>${listHome[i].name}</span></div>
+                                <div>
+                                    <span class="d-block mb-2 text-black-50">${listHome[i].address}</span>
+                                    <span class="city d-block mb-3">${listHome[i].province}</span>
+                                    <div class="specs d-flex mb-4">
+                                        <span class="d-block d-flex align-items-center me-3">
+                                            <span class="icon-bed me-2"></span>
+                                            <span class="caption">${listHome[i].bedroom} beds</span>
+                                        </span>
+                                        <span class="d-block d-flex align-items-center">
+                                            <span class="icon-bath me-2"></span>
+                                            <span class="caption">${listHome[i].bathroom} baths</span>
+                                        </span>
+                                    </div>
+                                    <a class="btn btn-primary py-2 px-3">See details</a>
+                                </div>
+                            </div>
+                        </div>
+                        `
+                }
+                console.log(str)
+                document.querySelector(".property-slider").innerHTML = str;
+            })
+    }
+    function loadUser() {
+        axios.get(API_USER + "/" + idLogin).then((res) =>{
+            let curUser = res.data
+            console.log(curUser)
+            document.getElementById("a").innerHTML = `<span id="user" class="logo m-0 float-start" onclick="showAdminDetail(${curUser.id})">${curUser.name}</span>`;
+            document.getElementById("b").innerHTML = `<img id="img" style="margin-left: 20px; width: 41px"
+                            src=${curUser.image}
+                            class="rounded-circle"
+                            height="41"
+                            alt="Black and White Portrait of a Man"
+                            loading="lazy"
+                />`;
+        })
+    }
+    function showAdminDetail(id) {
+        document.getElementById('id01').style.display='block'
+        axios.get('http://localhost:8080/api/users' + '/' + id).then((res)=>{
+            let list = res.data
+            let str = `<div class="section">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-lg-7">
+            <div class="img-property-slide-wrap">
+              <div class="img-property-slide" style="margin-right: 0">
+                <img src="${list.image}" alt="Image" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4" style="margin-left: 0">
+            <h2 class="heading text-primary"><b>${list.name}</b></h2>
+            <h2 class="heading text-primary">Age: ${list.age}</h2>
+            <h2 class="heading text-primary">Gender: ${list.sex}</h2>
+            <h2 class="heading text-primary">Phone: ${list.phone}</h2>
+            <h2 class="heading text-primary">Address: ${list.address}</h2>
+          `
+            if (id == idLogin) {
+                str += `<button type="button" class="btn btn-primary" style="background-color: #0d6efd" onclick="showEditUser(${list.id})">Edit Profile</button>`
+            }
+            str += `</div>
+        </div>
+      </div>
+    </div>`
+            document.getElementById("showProfile").innerHTML = str
+
+        })
+    }
+    function showEditUser(id){
+        document.getElementById('id01').style.display='none'
+        document.getElementById('id02').style.display='block'
+        axios.get('http://localhost:8080/api/users' + '/' + id).then((res) =>{
+            let curUser = res.data;
+            let str = '';
+
+            document.getElementById("showFormEditProfile").innerHTML = str
+
+        })
+    }
+    loadUser();
+    showAllHome();
+</script>
+</body>
+</html>
+
