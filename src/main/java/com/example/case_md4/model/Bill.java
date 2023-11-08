@@ -3,6 +3,7 @@ package com.example.case_md4.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class Bill {
     private LocalDate checkin;
     private LocalDate checkout;
     private double price;
+    @CreationTimestamp
     private LocalDate dateOfHire;
     @ManyToOne
     @JoinColumn(name = "id_user")

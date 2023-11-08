@@ -58,7 +58,7 @@ function showAllHouse() {
         let str = "";
         for (let i = 0; i < listHome.length; i++) {
             str += `
-            <div class="property-item">`
+            <div class="property-item col-3">`
             for (let j = 0; j < listImg.length; j++) {
                 if (listImg[j].home.id === listHome[i].id) {
                     str += `
@@ -334,4 +334,7 @@ function showFormEditHome(idHome) {
 function logOut() {
     localStorage.clear()
     window.location.href = 'giao_dien_home.html'
+}
+function refresh() {
+    location.reload()
 }

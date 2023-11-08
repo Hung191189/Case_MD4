@@ -11,6 +11,8 @@ const axiosConfig = {
 const API_URL_HOME = "http://localhost:8080/homes"
 let API_IMAGE = "http://localhost:8080/images";
 let API_USER = "http://localhost:8080/api/users";
+let API_HISTORY_BILL = "http://localhost:8080/historybills"
+let API_BILL = "http://localhost:8080/bills"
 
 function findByProvince() {
     let province =
@@ -370,7 +372,9 @@ function viewHomeDetail(idHome) {
     ])
         .then((res) => {
             let home = res[0].data;
+            console.log(home)
             let listImg = res[1].data;
+            console.log(listImg)
 
             for (let i = 0; i < listImg.length; i++) {
                 if (home.id === listImg[i].home.id) {
@@ -462,7 +466,7 @@ function viewHomeDetail(idHome) {
         <div class="col-4 h4">Trạng thái:</div>
         <div class="col-8 h4">${(home.status === 1) ? 'Đang trống' : (home.status === 2) ? 'Đang được thuê' : 'Đang ngừng cho thuê'}</div>
     </div>
-    <div class="row justify-content-lg-center" id="formRent">
+    <div class="row justify-content-center" id="formRent">
         <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#myModal" onclick="rentHome(${home.id})">Rent House</div>
 <!--        <div class="col-3 btn btn-primary h4" data-toggle="modal" data-target="#editHome">Edit</div>-->
 <!--        <div class="col-3 btn btn-primary h4"  onclick="changeStatus3(home)">Delete</div>-->
@@ -527,40 +531,50 @@ function showAllHomeByStatus(){
 showAllHomeByStatus();
 
 function rentHome(idHome) {
-    document.getElementById("formRent").innerHTML =
-        `
+    axios.get(API_URL_HOME + "/" + idHome,axiosConfig).then((res) => {
+        let home = res.data
+        document.getElementById("formRent").innerHTML =
+            `
+    <input type="hidden" id="idHomeRent" value="${home.id}">
+    <input type="hidden" id="nameHomeRent" value="${home.name}">
     <label for="checkInDate">Check In:</label>
-    <input type="text" id="checkInDate">
+    <input type="date" id="checkInDate">
     <label for="checkOutDate">Check Out:</label>
-    <input type="text" id="checkOutDate">
-    <button>OK</button>
+    <input type="date" id="checkOutDate">
+    <button onclick="calculate(${home.id})">OK</button>
         `
-    var checkInDateInput = document.getElementById("checkInDate");
-    flatpickr(checkInDateInput, {
-        dateFormat: "Y-m-d", // Định dạng ngày
-        locale: {
-            firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
-        },
-        disable: [disableDates("2023-08-12", "2023-08-15")], // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
-        onChange: function(selectedDates, dateStr, instance) {
-            // Khi người dùng chọn ngày check-in, cập nhật điều kiện cho ngày check-out
-            var checkOutDateInput = document.getElementById("checkOutDate");
-            checkOutDateInput._flatpickr.set("minDate", selectedDates[0]); // Set ngày check-in là ngày tối thiểu cho ngày check-out
-        }
-    });
+        // Lấy ô input check-in và kích hoạt Flatpickr
+        var checkInDateInput = document.getElementById("checkInDate");
+        flatpickr(checkInDateInput, {
+            dateFormat: "Y-m-d", // Định dạng ngày
+            locale: {
+                firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
+            },
+            disable: [disableDates("2023-11-12", "2023-11-15")], // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
+            onChange: function(selectedDates, dateStr, instance) {
+                // Khi người dùng chọn ngày check-in, cập nhật điều kiện cho ngày check-out
+                let checkOutDateInput = document.getElementById("checkOutDate");
+                checkOutDateInput.flatpickr.set("minDate", selectedDates[0]); // Set ngày check-in là ngày tối thiểu cho ngày check-out
+            }
+        });
 
-    // Lấy ô input check-out và kích hoạt Flatpickr
-    var checkOutDateInput = document.getElementById("checkOutDate");
-    flatpickr(checkOutDateInput, {
-        dateFormat: "Y-m-d", // Định dạng ngày
-        locale: {
-            firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
-        },
-        disable: [disableDates("2023-08-12", "2023-08-15")] // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
-    });
+        // Lấy ô input check-out và kích hoạt Flatpickr
+        let checkOutDateInput = document.getElementById("checkOutDate");
+        flatpickr(checkOutDateInput, {
+            dateFormat: "Y-m-d", // Định dạng ngày
+            locale: {
+                firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
+            },
+            disable: [disableDates("2023-11-12", "2023-11-15")] // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
+        });
+    })
+
+
 }
 function disableDates(a, b) {
-    let disableStartDate = new Date(a);
+    let disableStartDate1 = new Date(a);
+    let disableStartDate = new Date(disableStartDate1);
+    disableStartDate.setDate(disableStartDate1.getDate() - 1)
     let disableEndDate = new Date(b);
     let currentDate = new Date();
     let nextDay = new Date(currentDate);
@@ -575,4 +589,129 @@ function disableDates(a, b) {
         }
         return false;
     };
+}
+function calculate(idHome) {
+    let checkIn = document.getElementById("checkInDate").value
+    let checkOut = document.getElementById("checkOutDate").value
+    let dayCheckIn = new Date(checkIn)
+    let dayCheckOut = new Date(checkOut)
+    let deltaDay = (dayCheckOut - dayCheckIn)/(1000 * 60 * 60 * 24)
+    console.log(deltaDay)
+    Promise.all([
+        axios.get(API_HISTORY_BILL),
+        axios.get(API_URL_HOME + "/" + idHome,axiosConfig)
+    ])
+    .then((res) => {
+        let list = res[0].data
+        let home = res[1].data
+        console.log(list)
+        let listPrice = []
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].home.id === idHome) {
+                listPrice.push(list[i])
+                // }
+                // let compareByDate = (a, b) => {
+                //     return b.date - a.date;
+                // }
+                // // Sắp xếp mảng
+                // listPrice.sort(compareByDate);
+                // console.log(listPrice)
+            }
+            console.log(listPrice[0])
+            let price = listPrice[listPrice.length - 1].price * deltaDay
+            document.getElementById("formRent").innerHTML =
+                `
+        <div class="round3">
+            <div class="row h2 justify-content-center">BILL</div>
+            <div class="row">
+                <p class="col-6 h4">Home:</p>
+                <p class="col-6 h4" id="nameHomeBill">${home.name}</p>
+            </div>
+            <div class="row">
+                <p class="col-6 h4">Checkin day:</p>
+                <p class="col-6 h4" id="checkInBill">${checkIn}</p>
+            </div>
+            <div class="row">
+                <p class="col-6 h4">Checkout day:</p>
+                <p class="col-6 h4" id="checkOutBill">${checkOut}</p>
+            </div>
+            <div class="row">
+                <p class="col-6 h4">Price:</p>
+                <span class="col-6 h4" id="priceBill">${price}</span><span>$</span>
+            </div>
+            <div class="row justify-content-lg-center">
+                <p class="col-6 btn btn-primary h4" onclick="createBill(${idHome})">TIỀN LUÔN</p>
+            </div>
+        </div>
+            `
+        }
+    })
+}
+function createBill(idHome) {
+    let checkIn = document.getElementById("checkInBill").textContent
+    let checkOut = document.getElementById("checkOutBill").textContent
+    let priceBill = document.getElementById("priceBill").textContent
+    let data =
+        {
+            checkin:checkIn,
+            checkout:checkOut,
+            price:priceBill,
+            user:{
+                id:localStorage.getItem("idLogin")
+            },
+            home:{
+                id:idHome
+            }
+        }
+        console.log(data)
+    axios.post(API_BILL,data,axiosConfig).then(() => {
+        alert("Tạo Bill OK")
+        location.reload()
+    })
+}
+function showAllBill() {
+    axios.get(API_BILL).then((res) => {
+        let list = res.data
+        let listBill = []
+        for (let i = 0; i < list.length; i++) {
+            let x = localStorage.getItem("idLogin")
+            console.log(list[i].user.id)
+            console.log(x)
+            if (list[i].user.id == x) {
+
+                listBill.push(list[i])
+            }
+        }
+        if (listBill.length === 0) {
+            document.getElementById("showBill").innerHTML = "<p>Không có bill</p>"
+        } else {
+            let str =
+                `
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Date Create Bill</th>
+      <th scope="col">Checkin</th>
+      <th scope="col">Checkout</th>
+      <th scope="col">Total Money</th>
+    </tr>
+  </thead>
+  <tbody>
+          `
+            for (let i = 0; i < listBill.length; i++) {
+                str +=
+                    `
+    <tr>
+      <th scope="row">${listBill[i].dateOfHire}</th>
+      <td>${listBill[i].checkin}</td>
+      <td>${listBill[i].checkout}</td>
+      <td>${listBill[i].price} $</td>
+    </tr>
+                    `
+            }
+            str += `  </tbody>
+</table>`
+            document.getElementById("showBill").innerHTML = str
+        }
+    })
 }
