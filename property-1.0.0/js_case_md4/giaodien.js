@@ -52,15 +52,15 @@ function login() {
 
 
         if (response.data.roles[0].authority === "ROLE_ADMIN") {
-            // showOneUser();
+            showOneUser();
             console.log("admin")
             window.location.href="hadz_admin.html"
         } else if (response.data.roles[0].authority === "ROLE_USER") {
-            showOneUser();
+            // showOneUser();
             console.log("user")
             window.location.href="user.html"
         } else {
-            // showOneUser();
+            showOneUser();
             console.log("chủ nhà")
             window.location.href="owner.html"
         }
@@ -214,7 +214,7 @@ function showOneHome() {
                 "            <div class=\"row justify-content-between mb-5\">\n" +
                 "                <div class=\"col-lg-7 mb-5 mb-lg-0 order-lg-2\">\n" +
                 "                    <div class=\"img-about dots\" id=\"anh2\">\n" +
-                "                        <img style=\"width: 746px; height: 546px\" src=\"images/hero_bg_3.jpg\" id=\"img-1\" alt=\"Image\" class=\"img-fluid\"/>\n" +
+                "                        <img style=\"width: 500px; height: 500px\" src=\"images/hero_bg_3.jpg\" id=\"img-1\" alt=\"Image\" class=\"img-fluid\"/>\n" +
                 "                    </div>\n" +
                 "                </div>\n" +
                 "                <div class=\"col-lg-4\">\n" +
@@ -251,7 +251,17 @@ function showOneHome() {
                 "            </div>";
         document.getElementById("home_number_one").innerHTML = content;
     })
+    showImg()
+}
+function showImg() {
+    let config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    }
     axios.post("http://localhost:8080/images/img/" + 1, config).then((response)=>{
-        document.getElementById("img-1").src = response.data.url;
+        console.log("xxxxx = " + response.data.url)
+        let url = response.data.url
+        document.getElementById("img-1").src = url;
     })
 }
