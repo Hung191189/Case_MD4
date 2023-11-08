@@ -550,6 +550,7 @@ function rentHome(idHome) {
             locale: {
                 firstDayOfWeek: 1 // Tuần bắt đầu từ Thứ hai
             },
+
             disable: [disableDates("2023-1-1", "2023-1-2")], // Vô hiệu hóa ngày từ 12/8/2023 đến 15/8/2023
             onChange: function(selectedDates, dateStr, instance) {
                 // Khi người dùng chọn ngày check-in, cập nhật điều kiện cho ngày check-out
@@ -645,7 +646,6 @@ function calculate(idHome) {
             </div>
         </div>
             `
-
     })
 }
 function createBill(idHome) {
